@@ -32,7 +32,7 @@ class LevelAdmin(admin.ModelAdmin):
 class GroupAdmin(admin.ModelAdmin):
     list_display = (
         'level',
-        'weekday',
+        'weekdays',
         'time',
     )
 

@@ -24,6 +24,7 @@ DJANGO_APPS = [
 
 LOCAL_APPS = [
     'social_django',
+    'speaking_clubs',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS
@@ -109,7 +110,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-SOCIAL_AUTH_TELEGRAM_BOT_TOKEN = env.str('SOCIAL_AUTH_TELEGRAM_BOT_TOKEN')
+SOCIAL_AUTH_TELEGRAM_BOT_TOKEN = env.str('SOCIAL_AUTH_TELEGRAM_BOT_TOKEN', '')
 
 # Default profile url
 LOGIN_REDIRECT_URL = reverse_lazy('profile')

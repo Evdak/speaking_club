@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('social_django.urls', namespace='social')),
     path('profile/', TemplateView.as_view(template_name='profile.html'), name='profile'),
+    path('test/', TemplateView.as_view(template_name='test.html'), name='test'),
     path('', TemplateView.as_view(template_name='login.html')),
 ]
