@@ -8,6 +8,7 @@ django = "==2.2.27"
 django-environ = "==0.4.4"
 social-auth-core = {file = "https://github.com/python-social-auth/social-core/archive/master.zip"}
 social-auth-app-django = "==2.1.0"
+django-robokassa3 = "*"
 
 [dev-packages]
 

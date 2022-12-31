@@ -7,8 +7,12 @@ class StudentAdmin(admin.ModelAdmin):
     list_display = (
         'email',
         'name',
+        'test',
     )
-    list_filter = list_display
+    list_filter = (
+        'email',
+        'name',
+    )
 
 
 @admin.register(models.Teacher)
@@ -46,5 +50,28 @@ class ChatAdmin(admin.ModelAdmin):
         'chat',
         'group',
         'teacher',
+    )
+    list_filter = list_display
+
+
+@admin.register(models.Offer)
+class OfferAdmin(admin.ModelAdmin):
+    list_display = (
+        'period',
+        'description',
+        'price',
+    )
+    list_filter = list_display
+
+
+@admin.register(models.Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = (
+        'invoice_number',
+        'offer',
+        'user',
+        'email',
+        'time',
+        'weekdays',
     )
     list_filter = list_display

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "c96f4b82296e106aca6d248e540ab5011220beb3cac1044de033a1eef793e657"
+            "sha256": "9f9c4c60825c8ccf029799e79e1996d4b5e38c8225fd8b21aac0f734edd2fdb1"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -157,6 +157,14 @@
             "index": "pypi",
             "version": "==0.4.4"
         },
+        "django-robokassa3": {
+            "hashes": [
+                "sha256:51143deecfde1d3e96119f17f0bf208f87294b543f7b47a56b67a11516252d58",
+                "sha256:e6ca903f0f30cffa3167e94a1126514035a17b5f9d19a80517f6909790662c08"
+            ],
+            "index": "pypi",
+            "version": "==1.4"
+        },
         "idna": {
             "hashes": [
                 "sha256:814f528e8dead7d329833b91c5faa87d60bf71824cd12a7530b5526063d02cb4",
@@ -223,7 +231,7 @@
                 "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926",
                 "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2'",
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
             "version": "==1.16.0"
         },
         "social-auth-app-django": {
@@ -238,6 +246,7 @@
         "social-auth-core": {
             "file": "https://github.com/python-social-auth/social-core/archive/master.zip",
             "hashes": [
+                "sha256:189eb2804217a1e9bc72d10c2bc0c15a61a0503f47e43c80ad933856511cafdc",
                 "sha256:1963f26e57d76941e869a70edba7cc87eee828aaa3f1d80d87e121fff78f2d15"
             ],
             "version": "==4.3.0"

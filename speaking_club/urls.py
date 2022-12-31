@@ -15,13 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, RedirectView
+from django.urls import reverse_lazy
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('social_django.urls', namespace='social')),
-    path('profile/', TemplateView.as_view(template_name='profile.html'), name='profile'),
-    path('test/', TemplateView.as_view(template_name='test.html'), name='test'),
-    path('', TemplateView.as_view(template_name='login.html')),
+    path('robokassa/', include('robokassa.urls')),
+    path('speaking_club/', include('speaking_clubs.urls')),
+    path('login/', TemplateView.as_view(template_name='login.html'), name='login'),
+    path('', RedirectView.as_view(url=reverse_lazy('main'))),
 ]

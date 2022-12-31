@@ -25,6 +25,7 @@ DJANGO_APPS = [
 LOCAL_APPS = [
     'social_django',
     'speaking_clubs',
+    'robokassa',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS
@@ -120,3 +121,32 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.telegram.TelegramAuth',
     'django.contrib.auth.backends.ModelBackend',
 )
+
+
+ROBOKASSA_LOGIN = env.str('ROBOKASSA_LOGIN', '')
+ROBOKASSA_TEST_MODE = env.bool('ROBOKASSA_TEST_MODE', False)
+
+if ROBOKASSA_TEST_MODE:
+    ROBOKASSA_PASSWORD1 = env.str('TEST_ROBOKASSA_PASSWORD1', '')
+    ROBOKASSA_PASSWORD2 = env.str('TEST_ROBOKASSA_PASSWORD2', '')
+else:
+    ROBOKASSA_PASSWORD1 = env.str('ROBOKASSA_PASSWORD1', '')
+    ROBOKASSA_PASSWORD2 = env.str('ROBOKASSA_PASSWORD2', '')
+
+ROBOKASSA_USE_POST = True
+
+
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = env.str('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+
+print(EMAIL_HOST_USER)
+print(EMAIL_HOST_PASSWORD)
+
+SERVER_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+APPEND_SLASH = False

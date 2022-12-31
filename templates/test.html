@@ -1,17 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}
+Тест на уровень знаний
+{% endblock %}
+
+{% block content %}
+
 <head>
-    <meta charset="UTF-8">
-    <title>Hello {{ user }}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link href='https://fonts.googleapis.com/css?family=Jost' rel='stylesheet'>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
-        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
-        crossorigin="anonymous"></script>
-
     <script
         src="https://myyestoday.ru/pl/cms/layout/js?id=12808&hash=713ecd8e1e1aa77a6d2fa50f279aca8d&bundle=1"></script>
 
@@ -21,10 +16,6 @@
         #container-wrapper {}
 
         body {
-            background-color: #ebf0fa;
-        }
-
-        .bg-custom {
             background-color: #ebf0fa;
         }
 
@@ -204,14 +195,13 @@
     </style>
 </head>
 
-
 <div class="tabs-wrapper">
     <div class="tabs fixed-top">
         <nav class="nav nav-pills nav-justified bg-custom" id="myTab" role="tablist">
             <a class="nav-link active" id="nav-Writing">Writing</a>
             <a class="nav-link" id="nav-Listening">Listening</a>
             <a class="nav-link" id="nav-Vocabulary">Vocabulary</a>
-            <a class="nav-link" id="nav-Grammar">Grammar</a>
+            <a class="nav-link disabled" aria-disabled="true" id="nav-Grammar">Grammar</a>
             <a class="nav-link" id="nav-Reading">Reading</a>
             <a class="nav-link disabled" aria-disabled="true" id="nav-Result">Result</a>
         </nav>
@@ -3129,7 +3119,7 @@
 </div>
 
 <script>
-    var currentQuiz, currentTab;
+    var currentQuiz, currentTab, quizList;
 
     $(".nav-link").click(function () {
         $this = $(this);
@@ -3152,69 +3142,90 @@
     var quizCount = 0;
     var maxScore = 0;
 
+    var is_reloading = true;
+
     function progressBarRefresh() {
         $(`.${currentTab} #total-progress .progress-bar`).attr("aria-valuenow", quizPassed);
         $(`.${currentTab} #total-progress .progress-bar`).attr("style", ` width: ${(quizPassed / quizCount) * 100}%; `);
     }
 
     function showTest() {
-        document.querySelectorAll('#galery').forEach(el => {
-            $(el).hide()
-        })
-        $('.progress-wrapper').hide();
+        if (currentTab == 'nav-Result') {
+            getResult();
+        } else {
+            is_reloading = true;
+            document.querySelectorAll('#galery').forEach(el => {
+                $(el).hide()
+            })
+            $('.progress-wrapper').hide();
 
-        quizCount = document.querySelectorAll(`.${currentTab} .dropdown`).length + document.querySelectorAll(`.${currentTab} #quiz9-wrapper`).length;
-        maxScore = document.querySelectorAll(`.${currentTab} .dropdown`).length + document.querySelectorAll(`.${currentTab} #quiz9-wrapper`).length;
+            quizCount = document.querySelectorAll(`.${currentTab} .dropdown`).length + document.querySelectorAll(`.${currentTab} #quiz9-wrapper`).length;
+            maxScore = document.querySelectorAll(`.${currentTab} .dropdown`).length + document.querySelectorAll(`.${currentTab} #quiz9-wrapper`).length;
 
-        quizPassed = 0;
-        score = 0;
+            quizPassed = 0;
+            score = 0;
 
-        $(`.${currentTab} #total-progress .progress-bar`).attr("aria-valuemax", quizCount);
-        $(`.${currentTab} #total-progress .progress-bar`).attr("aria-valuenow", 0);
-        $(`.${currentTab} #total-progress .progress-bar`).attr("style", " width: 0%; ");
-        $(`.progress-wrapper`).hide();
-        $(`.${currentTab} .progress-wrapper`).show();
+            $(`.${currentTab} #total-progress .progress-bar`).attr("aria-valuemax", quizCount);
+            $(`.${currentTab} #total-progress .progress-bar`).attr("aria-valuenow", 0);
+            $(`.${currentTab} #total-progress .progress-bar`).attr("style", " width: 0%; ");
+            $(`.progress-wrapper`).hide();
+            $(`.${currentTab} .progress-wrapper`).show();
 
-        currentQuiz = document.querySelector(`.${currentTab} #galery`);
-        $(currentQuiz).fadeIn();
+            getAnswer(currentTab);
+        }
     }
 
     function setAnswerDropwown(element) {
+        position = quizList.indexOf(element.parentElement) + 1;
         var parentItem = element.parentElement.parentElement;
-        var newItem = document.createElement('span');
-        newItem.innerHTML = element.innerText;
-        parentItem.parentNode.replaceChild(newItem, parentItem);
-        if (element.hasAttribute('true')) {
-            newItem.classList.add('true');
-            score++;
-        } else {
-            newItem.classList.add('false');
-        }
+        var parentItem2 = parentItem.parentElement;
+        var newItem = "";
+        element.innerText.split(" ").forEach(el => {
+            if (el != "") {
+                newItem += `<span class="${"true" ? element.hasAttribute('true') : "false"}">${el}</span>`
+            }
+        })
+        parentItem.outerHTML = newItem;
 
-        if (newItem.parentElement.parentElement.querySelectorAll('.dropdown-toggle').length <= 0) {
-            showNextSlideButton(newItem.parentElement.parentElement.parentElement);
+        if (element.hasAttribute('true')) {
+            score++;
+            quizPassed++;
+            if (!is_reloading) { registerAnswer(currentTab, element.innerText, position, true); }
+        } else {
+            quizPassed++;
+            if (!is_reloading) { registerAnswer(currentTab, element.innerText, position, false); }
         }
-        quizPassed++;
+        console.log($(newItem));
+        if (parentItem2.querySelectorAll('.dropdown-toggle').length <= 0) {
+            showNextSlideButton(parentItem2);
+        }
         progressBarRefresh();
     }
 
     function setAnswerDropwownInput(element) {
+        position = quizList.indexOf(element.parentElement) + 1;
         var parentItem = element.parentElement.parentElement;
+        var parentItem2 = parentItem.parentElement;
         var input = element.parentElement.querySelector("input");
-        var newItem = document.createElement('span');
-        newItem.innerHTML = input.value;
-        parentItem.parentNode.replaceChild(newItem, parentItem);
+        var newItem = "";
+        input.value.split(" ").forEach(el => {
+            if (el != "") {
+                newItem += `<span class="${"true" ? element.hasAttribute('true') : "false"}">${el}</span>`
+            }
+        })
+        parentItem.outerHTML = newItem;
         if (input.value.toLowerCase().replace(`’`, `'`).replace(`‘`, `'`) == input.getAttribute('trueanswer').toLowerCase().replace(`’`, `'`).replace(`‘`, `'`)) {
-            newItem.classList.add('true');
             score++;
+            quizPassed++;
+            if (!is_reloading) { registerAnswer(currentTab, input.value, position, true); }
         } else {
-            newItem.classList.add('false');
+            quizPassed++;
+            if (!is_reloading) { registerAnswer(currentTab, input.value, position, false); }
         }
 
-        if (newItem.parentElement.parentElement.querySelectorAll('.dropdown-toggle').length <= 0) {
-            showNextSlideButton(newItem.parentElement.parentElement.parentElement);
+        if (parentItem2.querySelectorAll('.dropdown-toggle').length <= 0) {
+            showNextSlideButton(parentItem2);
         }
-        quizPassed++;
         progressBarRefresh();
     }
 
@@ -3232,28 +3243,31 @@
     }
 
     function showNextSlideButton(galery) {
-        quizPassed++;
         $(galery).append(`<div class="next-slide"><button class="btn btn-block" onclick="goToNextSlide()">Далее</button></div>`).fadeIn();
     }
 
     function showResult() {
-        if (score <= 6) {
-            level = "A1 (Beginner-Elementary)";
-        } else if (score > 6 && score <= 12) {
-            level = "A2 (Pre-intermediate)";
+        $(`.tabs #${currentTab}`).addClass("disabled");
+        if ($(`.tabs .nav-link:not(.disabled)`)) {
+            $(`.tabs .nav-link:not(.disabled)`)[0].click();
         } else {
-            level = "B1 (Intermediate)";
+            $(".tabs #nav-Result").removeClass('disabled');
+            $(".tabs #nav-Result").click();
         }
-        $("#container-wrapper").append(`<div class="resultdiv"><h3>Вы набрали ${score} из ${maxScore} баллов</h3><h3>Ваш уровень письма - ${level}</h3></div>`);
     }
 
 
     function checkQuiz9(btn) {
+        position = quizList.indexOf(btn.parentElement) + 1;
         if (btn.hasAttribute("true")) {
             btn.parentElement.classList.add("true");
             score++;
+            quizPassed++;
+            if (!is_reloading) { registerAnswer(currentTab, btn.innerText, position, true); }
         } else {
             btn.parentElement.classList.add("wrong");
+            quizPassed++;
+            if (!is_reloading) { registerAnswer(currentTab, btn.innerText, position, false); }
         }
         btn.parentElement.parentElement.querySelectorAll("button:not([true])").forEach(element => {
             element.classList.add("wrong-hidden");
@@ -3384,4 +3398,84 @@
     $("#quiz9-wrapper ul").shuffleChildren();
     $(".dropdown-menu").shuffleChildren();
 
+    function registerAnswer(nav, answer, position, is_true) {
+        $.post('/speaking_club/register_answer/', {
+            "nav": nav,
+            "answer": answer,
+            "is_true": is_true,
+            "position": position,
+        }, function (data) {
+            console.log("register_answer", data);
+            if (data.msg == 'error') {
+                alert("Произошла ошибка");
+                window.location.reload();
+            }
+            if (data.func == 'close') {
+                $(`.tabs #${data.nav}`).addClass("disabled");
+                if ($(`.tabs .nav-link:not(.disabled)`)) {
+                    $(`.tabs .nav-link:not(.disabled)`)[0].click();
+                } else {
+                    $(".tabs #nav-Result").removeClass('disabled');
+                    $(".tabs #nav-Result").click();
+                }
+            }
+        });
+    }
+    var quizList;
+
+    function getResult() {
+        window.location.href = '/speaking_club/get_result/'
+    };
+
+    function getAnswer(nav) {
+        $.post('/speaking_club/get_answer/', {
+            "nav": nav,
+        }, function (data) {
+            console.log("get_answer", data);
+            if (data.msg == 'error') {
+                alert("Произошла ошибка");
+                window.location.reload();
+            }
+            if (data.func == 'close') {
+                $(`.tabs #${data.data}`).addClass("disabled");
+                if ($(`.tabs .nav-link:not(.disabled)`).length > 0) {
+                    $(`.tabs .nav-link:not(.disabled)`)[0].click();
+                } else {
+                    $(".tabs #nav-Result").removeClass('disabled');
+                    $(".tabs #nav-Result").click();
+                }
+            }
+            if (data.func == "next") {
+                // console.log(data.data);
+                quizList = Array.from(document.querySelectorAll(`.${nav} :is(.dropdown-menu, .type2>ul)`));
+                // console.log("quizList", quizList);
+                data.data.forEach((element, i) => {
+                    if ($(quizList[element[0] - 1]).hasClass("dropdown-menu")) {
+                        if ($(quizList[element[0] - 1]).find('input').length > 0) {
+                            quizList[element[0] - 1].querySelector('input').value = element[1];
+                            quizList[element[0] - 1].querySelector('.btn').click();
+                        } else {
+                            $(quizList[element[0] - 1]).find(`button:contains("${element[1]}")`).click();
+                        }
+                    }
+                    // console.log(123, $(quizList[i]).find(`li:contains("${element[0]}")`));
+                })
+                currentQuiz = quizList[data.data.length].closest("#galery");
+                if (data.current_score > quizPassed) {
+                    quizPassed = data.current_score;
+                }
+
+                if (data.max_score > maxScore) {
+                    maxScore = data.max_score;
+                }
+
+                is_reloading = false;
+
+                $(currentQuiz).fadeIn();
+            }
+
+        });
+    }
+
 </script>
+{% endblock %}
