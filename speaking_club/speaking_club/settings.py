@@ -43,8 +43,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'speaking_club.urls'
 
-print(f"{BASE_DIR=}")
-print(f"{BASE_DIR/'templates'=}")
 
 TEMPLATES = [
     {
@@ -151,8 +149,6 @@ EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 
-print(EMAIL_HOST_USER)
-print(EMAIL_HOST_PASSWORD)
 
 SERVER_EMAIL = EMAIL_HOST_USER
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
