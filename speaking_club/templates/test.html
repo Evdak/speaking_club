@@ -196,8 +196,9 @@
 </head>
 
 <div class="tabs-wrapper">
-    <div class="tabs fixed-top">
-        <nav class="nav nav-pills nav-justified bg-custom" id="myTab" role="tablist">
+
+    <div class="collapse tabs" id="navbarToggleExternalContent">
+        <nav class="nav nav-pills nav-justified bg-custom p-4" id="myTab" role="tablist">
             <a class="nav-link active" id="nav-Writing">Writing</a>
             <a class="nav-link" id="nav-Listening">Listening</a>
             <a class="nav-link" id="nav-Vocabulary">Vocabulary</a>
@@ -206,6 +207,14 @@
             <a class="nav-link disabled" aria-disabled="true" id="nav-Result">Result</a>
         </nav>
     </div>
+
+    <nav class="navbar navbar-dark bg-secondary">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent"
+            aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </nav>
+
 
     <div class="test-wrapper">
         <div class="container nav-Writing" id="container-wrapper">
