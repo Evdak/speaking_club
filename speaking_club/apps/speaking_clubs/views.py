@@ -7,7 +7,7 @@ from django.db.models import Count
 
 from robokassa.forms import RobokassaForm
 from apps.speaking_clubs.helpers import MAX_SCORE, define_levels, define_total_level
-from speaking_club.apps.speaking_clubs.helpers import generate_success_form
+from apps.speaking_clubs.helpers import generate_success_form
 from speaking_clubs import models
 
 

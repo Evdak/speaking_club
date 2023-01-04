@@ -40,9 +40,9 @@
                 <button class="btn btn-lg btn-primary btn-block mt-4" type="submit">Продолжить</button>
             </form>
         </div>
-        <!-- <div class="row text-center dd-flex justify-content-center my-2">
-            <a class="text-center" href="/login">Войти в существующий</button>
-        </div> -->
+        <div class="row text-center dd-flex justify-content-center my-2">
+            <a class="text-center" href="/login">Войти в существующий</a></button>
+        </div>
     </div>
 </div>
 
@@ -167,10 +167,6 @@
             offer_id: $("#offers>.col.active").attr("offer-id"),
             email: $("#user-email-form").val(),
         }, function (data) {
-            // console.log(data);
-            // console.log(typeof (data));
-            // document.querySelector("html").innerHTML = data;
-            // document.querySelector(`body > form > p:nth-child(2) > input[type="submit"]`).click();
             window.location.href = data.url;
         });
     }

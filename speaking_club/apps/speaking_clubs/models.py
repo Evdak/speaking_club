@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 from django.core.mail import EmailMultiAlternatives
 from django.contrib.postgres.fields import JSONField
 
-from speaking_club.apps.speaking_clubs.helpers import generate_success_url
+from apps.speaking_clubs.helpers import generate_success_url
 from speaking_club.settings import EMAIL_HOST_USER
 
 User = get_user_model()
@@ -157,7 +157,7 @@ def payment_received(sender: SuccessNotification, **kwargs):
 
         msg = f"""Успешная оплата, ваш заказ можно получить по ссылке: {url}"""
         subject, from_email, to = 'Успешная оплата', EMAIL_HOST_USER, order.email
-        msg = EmailMultiAlternatives(subject, "text_content", from_email, [to])
+        msg = EmailMultiAlternatives(subject, msg, from_email, [to])
         msg.send()
 
 
