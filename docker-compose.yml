@@ -10,12 +10,13 @@ services:
     expose:
       - 8080
     ports:
-      - "80:8080"
+      - "443:8080"
     volumes:
       - ./speaking_club/static:/srv/www/speaking_club/static
       - ./speaking_club/media:/srv/www/speaking_club/media
       - ./speaking_club/logs:/srv/www/speaking_club/logs
       - ./docker/nginx:/etc/nginx/conf.d
+      - /etc/ssl/:/etc/ssl
     depends_on:
       - python
 
