@@ -1,16 +1,12 @@
 from robokassa.signals import result_received
 from robokassa.models import SuccessNotification
-from robokassa.forms import _RedirectPageForm
 from django.db import models
 from django.contrib.auth import get_user_model
 
-from django.utils.html import strip_tags
-from django.core.mail import send_mail
-from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
 from django.contrib.postgres.fields import JSONField
 
-from apps.speaking_clubs.helpers import generate_success_form
+from speaking_club.apps.speaking_clubs.helpers import generate_success_url
 from speaking_club.settings import EMAIL_HOST_USER
 
 User = get_user_model()
@@ -151,27 +147,18 @@ class Order(models.Model):
 
 
 def payment_received(sender: SuccessNotification, **kwargs):
-    print('init')
     order = Order.objects.filter(invoice_number=kwargs.get("InvId")).first()
 
     if order:
-
-        form = generate_success_form(
+        url = generate_success_url(
             cost=kwargs.get("OutSum"),
             number=kwargs.get("InvId")
         )
 
-        msg = render_to_string('email.html', {'form': form})
-        plain_message = strip_tags(msg)
-        print(msg)
+        msg = f"""Успешная оплата, ваш заказ можно получить по ссылке: {url}"""
         subject, from_email, to = 'Успешная оплата', EMAIL_HOST_USER, order.email
-        text_content = strip_tags(msg)
-        html_content = msg
         msg = EmailMultiAlternatives(subject, "text_content", from_email, [to])
-        msg.attach_alternative(html_content, "text/html")
         msg.send()
-        # send_mail('Успешная оплата', plain_message, EMAIL_HOST_USER,
-        #           [order.email], html_message=msg)
 
 
 result_received.connect(payment_received)

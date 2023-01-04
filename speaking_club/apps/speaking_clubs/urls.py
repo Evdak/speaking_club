@@ -11,4 +11,5 @@ urlpatterns = [
     path('register_answer/', views.register_answer),
     path('get_answer/', views.get_answer),
     path('get_result/', views.get_result, name='result'),
+    path('my_order/', views.my_order, name='my_order'),
 ]

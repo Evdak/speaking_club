@@ -1,9 +1,28 @@
 {% extends "base.html" %}
 
 {% block title %}
-Ошибка на стороне сервера
+Ошибка
 {% endblock %}
 
 {% block content %}
-<h1>Ошибка на стороне сервера</h1>
+<div class="container dd-flex justify-content-center py-5">
+    <div class="row dd-flex justify-content-center">
+        <div class="col col-md-8 dd-flex justify-content-center">
+            <h5 class="text-secondary text-center dd-flex justify-content-center">Какая-то ошибка :(</h5>
+            <div class="bg-white rounded-25 p-4 my-5 dd-flex justify-content-center">
+                <div class="row p-2 dd-flex justify-content-center">
+                    <div class="col-md-6 col-xs-12 dd-flex justify-content-center">
+                        <h2 class="text-bold text-center dd-flex justify-content-center my-5">Возникла ошибка,напишите
+                            нашему support-менеджеру</h2>
+                    </div>
+                </div>
+
+                <button class="btn btn-lg btn-primary btn-block mt-4"
+                    onclick="window.location.href = '{{chat.chat}}'">Написать в Telegram</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

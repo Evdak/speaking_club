@@ -1,17 +1,15 @@
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest, HttpResponseNotAllowed, HttpResponse, HttpResponseServerError, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.db import IntegrityError
 from django.db.models import Count
 
-import json
-
 from robokassa.forms import RobokassaForm
 from apps.speaking_clubs.helpers import MAX_SCORE, define_levels, define_total_level
+from speaking_club.apps.speaking_clubs.helpers import generate_success_form
 from speaking_clubs import models
 
-from django.utils import timezone
 
 from random import randint
 
@@ -38,7 +36,7 @@ def pay_with_robokassa(request: HttpRequest):
 
     if not all((weekdays, time, offer_id, email, offer, name)):
         print("ERROR: 'if not all((weekdays, time, offer_id, email, offer, name))'")
-        return render(request, "robokassa/error.html")
+        return render(request, "error.html")
 
     try:
         time = int(time.split(':')[0])
@@ -46,7 +44,7 @@ def pay_with_robokassa(request: HttpRequest):
     except Exception as err:
 
         print(f"ERROR: {str(err)}")
-        return render(request, "robokassa/error.html")
+        return render(request, "error.html")
 
     invoice_numbers = [el.invoice_number for el in models.Order.objects.all()]
 
@@ -103,7 +101,7 @@ def profile(request: HttpRequest):
     invoice_number = request.session.get("InvId")
     if not invoice_number:
         print("ERROR: 'if not invoice_number'")
-        return render(request, "robokassa/error.html")
+        return render(request, "error.html")
 
     order = models.Order.objects.filter(
         invoice_number=invoice_number,
@@ -111,7 +109,7 @@ def profile(request: HttpRequest):
 
     if not order:
         print("ERROR: 'if not order'")
-        return render(request, "robokassa/error.html")
+        return render(request, "error.html")
 
     if not order.user:
         order.user = request.user
@@ -257,7 +255,7 @@ def get_result(request: HttpRequest):
     ).first()
     if not student:
         print("ERROR: 'if not student'")
-        return render(request, "robokassa/error.html")
+        return render(request, "error.html")
 
     _test: dict = student.test
 
@@ -300,7 +298,7 @@ def get_result(request: HttpRequest):
     ).first()
     if not level:
         print("ERROR: 'if not level'")
-        return render(request, "robokassa/error.html")
+        return render(request, "error.html")
 
     order = models.Order.objects.filter(
         user=request.user,
@@ -308,7 +306,7 @@ def get_result(request: HttpRequest):
 
     if not order:
         print("ERROR: 'if not order'")
-        return render(request, "robokassa/error.html")
+        return render(request, "error.html")
 
     group = models.Group.objects.filter(
         level=level,
@@ -318,7 +316,7 @@ def get_result(request: HttpRequest):
 
     if not group:
         print("ERROR: 'if not group'")
-        return render(request, "robokassa/error.html")
+        return render(request, "error.html")
 
     student = models.Student.objects.filter(
         user=request.user,
@@ -326,7 +324,7 @@ def get_result(request: HttpRequest):
 
     if not student:
         print("ERROR: 'if not student'")
-        return render(request, "robokassa/error.html")
+        return render(request, "error.html")
 
     if not student.chat.first():
         chat = models.Chat.objects.annotate(
@@ -339,7 +337,7 @@ def get_result(request: HttpRequest):
         ).first()
         if not chat:
             print("ERROR: 'if not chat'")
-            return render(request, "robokassa/error.html")
+            return render(request, "error.html")
         chat.students.add(student)
         chat.save()
 
@@ -351,3 +349,22 @@ def get_result(request: HttpRequest):
         "user_name": student.name,
     }
     )
+
+
+def my_order(request: HttpRequest):
+    request.GET.get('InvId')
+    order = models.Order.objects.filter(
+        invoice_number=request.GET.get("InvId")
+    ).first()
+
+    if order:
+
+        form = generate_success_form(
+            cost=request.GET.get("OutSum"),
+            number=request.GET.get("InvId"),
+            signature=request.GET.get("SignatureValue"),
+        )
+
+        return render('email.html', {'form': form})
+    else:
+        return render(request, "error.html")

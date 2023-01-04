@@ -4,7 +4,7 @@ from urllib import parse
 from speaking_club.settings import ALLOWED_HOSTS, ROBOKASSA_PASSWORD1
 from django import forms
 from robokassa.forms import SuccessRedirectForm
-
+import urllib.parse
 
 MAX_SCORE = {
     "nav-Writing": 16,
@@ -112,14 +112,16 @@ def generate_success_form(
     cost: decimal,  # Cost of goods, RU
     number: int,  # Invoice number
     host_url=ALLOWED_HOSTS[0],
+    signature=None,
 ) -> str:
     """URL for redirection of the customer to the service.
     """
-    signature = calculate_signature(
-        cost,
-        number,
-        ROBOKASSA_PASSWORD1,
-    )
+    if signature is None:
+        signature = calculate_signature(
+            cost,
+            number,
+            ROBOKASSA_PASSWORD1,
+        )
 
     data = {
         'OutSum': cost,
@@ -129,6 +131,31 @@ def generate_success_form(
     }
 
     return SuccessRedirectForm(data).as_table()
+
+
+def generate_success_url(
+    cost: decimal,  # Cost of goods, RU
+    number: int,  # Invoice number
+    host_url=ALLOWED_HOSTS[0],
+    signature=None,
+) -> str:
+    """URL for redirection of the customer to the service.
+    """
+    if signature is None:
+        signature = calculate_signature(
+            cost,
+            number,
+            ROBOKASSA_PASSWORD1,
+        )
+
+    data = {
+        'OutSum': cost,
+        'InvId': number,
+        'SignatureValue': signature,
+        "Culture": "ru"
+    }
+
+    return f"https://{host_url}/my_order?{urllib.parse.urlencode(data)}"
 
 
 def calculate_signature(*args) -> str:
