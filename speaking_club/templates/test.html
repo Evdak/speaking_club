@@ -192,6 +192,10 @@
             justify-items: center;
             align-items: center;
         }
+
+        . {
+            filter: invert(10%) sepia(84%) saturate(13%) hue-rotate(359deg) brightness(96%) contrast(95%);
+        }
     </style>
 </head>
 
@@ -208,10 +212,15 @@
         </nav>
     </div>
 
-    <nav class="navbar navbar-dark bg-secondary">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent"
-            aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+    <nav class="navbar bg-custom">
+        <button class="navbar-toggler bg-primary" type="button" data-toggle="collapse"
+            data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-list"
+                viewBox="0 0 24 24">
+                <path fill-rule="evenodd"
+                    d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+            </svg>
         </button>
     </nav>
 
