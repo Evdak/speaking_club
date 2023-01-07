@@ -2,6 +2,15 @@ from django.contrib import admin
 from speaking_clubs import models
 
 
+if not hasattr(admin, "display"):
+    def display(description):
+        def decorator(fn):
+            fn.short_description = description
+            return fn
+        return decorator
+    setattr(admin, "display", display)
+
+    
 @admin.register(models.Student)
 class StudentAdmin(admin.ModelAdmin):
     list_display = (
