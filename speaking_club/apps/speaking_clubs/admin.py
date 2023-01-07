@@ -53,6 +53,10 @@ class ChatAdmin(admin.ModelAdmin):
     )
     list_filter = list_display
 
+    @admin.display(empty_value='???')
+    def students_count(self, obj):
+        return obj.students_count
+
 
 @admin.register(models.Offer)
 class OfferAdmin(admin.ModelAdmin):
