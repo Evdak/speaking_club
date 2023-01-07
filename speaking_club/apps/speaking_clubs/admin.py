@@ -53,7 +53,7 @@ class ChatAdmin(admin.ModelAdmin):
     )
     list_filter = list_display
 
-    @admin.display(empty_value='???')
+    @admin.display(description='students_count')
     def students_count(self, obj):
         return obj.students_count
 
