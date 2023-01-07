@@ -60,7 +60,10 @@ class ChatAdmin(admin.ModelAdmin):
         'teacher',
         'get_students_count'
     )
-    list_filter = list_display
+    list_filter  = (
+        'group',
+        'teacher',
+    )
 
     @admin.display(description='Кол-во учеников')
     def get_students_count(self, obj):
