@@ -60,8 +60,11 @@ class ChatAdmin(admin.ModelAdmin):
         'teacher',
         'get_students_count'
     )
+    
     list_filter  = (
-        'group',
+        'group__level',
+        'group__weekdays',
+        'group__time',
         'teacher',
     )
 
