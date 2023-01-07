@@ -46,10 +46,10 @@ class GroupAdmin(admin.ModelAdmin):
 @admin.register(models.Chat)
 class ChatAdmin(admin.ModelAdmin):
     list_display = (
-        'group',
-        'chat',
+        'id',
         'group',
         'teacher',
+        'students_count'
     )
     list_filter = list_display
 
