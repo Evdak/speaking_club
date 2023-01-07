@@ -10,7 +10,7 @@ if not hasattr(admin, "display"):
         return decorator
     setattr(admin, "display", display)
 
-    
+
 @admin.register(models.Student)
 class StudentAdmin(admin.ModelAdmin):
     list_display = (
@@ -64,7 +64,7 @@ class ChatAdmin(admin.ModelAdmin):
 
     @admin.display(description='students_count')
     def students_count(self, obj):
-        return obj.students_count
+        return len(obj.students)
 
 
 @admin.register(models.Offer)
