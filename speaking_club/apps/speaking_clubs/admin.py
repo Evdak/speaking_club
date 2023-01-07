@@ -62,9 +62,9 @@ class ChatAdmin(admin.ModelAdmin):
     )
     list_filter = list_display
 
-    @admin.display(description='students_count')
+    @admin.display(description='Кол-во учеников')
     def get_students_count(self, obj):
-        return len(obj.students)
+        return f"{obj.students_count()}/5"
 
 
 @admin.register(models.Offer)

@@ -235,7 +235,7 @@ class Chat(models.Model):
     )
 
     def students_count(self):
-        return len(self.students)
+        return self.students.count()
 
     def __str__(self):
         return f"{self.group} № {self.id}"
