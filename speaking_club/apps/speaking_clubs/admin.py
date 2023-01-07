@@ -55,12 +55,11 @@ class GroupAdmin(admin.ModelAdmin):
 @admin.register(models.Chat)
 class ChatAdmin(admin.ModelAdmin):
     list_display = (
-        'id',
         'group',
         'teacher',
         'get_students_count'
     )
-    
+
     list_filter  = (
         'group__level',
         'group__weekdays',
