@@ -58,12 +58,12 @@ class ChatAdmin(admin.ModelAdmin):
         'id',
         'group',
         'teacher',
-        'students_count'
+        'get_students_count'
     )
     list_filter = list_display
 
     @admin.display(description='students_count')
-    def students_count(self, obj):
+    def get_students_count(self, obj):
         return len(obj.students)
 
 
