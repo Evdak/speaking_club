@@ -128,6 +128,7 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
+GC_SECRET_KEY = env.str('GC_SECRET_KEY', '')
 
 ROBOKASSA_LOGIN = env.str('ROBOKASSA_LOGIN', '')
 ROBOKASSA_TEST_MODE = env.bool('ROBOKASSA_TEST_MODE', False)

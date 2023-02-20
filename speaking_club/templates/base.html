@@ -32,10 +32,46 @@
             background-color: #FFF !important;
             border-radius: 25px !important;
         }
+
+        .hide {
+            display: none !important;
+        }
+
+        .alerts,
+        .alerts>.alert {
+            position: fixed;
+            top: 2%;
+            left: 2%;
+            right: 2%;
+            z-index: 10000;
+        }
+
+        .alerts>.alert {
+            border: #000 1px solid;
+        }
     </style>
+
+    <script>
+        function custom_alert(text, type) {
+            $popup = $(
+                `<div class="alert alert-${type}" role="alert">
+                ${text}
+            </div>`
+            );
+            $('.alerts').empty().append(
+                $popup
+            );
+            $popup.alert();
+            $(".alert").fadeTo(2000, 500).slideUp(500, function () {
+                $(".alert").slideUp(500);
+            });
+        }
+
+    </script>
 </head>
 
 <body class="bg-custom">
+    <div class="alerts"></div>
     {% block content %}
     {% endblock %}
 </body>

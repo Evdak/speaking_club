@@ -94,6 +94,18 @@ class Offer(models.Model):
         verbose_name_plural = 'Пакеты'
 
 
+class OrderGC(models.Model):
+    email = models.EmailField(
+        "Эл. почта",
+    )
+    invoice_number = models.BigIntegerField(
+        "Номер заказа",
+    )
+
+    class Meta:
+        verbose_name = 'Заказ c GetCourse'
+        verbose_name_plural = 'Заказы c GetCourse'
+
 class Order(models.Model):
     user = models.OneToOneField(
         User,
@@ -141,6 +153,14 @@ class Order(models.Model):
         choices=WEEKDAYS,
     )
 
+    order_from_gc = models.OneToOneField(
+        OrderGC,
+        on_delete=models.CASCADE,
+        verbose_name='Заказ с GetCourse',
+        null=True,
+        blank=True,
+    )
+
     class Meta:
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'
@@ -177,7 +197,7 @@ class Student(models.Model):
         max_length=255,
     )
 
-    test = JSONField(  # TOJSON
+    test = JSONField(  
         "Результаты тестов",
         default=get_test,
     )

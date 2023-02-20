@@ -93,3 +93,12 @@ class OrderAdmin(admin.ModelAdmin):
         'weekdays',
     )
     list_filter = list_display
+
+
+@admin.register(models.OrderGC)
+class OrderGCAdmin(admin.ModelAdmin):
+    list_display = (
+        'invoice_number',
+        'email',
+    )
+    list_filter = list_display

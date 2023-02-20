@@ -1,6 +1,14 @@
+import re
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.http import HttpRequest, HttpResponseNotAllowed, HttpResponse, HttpResponseServerError, JsonResponse
+from django.http import (
+    HttpRequest,
+    HttpResponseNotAllowed,
+    HttpResponse,
+    HttpResponseServerError,
+    JsonResponse,
+    HttpResponseBadRequest,
+)
 from django.views.decorators.csrf import csrf_exempt
 from django.db import IntegrityError
 from django.db.models import Count
@@ -8,8 +16,10 @@ from django.db.models import Count
 from robokassa.forms import RobokassaForm
 from apps.speaking_clubs.helpers import MAX_SCORE, define_levels, define_total_level
 from apps.speaking_clubs.helpers import generate_success_form
+from speaking_club.settings import GC_SECRET_KEY
 from speaking_clubs import models
 
+import logging
 
 from random import randint
 
@@ -19,7 +29,68 @@ def index(request: HttpRequest):
     return render(request, 'main.html', {"offers": offers})
 
 
+def index_gc(request: HttpRequest):
+    offers = models.Offer.objects.all()
+    return render(request, 'main_from_gc.html', {"offers": offers})
+
+
+@csrf_exempt
+def order_from_gc(request: HttpRequest):
+    weekdays: str = request.POST.get("weekdays")
+    time: str = request.POST.get("time")
+    offer_id: int = request.POST.get("offer_id")
+    email: str = request.POST.get("email")
+    name: str = request.POST.get("name")
+    invoice_number: str = request.POST.get("invoice_number")
+
+    invoice_number = "".join(re.findall(r"\d+", invoice_number))
+
+    offer = models.Offer.objects.filter(
+        id=offer_id
+    ).first()
+
+    print((weekdays, time, offer_id, email, offer, name))
+
+    if not all((weekdays, time, offer_id, email, offer, name, invoice_number)):
+        print("ERROR: 'if not all((weekdays, time, offer_id, email, offer, name))'")
+        return render(request, "error.html")
+
+    try:
+        time = int(time.split(':')[0])
+
+    except Exception as err:
+
+        print(f"ERROR: {str(err)}")
+        return render(request, "error.html")
+
+    order_from_gc = models.OrderGC.objects.filter(
+        invoice_number=invoice_number,
+        email=email,
+    ).first()
+
+    if not order_from_gc:
+        return JsonResponse({"status": "ERROR", "result": "Заказ не найден. Email или № заказа неверен, попробуйте еще раз"})
+
+    try:
+        order, _ = models.Order.objects.get_or_create(
+            invoice_number=invoice_number,
+            offer=offer,
+            email=email,
+            time=time,
+            weekdays=weekdays,
+            name=name,
+            order_from_gc=order_from_gc,
+        )
+    except IntegrityError:
+        pass
+
+    request.session['InvId'] = invoice_number
+
+    return JsonResponse({"status": "OK", "result": "/login"})
+
 # @login_required
+
+
 @csrf_exempt
 def pay_with_robokassa(request: HttpRequest):
     weekdays: str = request.POST.get("weekdays")
@@ -46,7 +117,7 @@ def pay_with_robokassa(request: HttpRequest):
         print(f"ERROR: {str(err)}")
         return render(request, "error.html")
 
-    invoice_numbers = [el.invoice_number for el in models.Order.objects.all()]
+    invoice_numbers = [el.invoice_number for el in models.Order.objects.all()] + [el.invoice_number for el in models.OrderGC.objects.all()]
 
     invoice_number = randint(1, (2**31) - 1)
 
@@ -100,16 +171,18 @@ def profile(request: HttpRequest):
 
     invoice_number = request.session.get("InvId")
     if not invoice_number:
-        print("ERROR: 'if not invoice_number'")
-        return render(request, "error.html")
+        order = models.Order.objects.filter(
+            user=request.user,
+        ).first()
 
-    order = models.Order.objects.filter(
-        invoice_number=invoice_number,
-    ).first()
+    else:
+        order = models.Order.objects.filter(
+            invoice_number=invoice_number,
+        ).first()
 
     if not order:
         print("ERROR: 'if not order'")
-        return render(request, "error.html")
+        return render(request, "error.html", {'text': 'Ваш профиль не найден среди наших студентов'})
 
     if not order.user:
         order.user = request.user
@@ -124,6 +197,8 @@ def profile(request: HttpRequest):
             )
         except IntegrityError:
             pass
+    elif order.user != request.user:
+        return render(request, "error.html", {'text': 'К данному заказу привязан другой Telegram аккаунт'})
 
     return redirect("test")
 
@@ -358,7 +433,6 @@ def my_order(request: HttpRequest):
     ).first()
 
     if order:
-
         form = generate_success_form(
             cost=request.GET.get("OutSum"),
             number=request.GET.get("InvId"),
@@ -368,3 +442,23 @@ def my_order(request: HttpRequest):
         return render('email.html', {'form': form})
     else:
         return render(request, "error.html")
+
+
+@csrf_exempt
+def create_order_from_gc(request: HttpRequest):
+    try:
+        invoice_number = int(request.GET.get('invoice_number'))
+        email = request.GET.get('email')
+        key = request.GET.get('key')
+
+        logging.warning((invoice_number, email, key))
+
+        if all((invoice_number, email, key == GC_SECRET_KEY)):
+            models.OrderGC.objects.get_or_create(
+                email=email,
+                invoice_number=invoice_number,
+            )
+            return JsonResponse({"status": "OK"})
+    except Exception as err:
+        logging.critical(err)
+    return HttpResponseBadRequest()
