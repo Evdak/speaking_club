@@ -18,8 +18,13 @@ class UserLevelFilter(admin.SimpleListFilter):
     parameter_name = 'Уровень'
 
     def lookups(self, request, model_admin):
+        def _get_group(student: models.Student):
+            try:
+                return (student.chat.first().group.level, student.chat.first().group.level)
+            except AttributeError:
+                pass
         return [
-            (el.chat.first().group.level, el.chat.first().group.level) for el in models.Student.objects.all()
+            _get_group(el) for el in models.Student.objects.all()
         ]
 
     def queryset(self, request, queryset):
@@ -34,27 +39,15 @@ class UserTeacherFilter(admin.SimpleListFilter):
     parameter_name = 'Куратор'
 
     def lookups(self, request, model_admin):
+
+        def _get_teacher(student: models.Student):
+            try:
+                return (student.chat.first().teacher, student.chat.first().teacher)
+            except AttributeError:
+                pass
+
         return [
-            (el.chat.first().teacher, el.chat.first().teacher) for el in models.Student.objects.all()
-        ]
-
-    def queryset(self, request, queryset):
-        value = self.value()
-        if value:
-            return queryset.filter(
-                chat__teacher__email=value.split()[-1],
-                chat__teacher__name=(" ".join(value.split()[:-1])),
-            )
-        return queryset
-
-
-class UserTeacherFilter(admin.SimpleListFilter):
-    title = 'Куратор'
-    parameter_name = 'Куратор'
-
-    def lookups(self, request, model_admin):
-        return [
-            (el.chat.first().teacher, el.chat.first().teacher) for el in models.Student.objects.all()
+            _get_teacher(el) for el in models.Student.objects.all()
         ]
 
     def queryset(self, request, queryset):
