@@ -31,10 +31,6 @@ class UserLevelFilter(admin.SimpleListFilter):
 
         res = [el for el in res if el]
 
-        if not res:
-            return [
-                ('---', '---')
-            ]
         return res
 
     def queryset(self, request, queryset):
@@ -64,10 +60,6 @@ class UserTeacherFilter(admin.SimpleListFilter):
 
         res = [el for el in res if el]
 
-        if not res:
-            return [
-                ('---', '---')
-            ]
         return res
 
     def queryset(self, request, queryset):
@@ -91,10 +83,6 @@ class UserTGFilter(admin.SimpleListFilter):
 
         res = [el for el in res if el]
 
-        if not res:
-            return [
-                ('---', '---')
-            ]
         return res
 
     def queryset(self, request, queryset):
