@@ -33,12 +33,13 @@ services:
       - 8000:8000
     env_file:
       - .env
-    command: "gunicorn -c gunicorn.py speaking_club.wsgi"
+    command: "gunicorn --log-level DEBUG -c gunicorn.py speaking_club.wsgi"
 
   postgres:
     image: postgres:15
     ports:
-      - 5432:5432
+      - 49714:5432
+
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -65,7 +66,7 @@ services:
       - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
       - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
     ports:
-      - 5050:80
+      - 1723:80
     depends_on:
       postgres:
         condition: service_healthy
