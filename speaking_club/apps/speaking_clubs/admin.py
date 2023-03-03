@@ -23,9 +23,15 @@ class UserLevelFilter(admin.SimpleListFilter):
                 return (student.chat.first().group.level, student.chat.first().group.level)
             except AttributeError:
                 pass
-        return [
+        res = [
             _get_group(el) for el in models.Student.objects.all()
         ]
+
+        if not res:
+            return [
+                ('---', '---')
+            ]
+        return res
 
     def queryset(self, request, queryset):
         value = self.value()
@@ -46,9 +52,15 @@ class UserTeacherFilter(admin.SimpleListFilter):
             except AttributeError:
                 pass
 
-        return [
+        res = [
             _get_teacher(el) for el in models.Student.objects.all()
         ]
+
+        if not res:
+            return [
+                ('---', '---')
+            ]
+        return res
 
     def queryset(self, request, queryset):
         value = self.value()
@@ -65,9 +77,15 @@ class UserTGFilter(admin.SimpleListFilter):
     parameter_name = 'Ник в TG'
 
     def lookups(self, request, model_admin):
-        return [
+        res = [
             (el.user.username, el.user.username) for el in models.Student.objects.all()
         ]
+
+        if not res:
+            return [
+                ('---', '---')
+            ]
+        return res
 
     def queryset(self, request, queryset):
         value = self.value()
