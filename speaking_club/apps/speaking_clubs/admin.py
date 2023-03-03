@@ -20,7 +20,9 @@ class UserLevelFilter(admin.SimpleListFilter):
     def lookups(self, request, model_admin):
         def _get_group(student: models.Student):
             try:
-                return (student.chat.first().group.level, student.chat.first().group.level)
+                res = (student.chat.first().group.level, student.chat.first().group.level)
+                if all(res):
+                    return res
             except AttributeError:
                 pass
         res = [
@@ -48,7 +50,9 @@ class UserTeacherFilter(admin.SimpleListFilter):
 
         def _get_teacher(student: models.Student):
             try:
-                return (student.chat.first().teacher, student.chat.first().teacher)
+                res = (student.chat.first().teacher, student.chat.first().teacher)
+                if all(res):
+                    return res
             except AttributeError:
                 pass
 
