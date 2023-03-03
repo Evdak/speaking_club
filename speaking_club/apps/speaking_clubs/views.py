@@ -160,6 +160,7 @@ def update_session(request: HttpRequest):
 
 @login_required
 def profile(request: HttpRequest):
+    logger = logging.getLogger('profile')
     student = models.Student.objects.filter(
         user=request.user
     ).first()
@@ -170,6 +171,9 @@ def profile(request: HttpRequest):
             return redirect("test")
 
     invoice_number = request.session.get("InvId")
+    logger.warning(f"{request.session.items()=}")
+    logger.warning(f"{invoice_number=}")
+    logger.warning(f"{request.user=}")
     if not invoice_number:
         order = models.Order.objects.filter(
             user=request.user,
@@ -181,7 +185,7 @@ def profile(request: HttpRequest):
         ).first()
 
     if not order:
-        print("ERROR: 'if not order'")
+        logger.error("if not order")
         return render(request, "error.html", {'text': 'Ваш профиль не найден среди наших студентов'})
 
     if not order.user:

@@ -175,6 +175,7 @@
     $("#offers>.col:first-child()").addClass('active');
 
     function finish() {
+        $.post('/speaking_club/update_session/', { 'InvId': $("#user-order-form").val() }, function (data) { });
         $.post('/speaking_club/order_from_gc/', {
             weekdays: $("#user-weekdays").text(),
             time: $("#user-time").text(),

@@ -106,6 +106,7 @@ class OrderGC(models.Model):
         verbose_name = 'Заказ c GetCourse'
         verbose_name_plural = 'Заказы c GetCourse'
 
+
 class Order(models.Model):
     user = models.OneToOneField(
         User,
@@ -197,13 +198,31 @@ class Student(models.Model):
         max_length=255,
     )
 
-    test = JSONField(  
+    test = JSONField(
         "Результаты тестов",
         default=get_test,
     )
 
     def __str__(self):
         return f"{self.name} {self.email}"
+
+    def _get_user_chat(self):
+        return self.chat.first()
+
+    def get_user_level(self):
+        chat = self._get_user_chat()
+        return chat.group.level if chat else None
+
+    def get_user_teacher(self):
+        chat = self._get_user_chat()
+        return chat.teacher if chat else None
+
+    def get_user_chat_url(self):
+        chat = self._get_user_chat()
+        return chat.chat if chat else None
+
+    def get_user_tg(self):
+        return f"@{self.user.username}" if self.user.username else None
 
     class Meta:
         verbose_name = 'Студент'
