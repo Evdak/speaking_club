@@ -29,6 +29,8 @@ class UserLevelFilter(admin.SimpleListFilter):
             _get_group(el) for el in models.Student.objects.all()
         ]
 
+        res = [el for el in res if el]
+
         if not res:
             return [
                 ('---', '---')
@@ -60,6 +62,8 @@ class UserTeacherFilter(admin.SimpleListFilter):
             _get_teacher(el) for el in models.Student.objects.all()
         ]
 
+        res = [el for el in res if el]
+
         if not res:
             return [
                 ('---', '---')
@@ -84,6 +88,8 @@ class UserTGFilter(admin.SimpleListFilter):
         res = [
             (el.user.username, el.user.username) for el in models.Student.objects.all()
         ]
+
+        res = [el for el in res if el]
 
         if not res:
             return [
