@@ -5,12 +5,14 @@ from django.urls import reverse_lazy
 from django.conf import settings
 from django.conf.urls.static import static
 
+from apps.speaking_clubs.views import login
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('social_django.urls', namespace='social')),
     path('robokassa/', include('robokassa.urls')),
     path('speaking_club/', include('speaking_clubs.urls')),
-    path('login/', TemplateView.as_view(template_name='login.html'), name='login'),
+    path('login/', login, name='login'),
     path('', RedirectView.as_view(url=reverse_lazy('main'))),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

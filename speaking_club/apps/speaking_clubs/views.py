@@ -24,6 +24,13 @@ import logging
 from random import randint
 
 
+def login(request: HttpRequest):
+    print(f"yec {request.user.id=}")
+    if request.user.id:
+        return redirect("profile")
+    return render(request, 'login.html')
+
+
 def index(request: HttpRequest):
     offers = models.Offer.objects.all()
     return render(request, 'main.html', {"offers": offers})
@@ -87,8 +94,6 @@ def order_from_gc(request: HttpRequest):
     request.session['InvId'] = invoice_number
 
     return JsonResponse({"status": "OK", "result": "/login"})
-
-# @login_required
 
 
 @csrf_exempt
