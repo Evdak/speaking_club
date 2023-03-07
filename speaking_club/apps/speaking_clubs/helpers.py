@@ -162,3 +162,37 @@ def calculate_signature(*args) -> str:
     """Create signature MD5.
     """
     return hashlib.md5(':'.join(str(arg) for arg in args).encode()).hexdigest()
+
+
+def calculate_levels(_test) -> tuple[dict[str, int], str]:
+    import logging
+    logging.warning(_test)
+    grammar = _test.get("nav-Grammar")
+    writing = _test.get("nav-Writing")
+    listening = _test.get("nav-Listening")
+    vocabulary = _test.get("nav-Vocabulary")
+    reading = _test.get("nav-Reading")
+
+    levels = define_levels(
+        grammar=grammar,
+        writing=writing,
+        listening=listening,
+        vocabulary=vocabulary,
+        reading=reading
+    )
+
+    grammar = levels.get("grammar")
+    writing = levels.get("writing")
+    listening = levels.get("listening")
+    vocabulary = levels.get("vocabulary")
+    reading = levels.get("reading")
+
+    total_level = define_total_level(
+        grammar=grammar,
+        writing=writing,
+        listening=listening,
+        vocabulary=vocabulary,
+        reading=reading
+    )
+
+    return levels, total_level

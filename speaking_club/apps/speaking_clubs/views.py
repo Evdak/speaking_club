@@ -1,3 +1,4 @@
+import json
 import re
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -14,8 +15,9 @@ from django.db import IntegrityError
 from django.db.models import Count
 
 from robokassa.forms import RobokassaForm
-from apps.speaking_clubs.helpers import MAX_SCORE, define_levels, define_total_level
+from apps.speaking_clubs.helpers import MAX_SCORE, define_levels, define_total_level, calculate_levels
 from apps.speaking_clubs.helpers import generate_success_form
+from apps.speaking_clubs.answers_helpers import get_answers, register_answer
 from speaking_club.settings import GC_SECRET_KEY
 from speaking_clubs import models
 
@@ -169,6 +171,7 @@ def profile(request: HttpRequest):
     student = models.Student.objects.filter(
         user=request.user
     ).first()
+    logger.warning(f'{student=}')
     if student:
         if student.chat.first():
             return redirect("result")
@@ -217,65 +220,65 @@ def test(request: HttpRequest):
     return render(request, "test.html")
 
 
-@login_required
-@csrf_exempt
-def register_answer(request: HttpRequest):
-    student = models.Student.objects.filter(
-        user=request.user
-    ).first()
-    if not student:
-        return JsonResponse(
-            {
-                "msg": "error"
-            }
-        )
+# @login_required
+# @csrf_exempt
+# def register_answer(request: HttpRequest):
+#     student = models.Student.objects.filter(
+#         user=request.user
+#     ).first()
+#     if not student:
+#         return JsonResponse(
+#             {
+#                 "msg": "error"
+#             }
+#         )
 
-    nav = request.POST.get('nav')
-    answer = request.POST.get('answer')
-    position = request.POST.get('position')
-    is_true = request.POST.get('is_true')
+#     nav = request.POST.get('nav')
+#     answer = request.POST.get('answer')
+#     position = request.POST.get('position')
+#     is_true = request.POST.get('is_true')
 
-    if not all([nav, answer, is_true, position]):
-        return JsonResponse(
-            {
-                "msg": "error"
-            }
-        )
+#     if not all([nav, answer, is_true, position]):
+#         return JsonResponse(
+#             {
+#                 "msg": "error"
+#             }
+#         )
 
-    _test: dict = student.test
+#     _test: dict = student.test
 
-    if _test.get(nav) is None:
-        return JsonResponse(
-            {
-                "msg": "error"
-            }
-        )
+#     if _test.get(nav) is None:
+#         return JsonResponse(
+#             {
+#                 "msg": "error"
+#             }
+#         )
 
-    result = _test.get(nav)
+#     result = _test.get(nav)
 
-    if len(result) >= MAX_SCORE.get(nav):
-        return JsonResponse(
-            {
-                "msg": "OK",
-                "func": "close",
-                "data": nav,
-            }
-        )
+#     if len(result) >= MAX_SCORE.get(nav):
+#         return JsonResponse(
+#             {
+#                 "msg": "OK",
+#                 "func": "close",
+#                 "data": nav,
+#             }
+#         )
 
-    _test.get(nav).append(
-        [int(position), answer, is_true]
-    )
+#     _test.get(nav).append(
+#         [int(position), answer, is_true]
+#     )
 
-    student.test = _test
-    student.save()
+#     student.test = _test
+#     student.save()
 
-    return JsonResponse(
-        {
-            "msg": "OK",
-            "func": "next",
-            "data": len(result) + 1,
-        }
-    )
+#     return JsonResponse(
+#         {
+#             "msg": "OK",
+#             "func": "next",
+#             "data": len(result) + 1,
+#         }
+#     )
 
 
 @login_required
@@ -341,48 +344,19 @@ def get_result(request: HttpRequest):
         print("ERROR: 'if not student'")
         return render(request, "error.html")
 
+    if not student.test:
+        return redirect('test')
+
     _test: dict = student.test
 
-    grammar = _test.get("nav-Grammar")
-    writing = _test.get("nav-Writing")
-    listening = _test.get("nav-Listening")
-    vocabulary = _test.get("nav-Vocabulary")
-    reading = _test.get("nav-Reading")
-
-    grammar = sum([1 for el in grammar if el[-1] == True])
-    writing = sum([1 for el in writing if el[-1] == True])
-    listening = sum([1 for el in listening if el[-1] == True])
-    vocabulary = sum([1 for el in vocabulary if el[-1] == True])
-    reading = sum([1 for el in reading if el[-1] == True])
-
-    levels = define_levels(
-        grammar=grammar,
-        writing=writing,
-        listening=listening,
-        vocabulary=vocabulary,
-        reading=reading
-    )
-
-    grammar = levels.get("grammar")
-    writing = levels.get("writing")
-    listening = levels.get("listening")
-    vocabulary = levels.get("vocabulary")
-    reading = levels.get("reading")
-
-    total_level = define_total_level(
-        grammar=grammar,
-        writing=writing,
-        listening=listening,
-        vocabulary=vocabulary,
-        reading=reading
-    )
+    levels, total_level = calculate_levels(_test)
 
     level = models.Level.objects.filter(
         name=total_level.get('total')
     ).first()
     if not level:
         print("ERROR: 'if not level'")
-        return render(request, "error.html")
+        return render(request, "error.html", {'text': 'Ошибка при обработке результатов, обратитесь в поддержку'})
 
     order = models.Order.objects.filter(
         user=request.user,
@@ -400,7 +374,7 @@ def get_result(request: HttpRequest):
 
     if not group:
         print("ERROR: 'if not group'")
-        return render(request, "error.html")
+        return render(request, "error.html", {'text': 'Не удалось найти свободную группу, обратитесь в поддержку'})
 
     student = models.Student.objects.filter(
         user=request.user,
@@ -427,11 +401,13 @@ def get_result(request: HttpRequest):
 
     levels.update(total_level)
 
-    return render(request, "result.html",  {
-        "levels": levels,
-        "chat": student.chat.first(),
-        "user_name": student.name,
-    }
+    return render(
+        request,
+        "result.html",  {
+            "levels": levels,
+            "chat": student.chat.first(),
+            "user_name": student.name,
+        }
     )
 
 
@@ -471,3 +447,94 @@ def create_order_from_gc(request: HttpRequest):
     except Exception as err:
         logging.critical(err)
     return HttpResponseBadRequest()
+
+
+@login_required
+@csrf_exempt
+def register_answer_view(request: HttpRequest):
+    _request = json.loads(request.body)
+    quiz_id = _request.get('quiz_id')
+    answer = _request.get("answer")
+
+    if all((quiz_id, answer)):
+        try:
+            register_answer(request.user, quiz_id=quiz_id, answer=answer)
+            return JsonResponse(
+                {
+                    "status": "OK",
+                }
+            )
+        except Exception as err:
+            logging.error(err)
+    return JsonResponse(
+        {
+            "status": "ERROR",
+            "msg": "Произошла ошибка, попробуйте еще раз или обратитесь в поддержку",
+        }
+    )
+
+
+@login_required
+@csrf_exempt
+def get_answers_view(request: HttpRequest):
+    quiz_ids = request.POST.get('quiz_ids')
+
+    try:
+        quiz_ids = quiz_ids.split(';;')
+    except:
+        quiz_ids = None
+
+    if all((quiz_ids)):
+        try:
+            answers = get_answers(request.user, quiz_ids=quiz_ids)
+
+            return JsonResponse({
+                "status": "OK",
+                "answers": answers,
+            })
+        except Exception as err:
+            logging.error(err)
+
+    return JsonResponse(
+        {
+            "status": "ERROR",
+            "msg": "Произошла ошибка, попробуйте еще раз или обратитесь в поддержку",
+        }
+    )
+
+
+@login_required
+@csrf_exempt
+def register_results_view(request: HttpRequest):
+    logger = logging.getLogger('register_results_view')
+    _request = json.loads(request.body)
+    logger.warning(_request)
+    try:
+        if all([_request.get(el) != None for el in models.TEST]):
+            student = models.Student.objects.filter(
+                user=request.user
+            ).first()
+            logger.warning(student)
+            logger.warning(student.test)
+            student.test = _request
+            logger.warning(student.test)
+            student.save()
+            logger.warning(student.test)
+            return JsonResponse(
+                {
+                    "status": "OK",
+                    "msg": "",
+                }
+            )
+        else:
+            logger.warning(all([_request.get(el) for el in models.TEST]))
+            logger.warning([_request.get(el) for el in models.TEST])
+    except Exception as err:
+        logger.error(err)
+
+    return JsonResponse(
+        {
+            "status": "ERROR",
+            "msg": "Произошла ошибка, попробуйте еще раз или обратитесь в поддержку",
+        }
+    )

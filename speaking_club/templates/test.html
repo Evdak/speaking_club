@@ -202,7 +202,7 @@
             <a class="nav-link active" id="nav-Writing">Writing</a>
             <a class="nav-link" id="nav-Listening">Listening</a>
             <a class="nav-link" id="nav-Vocabulary">Vocabulary</a>
-            <a class="nav-link" aria-disabled="true" id="nav-Grammar">Grammar</a>
+            <a class="nav-link" id="nav-Grammar">Grammar</a>
             <a class="nav-link" id="nav-Reading">Reading</a>
             <a class="nav-link disabled" aria-disabled="true" id="nav-Result">Result</a>
         </nav>
@@ -222,7 +222,7 @@
             <div class='galery1' id='galery'>
                 <div class='galery_div1_1' id='galerydiv'>
                     <h3></h3>
-                    <div class="dropdown-wrapper">
+                    <div>
                         <div class="dropdown-wrapper">
                             <span>- Hi, John! </span>
                             <div class="dropdown">
@@ -230,304 +230,316 @@
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     ___
                                 </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                    quiz-uuid="4216e84f-612e-4607-baba-b5d9bf751c56">
                                     <input type="text" trueanswer="how">
                                     <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
                                 </div>
                             </div>
                             <span> are you doing?</span>
                         </div>
+
                         <div class="dropdown-wrapper">
-                            <div class="dropdown-wrapper">
-                                <span>- Hello, Ann. I am fine, thank you. Can I ask you some</span>
-                                <div class="dropdown">
-                                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        ___
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <button type="button" class="dropdown-item"
-                                            onclick="setAnswerDropwown(this)">answers</button>
-                                        <button type="button" class="dropdown-item"
-                                            onclick="setAnswerDropwown(this)">ways</button>
-                                        <button type="button" class="dropdown-item" true
-                                            onclick="setAnswerDropwown(this)">questions</button>
-                                        <button type="button" class="dropdown-item"
-                                            onclick="setAnswerDropwown(this)">problems</button>
-                                    </div>
+                            <span>- Hello, Ann. I am fine, thank you. Can I ask you some</span>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    ___
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                    quiz-uuid="a1aef195-749d-4a89-ad79-4feb106d685d">
+                                    <button type="button" class="dropdown-item"
+                                        onclick="setAnswerDropwown(this)">answers</button>
+                                    <button type="button" class="dropdown-item"
+                                        onclick="setAnswerDropwown(this)">ways</button>
+                                    <button type="button" class="dropdown-item" true
+                                        onclick="setAnswerDropwown(this)">questions</button>
+                                    <button type="button" class="dropdown-item"
+                                        onclick="setAnswerDropwown(this)">problems</button>
                                 </div>
-                                <span>?</span>
                             </div>
-
-                            <div class="dropdown-wrapper">
-                                <span>- Sure. Do</span>
-                                <div class="dropdown">
-                                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        ___
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <button type="button" class="dropdown-item" true
-                                            onclick="setAnswerDropwown(this)">whatever</button>
-                                        <button type="button" class="dropdown-item"
-                                            onclick="setAnswerDropwown(this)">whenever</button>
-                                        <button type="button" class="dropdown-item"
-                                            onclick="setAnswerDropwown(this)">whoever</button>
-                                        <button type="button" class="dropdown-item"
-                                            onclick="setAnswerDropwown(this)">wherever</button>
-                                    </div>
-                                </div>
-
-                                <span> you want. I listen to you.</span>
-                            </div>
-                            <div class="dropdown-wrapper">
-                                <span>- You know, my wife is a </span>
-                                <div class="dropdown">
-                                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        ___
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <input type="text" trueanswer="teacher">
-                                        <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
-                                    </div>
-                                </div>
-                                <span> just like you. She works with kids in school for 9 hours every
-                                    weekday. She is so tired.</span>
-                            </div>
-                            <div class="dropdown-wrapper">
-                                <span>- That sounds </span>
-                                <div class="dropdown">
-                                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        ___
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <button type="button" class="dropdown-item"
-                                            onclick="setAnswerDropwown(this)">amazing</button>
-                                        <button type="button" class="dropdown-item"
-                                            onclick="setAnswerDropwown(this)">wonderful</button>
-                                        <button type="button" class="dropdown-item" true
-                                            onclick="setAnswerDropwown(this)">awful</button>
-                                        <button type="button" class="dropdown-item"
-                                            onclick="setAnswerDropwown(this)">delicious</button>
-                                    </div>
-                                </div>
-                                <span>!</span>
-                            </div>
-                            <div class="dropdown-wrapper">
-                                <span>- Yeah, I agree with you but she doesn't want to </span>
-                                <div class="dropdown">
-                                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        ___
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <button type="button" class="dropdown-item" true
-                                            onclick="setAnswerDropwown(this)">give
-                                            up</button>
-                                        <button type="button" class="dropdown-item"
-                                            onclick="setAnswerDropwown(this)">give
-                                            in</button>
-                                        <button type="button" class="dropdown-item"
-                                            onclick="setAnswerDropwown(this)">get
-                                            in</button>
-                                        <button type="button" class="dropdown-item"
-                                            onclick="setAnswerDropwown(this)">get
-                                            by</button>
-                                    </div>
-                                </div>
-                                <span>on her job and I don't know what to do. What can you recommend me to do in this
-                                    situation?</span>
-                            </div>
-                            <div class="dropdown-wrapper">
-                                <span>- Well, I am a teacher myself so I understand her </span>
-                                <div class="dropdown">
-                                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        ___
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <input type="text" trueanswer="more">
-                                        <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
-                                    </div>
-                                </div>
-                                <span> than you do. I think that you should try to help her. Do housework instead of
-                                    her, take
-                                    care
-                                    of your children more often and don't forget to tell her that you love her.</span>
-                            </div>
-                            <div class="dropdown-wrapper">
-                                <span>- How could I help her to do housework and take care of our children if I work
-                                    just like
-                                    she
-                                    does?
-                                    I am an engineer, I don't have</span>
-                                <div class="dropdown">
-                                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        ___
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <button type="button" class="dropdown-item" true
-                                            onclick="setAnswerDropwown(this)">enough</button>
-                                        <button type="button" class="dropdown-item"
-                                            onclick="setAnswerDropwown(this)">many</button>
-                                        <button type="button" class="dropdown-item"
-                                            onclick="setAnswerDropwown(this)">few</button>
-                                        <button type="button" class="dropdown-item"
-                                            onclick="setAnswerDropwown(this)">some</button>
-                                    </div>
-                                </div>
-                                <span>time for this!</span>
-                            </div>
-                            <div class="dropdown-wrapper">
-                                <span>- You asked me and I expressed my </span>
-                                <div class="dropdown">
-                                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        ___
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <input type="text" trueanswer="opinion">
-                                        <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
-                                    </div>
-                                </div>
-                                <span>. That's it, don't be so dramatic.</span>
-                            </div>
-                            <div class="dropdown-wrapper">
-                                <span>- I am not dramatic. I am just trying to think </span>
-                                <div class="dropdown">
-                                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        ___
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <button type="button" class="dropdown-item"
-                                            onclick="setAnswerDropwown(this)">right</button>
-                                        <button type="button" class="dropdown-item" true
-                                            onclick="setAnswerDropwown(this)">straight</button>
-                                        <button type="button" class="dropdown-item"
-                                            onclick="setAnswerDropwown(this)">good</button>
-                                        <button type="button" class="dropdown-item"
-                                            onclick="setAnswerDropwown(this)">correct</button>
-                                    </div>
-                                </div>
-                                <span>.</span>
-                            </div>
-                            <div class="dropdown-wrapper">
-                                <span>- Actually, I don't see it. You missed the message of my words. I told you not
-                                    only about
-                                    children
-                                    and housework </span>
-                                <div class="dropdown">
-                                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        ___
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <button type="button" class="dropdown-item"
-                                            onclick="setAnswerDropwown(this)">but
-                                            too</button>
-                                        <button type="button" class="dropdown-item"
-                                            onclick="setAnswerDropwown(this)">moreover</button>
-                                        <button type="button" class="dropdown-item" true
-                                            onclick="setAnswerDropwown(this)">but
-                                            also</button>
-                                        <button type="button" class="dropdown-item"
-                                            onclick="setAnswerDropwown(this)">as</button>
-                                    </div>
-                                </div>
-                                <span>about expressing your love to her.</span>
-                            </div>
-                            <div class="dropdown-wrapper">
-                                <span>- Okay, I get it. What should I actually tell her? I am not </span>
-                                <div class="dropdown">
-                                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        ___
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <input type="text" trueanswer="good">
-                                        <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
-                                    </div>
-                                </div>
-                                <span> at this.</span>
-                            </div>
-                            <div class="dropdown-wrapper">
-                                <span>- Tell her that she is an amazing person and you will never leave her in </span>
-                                <div class="dropdown">
-                                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        ___
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <button type="button" class="dropdown-item" true
-                                            onclick="setAnswerDropwown(this)">any</button>
-                                        <button type="button" class="dropdown-item"
-                                            onclick="setAnswerDropwown(this)">some</button>
-                                        <button type="button" class="dropdown-item"
-                                            onclick="setAnswerDropwown(this)">every</button>
-                                        <button type="button" class="dropdown-item"
-                                            onclick="setAnswerDropwown(this)">each</button>
-                                    </div>
-                                </div>
-                                <span>situation.</span>
-                            </div>
-                            <div class="dropdown-wrapper">
-                                <span>- Ann, do you think she will actually like it? I suppose it will sound strange.
-                                    And how
-                                    could it help her not to feel so </span>
-                                <div class="dropdown">
-                                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        ___
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <button type="button" class="dropdown-item"
-                                            onclick="setAnswerDropwown(this)">wonderful</button>
-                                        <button type="button" class="dropdown-item"
-                                            onclick="setAnswerDropwown(this)">spectacular</button>
-                                        <button type="button" class="dropdown-item"
-                                            onclick="setAnswerDropwown(this)">hideous</button>
-                                        <button type="button" class="dropdown-item" true
-                                            onclick="setAnswerDropwown(this)">exhausted</button>
-                                    </div>
-                                </div>
-                                <span>?</span>
-                            </div>
-                            <div class="dropdown-wrapper">
-                                <span>- It is just my opinion, I can't tell that it will work with your wife. At </span>
-                                <div class="dropdown">
-                                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        ___
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <input type="text" trueanswer="least">
-                                        <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
-                                    </div>
-                                </div>
-                                <span>, you should try and give it a </span>
-                                <div class="dropdown">
-                                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        ___
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <button type="button" class="dropdown-item" true
-                                            onclick="setAnswerDropwown(this)">chance</button>
-                                        <button type="button" class="dropdown-item"
-                                            onclick="setAnswerDropwown(this)">opportunity</button>
-                                        <button type="button" class="dropdown-item"
-                                            onclick="setAnswerDropwown(this)">way</button>
-                                        <button type="button" class="dropdown-item"
-                                            onclick="setAnswerDropwown(this)">minute</button>
-                                    </div>
-                                </div>
-                                <span>.</span>
-                            </div>
+                            <span>?</span>
                         </div>
+
+                        <div class="dropdown-wrapper">
+                            <span>- Sure. Do</span>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    ___
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                    quiz-uuid="f3ce3e19-b3fd-4a7b-9b88-7bb08ca07693">
+                                    <button type="button" class="dropdown-item" true
+                                        onclick="setAnswerDropwown(this)">whatever</button>
+                                    <button type="button" class="dropdown-item"
+                                        onclick="setAnswerDropwown(this)">whenever</button>
+                                    <button type="button" class="dropdown-item"
+                                        onclick="setAnswerDropwown(this)">whoever</button>
+                                    <button type="button" class="dropdown-item"
+                                        onclick="setAnswerDropwown(this)">wherever</button>
+                                </div>
+                            </div>
+
+                            <span> you want. I listen to you.</span>
+                        </div>
+                        <div class="dropdown-wrapper">
+                            <span>- You know, my wife is a </span>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    ___
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                    quiz-uuid="53d9d1d5-dad1-4997-9230-c8f155d7e034">
+                                    <input type="text" trueanswer="teacher">
+                                    <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                                </div>
+                            </div>
+                            <span> just like you. She works with kids in school for 9 hours every
+                                weekday. She is so tired.</span>
+                        </div>
+                        <div class="dropdown-wrapper">
+                            <span>- That sounds </span>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    ___
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                    quiz-uuid="0457d4b6-0ff0-4a60-833c-b7054d67f148">
+                                    <button type="button" class="dropdown-item"
+                                        onclick="setAnswerDropwown(this)">amazing</button>
+                                    <button type="button" class="dropdown-item"
+                                        onclick="setAnswerDropwown(this)">wonderful</button>
+                                    <button type="button" class="dropdown-item" true
+                                        onclick="setAnswerDropwown(this)">awful</button>
+                                    <button type="button" class="dropdown-item"
+                                        onclick="setAnswerDropwown(this)">delicious</button>
+                                </div>
+                            </div>
+                            <span>!</span>
+                        </div>
+                        <div class="dropdown-wrapper">
+                            <span>- Yeah, I agree with you but she doesn't want to </span>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    ___
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                    quiz-uuid="d446e8f7-283d-43c8-8fc7-2ac5af07ff26">
+                                    <button type="button" class="dropdown-item" true
+                                        onclick="setAnswerDropwown(this)">give
+                                        up</button>
+                                    <button type="button" class="dropdown-item" onclick="setAnswerDropwown(this)">give
+                                        in</button>
+                                    <button type="button" class="dropdown-item" onclick="setAnswerDropwown(this)">get
+                                        in</button>
+                                    <button type="button" class="dropdown-item" onclick="setAnswerDropwown(this)">get
+                                        by</button>
+                                </div>
+                            </div>
+                            <span>on her job and I don't know what to do. What can you recommend me to do in this
+                                situation?</span>
+                        </div>
+                        <div class="dropdown-wrapper">
+                            <span>- Well, I am a teacher myself so I understand her </span>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    ___
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                    quiz-uuid="567b1198-0c03-4c4e-b439-aa688c9cd5e1">
+                                    <input type="text" trueanswer="more">
+                                    <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                                </div>
+                            </div>
+                            <span> than you do. I think that you should try to help her. Do housework instead of
+                                her, take
+                                care
+                                of your children more often and don't forget to tell her that you love her.</span>
+                        </div>
+                        <div class="dropdown-wrapper">
+                            <span>- How could I help her to do housework and take care of our children if I work
+                                just like
+                                she
+                                does?
+                                I am an engineer, I don't have</span>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    ___
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                    quiz-uuid="fd50e64a-37b3-4e65-8e0c-c5453a5bd596">
+                                    <button type="button" class="dropdown-item" true
+                                        onclick="setAnswerDropwown(this)">enough</button>
+                                    <button type="button" class="dropdown-item"
+                                        onclick="setAnswerDropwown(this)">many</button>
+                                    <button type="button" class="dropdown-item"
+                                        onclick="setAnswerDropwown(this)">few</button>
+                                    <button type="button" class="dropdown-item"
+                                        onclick="setAnswerDropwown(this)">some</button>
+                                </div>
+                            </div>
+                            <span>time for this!</span>
+                        </div>
+                        <div class="dropdown-wrapper">
+                            <span>- You asked me and I expressed my </span>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    ___
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                    quiz-uuid="699978f9-2f6a-43e4-a4dc-94fbce16c1e2">
+                                    <input type="text" trueanswer="opinion">
+                                    <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                                </div>
+                            </div>
+                            <span>. That's it, don't be so dramatic.</span>
+                        </div>
+                        <div class="dropdown-wrapper">
+                            <span>- I am not dramatic. I am just trying to think </span>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    ___
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                    quiz-uuid="79ccd384-6cec-49af-8be3-63070a5248cc">
+                                    <button type="button" class="dropdown-item"
+                                        onclick="setAnswerDropwown(this)">right</button>
+                                    <button type="button" class="dropdown-item" true
+                                        onclick="setAnswerDropwown(this)">straight</button>
+                                    <button type="button" class="dropdown-item"
+                                        onclick="setAnswerDropwown(this)">good</button>
+                                    <button type="button" class="dropdown-item"
+                                        onclick="setAnswerDropwown(this)">correct</button>
+                                </div>
+                            </div>
+                            <span>.</span>
+                        </div>
+                        <div class="dropdown-wrapper">
+                            <span>- Actually, I don't see it. You missed the message of my words. I told you not
+                                only about
+                                children
+                                and housework </span>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    ___
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                    quiz-uuid="ec6546e0-a711-48de-8812-565f2bb150a9">
+                                    <button type="button" class="dropdown-item" onclick="setAnswerDropwown(this)">but
+                                        too</button>
+                                    <button type="button" class="dropdown-item"
+                                        onclick="setAnswerDropwown(this)">moreover</button>
+                                    <button type="button" class="dropdown-item" true
+                                        onclick="setAnswerDropwown(this)">but
+                                        also</button>
+                                    <button type="button" class="dropdown-item"
+                                        onclick="setAnswerDropwown(this)">as</button>
+                                </div>
+                            </div>
+                            <span>about expressing your love to her.</span>
+                        </div>
+                        <div class="dropdown-wrapper">
+                            <span>- Okay, I get it. What should I actually tell her? I am not </span>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    ___
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                    quiz-uuid="5dcf5239-c867-4791-a0b7-9819994cd363">
+                                    <input type="text" trueanswer="good">
+                                    <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                                </div>
+                            </div>
+                            <span> at this.</span>
+                        </div>
+                        <div class="dropdown-wrapper">
+                            <span>- Tell her that she is an amazing person and you will never leave her in </span>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    ___
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                    quiz-uuid="8e710ca2-ca82-4655-9c8d-eacab363c1e1">
+                                    <button type="button" class="dropdown-item" true
+                                        onclick="setAnswerDropwown(this)">any</button>
+                                    <button type="button" class="dropdown-item"
+                                        onclick="setAnswerDropwown(this)">some</button>
+                                    <button type="button" class="dropdown-item"
+                                        onclick="setAnswerDropwown(this)">every</button>
+                                    <button type="button" class="dropdown-item"
+                                        onclick="setAnswerDropwown(this)">each</button>
+                                </div>
+                            </div>
+                            <span>situation.</span>
+                        </div>
+                        <div class="dropdown-wrapper">
+                            <span>- Ann, do you think she will actually like it? I suppose it will sound strange.
+                                And how
+                                could it help her not to feel so </span>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    ___
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                    quiz-uuid="0e915fc6-c13c-489d-9a21-e657bbc26644">
+                                    <button type="button" class="dropdown-item"
+                                        onclick="setAnswerDropwown(this)">wonderful</button>
+                                    <button type="button" class="dropdown-item"
+                                        onclick="setAnswerDropwown(this)">spectacular</button>
+                                    <button type="button" class="dropdown-item"
+                                        onclick="setAnswerDropwown(this)">hideous</button>
+                                    <button type="button" class="dropdown-item" true
+                                        onclick="setAnswerDropwown(this)">exhausted</button>
+                                </div>
+                            </div>
+                            <span>?</span>
+                        </div>
+                        <div class="dropdown-wrapper">
+                            <span>- It is just my opinion, I can't tell that it will work with your wife. At </span>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    ___
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                    quiz-uuid="c6a57cbd-5aa9-48ac-a164-ab9de4699e02">
+                                    <input type="text" trueanswer="least">
+                                    <button class="btn" onclick="setAnswerDropwownInput(this)">✓</button>
+                                </div>
+                            </div>
+                            <span>, you should try and give it a </span>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    ___
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                    quiz-uuid="9a4c837a-6916-4e00-8d71-8c566e5f3092">
+                                    <button type="button" class="dropdown-item" true
+                                        onclick="setAnswerDropwown(this)">chance</button>
+                                    <button type="button" class="dropdown-item"
+                                        onclick="setAnswerDropwown(this)">opportunity</button>
+                                    <button type="button" class="dropdown-item"
+                                        onclick="setAnswerDropwown(this)">way</button>
+                                    <button type="button" class="dropdown-item"
+                                        onclick="setAnswerDropwown(this)">minute</button>
+                                </div>
+                            </div>
+                            <span>.</span>
+                        </div>
+
                     </div>
 
 
@@ -583,7 +595,8 @@
                         </div>
                     </div>
 
-                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="3858ee8f-5998-4ddf-8cfb-cdf3a98b924c">
                         <h4>Where does the man work?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">School</button></li>
@@ -636,7 +649,8 @@
                         </div>
                     </div>
 
-                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="a0033f64-4a1a-4ba9-b55c-125a14ba1715">
                         <h4>What does the man hate to do?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">Log in books</button></li>
@@ -689,7 +703,8 @@
                         </div>
                     </div>
 
-                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="542502b9-3783-4591-a5b3-fb543b1c7ac1">
                         <h4>What do they discuss?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)" true>Favorite painting of thieves</button></li>
@@ -744,7 +759,8 @@
                         </div>
                     </div>
 
-                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="e3c11d68-7d17-4372-a0db-e86a11abc2d1">
                         <h4>How many times it was stolen in the last 20 years?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">Once</button></li>
@@ -797,7 +813,8 @@
                         </div>
                     </div>
 
-                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="4c251484-0066-48fd-ae1a-05fe6a1b3086">
                         <h4>Why is this painting popular among thieves?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">It's worth $5 million.</button></li>
@@ -850,7 +867,8 @@
                         </div>
                     </div>
 
-                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="55d8c54b-610d-4ef8-9a29-580dd1540acf">
                         <h4>What is subseption?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">A technique based on understanding the feeling of
@@ -908,7 +926,8 @@
                         </div>
                     </div>
 
-                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="bea8a878-2a96-4aa8-b354-155954994c61">
                         <h4>What did the professor NOT mention while speaking about brainwashing?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)" true>Drugging</button></li>
@@ -961,7 +980,8 @@
                         </div>
                     </div>
 
-                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="db57c50e-d40e-4025-805e-4a920175c0d0">
                         <h4>What are three types of mind control?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)" true>Subception, hypnosis, brainwashing</button></li>
@@ -1014,7 +1034,8 @@
                         </div>
                     </div>
 
-                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="2818bd99-2936-4533-aaaa-8955f70f6cc7">
                         <h4>What is the weather on the West coast?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">Sunny</button></li>
@@ -1067,7 +1088,8 @@
                         </div>
                     </div>
 
-                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="19e59fba-3ae8-4038-af85-193b522039aa">
                         <h4>What will South California have?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)" true>Sunny skies</button></li>
@@ -1120,7 +1142,8 @@
                         </div>
                     </div>
 
-                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="e0167e0f-4a69-48e7-9573-3fd725c995a5">
                         <h4>What will the Midwest see?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">Cold weather</button></li>
@@ -1173,7 +1196,8 @@
                         </div>
                     </div>
 
-                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="13fcd44d-6060-47d5-89cf-17a117dd39fe">
                         <h4>How will the temperature change from the East to Miami?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">It will get to 64 degrees</button></li>
@@ -1226,7 +1250,8 @@
                         </div>
                     </div>
 
-                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="98280f6d-df27-4492-bd13-a5d647b57ad4">
                         <h4>What does Mr. Turner do at the beginning of the audio?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)" true>He has a meeting</button></li>
@@ -1279,7 +1304,8 @@
                         </div>
                     </div>
 
-                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="ecd0b74f-1310-4c49-9f07-a796b9320028">
                         <h4>Who wants to cancel an appointment?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">Mrs.Robert</button></li>
@@ -1332,7 +1358,8 @@
                         </div>
                     </div>
 
-                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="2ed39e8e-6de7-490b-b9c1-9883ba593a2e">
                         <h4>When does the flight leave?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">at 8 p.m. on Thursday</button></li>
@@ -1397,7 +1424,8 @@
                         </div>
                     </div>
 
-                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="8aaadf9e-37de-4944-9e05-f1a06a862e7d">
                         <h4>What are the three primary colors?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">Red, blue, white</button></li>
@@ -1455,7 +1483,8 @@
                         </div>
                     </div>
 
-                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="2eea2922-80c3-4eb5-9697-433aec00d677">
                         <h4>What is the color of apricot? </h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">Red</button></li>
@@ -1513,7 +1542,8 @@
                         </div>
                     </div>
 
-                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="5131027e-e9d8-4522-887b-1f20b8141ce1">
                         <h4>Which of these fruits is yellow?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)" true>Banana</button></li>
@@ -1570,7 +1600,8 @@
                         </div>
                     </div>
 
-                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="1cadb67a-dfbf-49bd-80c8-65d6165ebaeb">
                         <h4>What is the color of coffee? </h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">Blue</button></li>
@@ -1628,7 +1659,8 @@
                         </div>
                     </div>
 
-                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="6b1e8650-d47c-4ed4-b7d6-630345f6298c">
                         <h4>What colors should be mixed to get gray?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">Blue and yellow</button></li>
@@ -1708,7 +1740,8 @@
                         </div>
                     </div>
 
-                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="0b134cca-4105-49aa-b061-ccd76c1f0625">
                         <h4>Which day of the week is the most satisfying? </h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">Wednesday</button></li>
@@ -1788,7 +1821,8 @@
                         </div>
                     </div>
 
-                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="7c785db9-b76a-4440-b3ae-d460d50902ed">
                         <h4>How many days of the week do you see in this text?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)" true>Seven</button></li>
@@ -1869,7 +1903,8 @@
                         </div>
                     </div>
 
-                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="678567d9-6a7b-4ede-ac23-b7d8c00553b1">
                         <h4>Which day of the week is called "a small Friday"?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">Monday</button></li>
@@ -1950,7 +1985,8 @@
                         </div>
                     </div>
 
-                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="5fc3f4bb-11e1-4bd0-9c4f-7896c4c3a156">
                         <h4>On which day does a regular work week start?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)" true>Monday</button></li>
@@ -2031,7 +2067,8 @@
                         </div>
                     </div>
 
-                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="853eb7e5-0130-45d0-842b-725f3065b375">
                         <h4>What day can we use to rest after all the work?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)" true>Sunday</button></li>
@@ -2111,7 +2148,8 @@
                         </div>
                     </div>
 
-                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="c6d06ff5-4160-40f6-89d9-3606f4a2d9c3">
                         <h4>What do people usually do after work or school on Tuesday?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">Sleep</button></li>
@@ -2201,7 +2239,8 @@
                         </div>
                     </div>
 
-                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="42848625-18ae-423f-9177-370ef28dc5b8">
                         <h4>Why were American drivers angry?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">There was no gasoline in the country </button></li>
@@ -2290,7 +2329,8 @@
                         </div>
                     </div>
 
-                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="97ebacd1-a07c-45cd-b0e1-f67a2c21e8f7">
                         <h4>What helped to make modern America?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">Cheap coal</button></li>
@@ -2379,7 +2419,8 @@
                         </div>
                     </div>
 
-                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="f3de9853-6660-481d-b9c8-457b30658274">
                         <h4>What is the “oil capital” of the USA?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">New York</button></li>
@@ -2469,7 +2510,8 @@
                         </div>
                     </div>
 
-                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="0b57765c-fb3a-4bc0-84be-97976ffa2c78">
                         <h4>What percentage of the oil resources was used in America in 2000?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">20%</button></li>
@@ -2558,7 +2600,8 @@
                         </div>
                     </div>
 
-                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="2b7535d7-d816-419c-ab80-85ed0a4b94dc">
                         <h4>What should people do to use less energy?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)" true>Buy smaller cars</button></li>
@@ -2581,7 +2624,8 @@
         <div class="container nav-Grammar" id="container-wrapper">
             <div class='galery1' id='galery'>
                 <div class='galery_div1_1' id='galerydiv'>
-                    <div class="type2 quiz-wrapper1_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper1_2_1" id="quiz9-wrapper"
+                        quiz-uuid="91fbe1db-f93b-44c2-99ad-6ccb55fc48a6">
                         <h4>Can anyone give me ___ please because I have just fallen over?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)" true>a hand</button></li>
@@ -2593,7 +2637,8 @@
             </div>
             <div class='galery2' id='galery'>
                 <div class='galery_div2_1' id='galerydiv'>
-                    <div class="type2 quiz-wrapper2_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper2_2_1" id="quiz9-wrapper"
+                        quiz-uuid="96258abd-4b7f-466b-9942-f63189e4ac3e">
                         <h4>___ to come to his office, and he is the first to go home.</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">Jerry often the last is</button></li>
@@ -2605,7 +2650,8 @@
             </div>
             <div class='galery3' id='galery'>
                 <div class='galery_div3_1' id='galerydiv'>
-                    <div class="type2 quiz-wrapper3_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper3_2_1" id="quiz9-wrapper"
+                        quiz-uuid="6d182b2f-f857-4a09-a9b3-49021da12cff">
                         <h4>I don't like Alice. She ___ about difficulties of life all the time.</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">has been complaining</button></li>
@@ -2617,7 +2663,8 @@
             </div>
             <div class='galery4' id='galery'>
                 <div class='galery_div4_1' id='galerydiv'>
-                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="b7958c8e-d6fd-4cf6-bad6-2de51d0099c1">
                         <h4>You do not hear what I am saying because you ___ very absent-minded today.</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)" true>are being</button></li>
@@ -2630,7 +2677,8 @@
             </div>
             <div class='galery5' id='galery'>
                 <div class='galery_div5_1' id='galerydiv'>
-                    <div class="type2 quiz-wrapper5_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper5_2_1" id="quiz9-wrapper"
+                        quiz-uuid="534103a8-33f1-42f5-a9e7-67702ee28ab2">
                         <h4>Dinosaurs were the largest animals ever to live on earth, and they ___ the Earth for a very
                             long period
                             of time.</h4>
@@ -2644,7 +2692,8 @@
             </div>
             <div class='galery6' id='galery'>
                 <div class='galery_div6_1' id='galerydiv'>
-                    <div class="type2 quiz-wrapper6_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper6_2_1" id="quiz9-wrapper"
+                        quiz-uuid="ea40ebfb-fda0-4ded-ae5e-5342d8e2b523">
                         <h4>You can't see this film on TV tonight, they ___ it only next Sunday.</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">are showing</button></li>
@@ -2656,7 +2705,8 @@
             </div>
             <div class='galery7' id='galery'>
                 <div class='galery_div7_1' id='galerydiv'>
-                    <div class="type2 quiz-wrapper7_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper7_2_1" id="quiz9-wrapper"
+                        quiz-uuid="5978c9e8-07f2-42aa-b0f7-39b409199993">
                         <h4>___ you a ride home yet since he started working in your department?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">Has Sam been giving</button></li>
@@ -2668,7 +2718,8 @@
             </div>
             <div class='galery8' id='galery'>
                 <div class='galery_div8_1' id='galerydiv'>
-                    <div class="type2 quiz-wrapper8_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper8_2_1" id="quiz9-wrapper"
+                        quiz-uuid="5d3b953f-f26f-455c-9b32-be9a3e08096f">
                         <h4>How much ___ you earn?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)" true>Do</button></li>
@@ -2679,7 +2730,8 @@
             </div>
             <div class='galery9' id='galery'>
                 <div class='galery_div9_1' id='galerydiv'>
-                    <div class="type2 quiz-wrapper9_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper9_2_1" id="quiz9-wrapper"
+                        quiz-uuid="a8e1ac07-97b6-4d6f-b9e5-2dea745a1be4">
                         <h4>___ you speak any foreign language?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)" true>Can</button></li>
@@ -2691,7 +2743,8 @@
             </div>
             <div class='galery10' id='galery'>
                 <div class='galery_div10_1' id='galerydiv'>
-                    <div class="type2 quiz-wrapper10_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper10_2_1" id="quiz9-wrapper"
+                        quiz-uuid="35201dbf-6506-493a-a810-91704646b727">
                         <h4>What shall we do this evening? We ___ go out.</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)" true>could</button></li>
@@ -2703,7 +2756,8 @@
             </div>
             <div class='galery11' id='galery'>
                 <div class='galery_div11_1' id='galerydiv'>
-                    <div class="type2 quiz-wrapper11_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper11_2_1" id="quiz9-wrapper"
+                        quiz-uuid="50815f18-878d-4ef5-baf9-901976dd9558">
                         <h4>My flight is ___ Monday.</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)" true>on</button></li>
@@ -2715,7 +2769,8 @@
             </div>
             <div class='galery12' id='galery'>
                 <div class='galery_div12_1' id='galerydiv'>
-                    <div class="type2 quiz-wrapper12_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper12_2_1" id="quiz9-wrapper"
+                        quiz-uuid="f2e9dae8-5c16-46af-ad8c-b8a27b1a727b">
                         <h4>I like that camera. I am going to buy ___ .</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)" true>it</button></li>
@@ -2727,7 +2782,8 @@
             </div>
             <div class='galery13' id='galery'>
                 <div class='galery_div13_1' id='galerydiv'>
-                    <div class="type2 quiz-wrapper13_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper13_2_1" id="quiz9-wrapper"
+                        quiz-uuid="a8a34a50-3b6d-43a8-b6d9-16c0933b52f7">
                         <h4>This is not my pencil; ___ is blue.</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">me</button></li>
@@ -2739,7 +2795,8 @@
             </div>
             <div class='galery14' id='galery'>
                 <div class='galery_div14_1' id='galerydiv'>
-                    <div class="type2 quiz-wrapper14_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper14_2_1" id="quiz9-wrapper"
+                        quiz-uuid="15acab89-3a1c-4fe4-a661-0a035bce53c6">
                         <h4>My textbook is at home today. Will you, please, give me ___ ?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">you</button></li>
@@ -2751,7 +2808,8 @@
             </div>
             <div class='galery15' id='galery'>
                 <div class='galery_div15_1' id='galerydiv'>
-                    <div class="type2 quiz-wrapper15_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper15_2_1" id="quiz9-wrapper"
+                        quiz-uuid="004c7724-e7a3-42ad-a316-239eb665a451">
                         <h4>Where are the keys? I can't find ___.</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)" true>them</button></li>
@@ -2763,7 +2821,8 @@
             </div>
             <div class='galery16' id='galery'>
                 <div class='galery_div16_1' id='galerydiv'>
-                    <div class="type2 quiz-wrapper16_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper16_2_1" id="quiz9-wrapper"
+                        quiz-uuid="6e74778d-668e-4831-a888-e7e64fb47e22">
                         <h4>We know their names, but they don't know ___.</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">us</button></li>
@@ -2775,7 +2834,8 @@
             </div>
             <div class='galery17' id='galery'>
                 <div class='galery_div17_1' id='galerydiv'>
-                    <div class="type2 quiz-wrapper17_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper17_2_1" id="quiz9-wrapper"
+                        quiz-uuid="4f0ffc0a-dbdb-41bb-89fe-161bc7b65d9b">
                         <h4>There aren't any sugars in my coffee</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">Correct</button></li>
@@ -2786,7 +2846,8 @@
             </div>
             <div class='galery18' id='galery'>
                 <div class='galery_div18_1' id='galerydiv'>
-                    <div class="type2 quiz-wrapper18_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper18_2_1" id="quiz9-wrapper"
+                        quiz-uuid="7359e462-e3b9-4152-b939-a5cf9a96879c">
                         <h4>Where ___ you from?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">am</button></li>
@@ -2798,7 +2859,8 @@
             </div>
             <div class='galery19' id='galery'>
                 <div class='galery_div19_1' id='galerydiv'>
-                    <div class="type2 quiz-wrapper19_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper19_2_1" id="quiz9-wrapper"
+                        quiz-uuid="333057a2-5318-46fd-870b-bdc7f83e8171">
                         <h4>I enjoyed reading detective stories very ___.</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">many</button></li>
@@ -2809,7 +2871,8 @@
             </div>
             <div class='galery20' id='galery'>
                 <div class='galery_div20_1' id='galerydiv'>
-                    <div class="type2 quiz-wrapper20_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper20_2_1" id="quiz9-wrapper"
+                        quiz-uuid="0c5b101d-75da-4d28-80e7-8aed89dc339b">
                         <h4>___ are you going to get home from work?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)" true>How</button></li>
@@ -2821,7 +2884,8 @@
             </div>
             <div class='galery21' id='galery'>
                 <div class='galery_div21_1' id='galerydiv'>
-                    <div class="type2 quiz-wrapper21_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper21_2_1" id="quiz9-wrapper"
+                        quiz-uuid="bde04d84-1a94-4e8c-9d3d-9aa08a4d7117">
                         <h4>___ are you leaving?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">How</button></li>
@@ -2833,7 +2897,8 @@
             </div>
             <div class='galery22' id='galery'>
                 <div class='galery_div22_1' id='galerydiv'>
-                    <div class="type2 quiz-wrapper22_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper22_2_1" id="quiz9-wrapper"
+                        quiz-uuid="2197c585-11ba-41d4-9599-719e95acbf73">
                         <h4>___ are you crying?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">Who</button></li>
@@ -2845,7 +2910,8 @@
             </div>
             <div class='galery23' id='galery'>
                 <div class='galery_div23_1' id='galerydiv'>
-                    <div class="type2 quiz-wrapper23_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper23_2_1" id="quiz9-wrapper"
+                        quiz-uuid="b91b75a5-1315-4032-9179-38f4ae4a6dc9">
                         <h4>She ___ watch the match.</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">is go to</button></li>
@@ -2857,7 +2923,8 @@
             </div>
             <div class='galery24' id='galery'>
                 <div class='galery_div24_1' id='galerydiv'>
-                    <div class="type2 quiz-wrapper24_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper24_2_1" id="quiz9-wrapper"
+                        quiz-uuid="8b8d817b-2683-4a6d-97bf-b0d6cf0a4b49">
                         <h4>Every year The Guinness Book of World Records announces ___ person in the world.</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">more taller</button></li>
@@ -2869,7 +2936,8 @@
             </div>
             <div class='galery25' id='galery'>
                 <div class='galery_div25_1' id='galerydiv'>
-                    <div class="type2 quiz-wrapper25_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper25_2_1" id="quiz9-wrapper"
+                        quiz-uuid="aaccab61-43cb-483a-a38d-07cbf3147291">
                         <h4>This chair is ___ than the other one.</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">much comfortable</button></li>
@@ -2881,7 +2949,8 @@
             </div>
             <div class='galery26' id='galery'>
                 <div class='galery_div26_1' id='galerydiv'>
-                    <div class="type2 quiz-wrapper26_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper26_2_1" id="quiz9-wrapper"
+                        quiz-uuid="2c2d7372-6358-46b4-b6c3-800a06a653d9">
                         <h4>This is the ___ hangover I ever had. I'm never going to drink again.</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">baddest</button></li>
@@ -2893,7 +2962,8 @@
             </div>
             <div class='galery27' id='galery'>
                 <div class='galery_div27_1' id='galerydiv'>
-                    <div class="type2 quiz-wrapper27_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper27_2_1" id="quiz9-wrapper"
+                        quiz-uuid="a980691c-6181-42e2-bb09-ea97b91ccfd3">
                         <h4>I haven't got ___ money.</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">some</button></li>
@@ -2904,7 +2974,8 @@
             </div>
             <div class='galery28' id='galery'>
                 <div class='galery_div28_1' id='galerydiv'>
-                    <div class="type2 quiz-wrapper28_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper28_2_1" id="quiz9-wrapper"
+                        quiz-uuid="6d7a428f-fe4c-4dda-b01d-62504ed6f3c6">
                         <h4>Would you like ___ milk in your coffee?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)" true>some</button></li>
@@ -2915,7 +2986,8 @@
             </div>
             <div class='galery29' id='galery'>
                 <div class='galery_div29_1' id='galerydiv'>
-                    <div class="type2 quiz-wrapper29_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper29_2_1" id="quiz9-wrapper"
+                        quiz-uuid="a956feba-29f3-466c-a71a-55960f2c1168">
                         <h4>Он часто читает газеты по вечерам.</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)" true>He often reads newspapers in the
@@ -2929,7 +3001,8 @@
             </div>
             <div class='galery30' id='galery'>
                 <div class='galery_div30_1' id='galerydiv'>
-                    <div class="type2 quiz-wrapper30_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper30_2_1" id="quiz9-wrapper"
+                        quiz-uuid="2d7bc037-6420-4889-90d3-e3cc14f98794">
                         <h4>Мы гуляем с собакой в парке каждый день.</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">We always walk the dog in the park</button></li>
@@ -2942,7 +3015,8 @@
             </div>
             <div class='galery31' id='galery'>
                 <div class='galery_div31_1' id='galerydiv'>
-                    <div class="type2 quiz-wrapper31_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper31_2_1" id="quiz9-wrapper"
+                        quiz-uuid="c57389b4-b633-4b19-af5a-980439718d41">
                         <h4>Я никогда не пишу письма.</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)" true>I never write letters</button></li>
@@ -2954,7 +3028,8 @@
             </div>
             <div class='galery32' id='galery'>
                 <div class='galery_div32_1' id='galerydiv'>
-                    <div class="type2 quiz-wrapper32_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper32_2_1" id="quiz9-wrapper"
+                        quiz-uuid="36ba4b05-8d9a-4463-82aa-e636ffc5e7d5">
                         <h4>There are already some ___ waiting outside to buy tickets.</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">peoples</button></li>
@@ -2966,7 +3041,8 @@
             </div>
             <div class='galery33' id='galery'>
                 <div class='galery_div33_1' id='galerydiv'>
-                    <div class="type2 quiz-wrapper33_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper33_2_1" id="quiz9-wrapper"
+                        quiz-uuid="a51026a6-8639-4cfe-be96-671e4e321e79">
                         <h4>A lot of ___ came to see the match.</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)" true>men</button></li>
@@ -2978,7 +3054,8 @@
             </div>
             <div class='galery34' id='galery'>
                 <div class='galery_div34_1' id='galerydiv'>
-                    <div class="type2 quiz-wrapper34_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper34_2_1" id="quiz9-wrapper"
+                        quiz-uuid="ce038e34-3916-4158-b1c0-80453fe00035">
                         <h4>If I feel sick, I ___ to the doctor.</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">would go</button></li>
@@ -3008,7 +3085,8 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 ___
                             </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="ace585aa-d783-4726-9fe9-4013d53bf2d3">
                                 <button type="button" class="dropdown-item" true
                                     onclick="setAnswerDropwown(this)">check-in</button>
                                 <button type="button" class="dropdown-item"
@@ -3023,7 +3101,8 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 ___
                             </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="60c37d31-d028-4f30-993c-5dbf454a5ebc">
                                 <button type="button" class="dropdown-item" true
                                     onclick="setAnswerDropwown(this)">after</button>
                                 <button type="button" class="dropdown-item"
@@ -3038,7 +3117,8 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 ___
                             </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="efb52157-da86-4170-bba0-8718f66a438b">
                                 <button type="button" class="dropdown-item" onclick="setAnswerDropwown(this)">won't
                                     ask</button>
                                 <button type="button" class="dropdown-item" true
@@ -3061,7 +3141,8 @@
                     <h3>Выберите правильный ответ. Вопрос по тексту предыдущего задания.</h3>
 
                     <h4>Guests who arrive at the hotel in the early morning CAN'T</h4>
-                    <div class="type2 quiz-wrapper2_1_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper2_1_1" id="quiz9-wrapper"
+                        quiz-uuid="7a81e23b-bcd5-4043-ab4f-aaf253847413">
                         <ul>
                             <li><button onclick="checkQuiz9(this)">use the hotel restaurant</button></li>
                             <li><button onclick="checkQuiz9(this)">leave their bags at the
@@ -3084,7 +3165,8 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 ___
                             </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="3c1f7e9a-313e-4984-b267-bffee111dfbf">
                                 <button type="button" class="dropdown-item"
                                     onclick="setAnswerDropwown(this)">lose</button>
                                 <button type="button" class="dropdown-item"
@@ -3100,7 +3182,8 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 ___
                             </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="f85c4c9d-5f6e-40ca-8429-becc7c9c6d60">
                                 <button type="button" class="dropdown-item" true
                                     onclick="setAnswerDropwown(this)">unwell</button>
                                 <button type="button" class="dropdown-item"
@@ -3115,7 +3198,8 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 ___
                             </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"
+                                quiz-uuid="77d9eeaf-cb78-406e-b851-81d624d49bd5">
                                 <button type="button" class="dropdown-item"
                                     onclick="setAnswerDropwown(this)">hold</button>
                                 <button type="button" class="dropdown-item"
@@ -3169,7 +3253,8 @@
                         </div>
                     </div>
 
-                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper4_2_1" id="quiz9-wrapper"
+                        quiz-uuid="8ff68d5d-f7ee-4390-b068-5cc923ff315b">
                         <h4>How old was the father when his son left home?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">30</button></li>
@@ -3221,7 +3306,8 @@
                         </div>
                     </div>
 
-                    <div class="type2 quiz-wrapper5_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper5_2_1" id="quiz9-wrapper"
+                        quiz-uuid="95eb91f0-4ef9-4722-8620-2a5ee624d7d1">
                         <h4>How many reasons does the father give for his failed relationship?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">3</button></li>
@@ -3274,7 +3360,8 @@
                         </div>
                     </div>
 
-                    <div class="type2 quiz-wrapper6_2_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper6_2_1" id="quiz9-wrapper"
+                        quiz-uuid="c9de8c4d-119f-4cca-a82c-04539cb7e6d4">
                         <h4>Who left the family first?</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">father</button></li>
@@ -3289,7 +3376,8 @@
             <div class='galery7' id='galery'>
                 <div class='galery_div7_1' id='galerydiv'>
                     <h3>Выберите правильный ответ</h3>
-                    <div class="type2 quiz-wrapper7_1_1" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper7_1_1" id="quiz9-wrapper"
+                        quiz-uuid="5db94d90-c73e-46d3-a0d5-b910992b99d8">
                         <h4>I'm really ______ . I'm looking for some water.</h4>
                         <ul>
                             <li><button onclick="checkQuiz9(this)">hungry</button></li>
@@ -3305,7 +3393,7 @@
                     <h3>Прослушайте аудио и выберите правильный ответ</h3>
                     <div class='audio-tts3839 audio-div' id='audio-tts'>
                         <audio class="audio-player3839" id='audio-player'
-                            src="https://Yestoday.pythonanywhere.com/get-audio/3839.mp3" onended="audioOnEnded(this)"
+                            src="https://constystd.ru/media/audio/3839.mp3" onended="audioOnEnded(this)"
                             oncanplay="audioOnCanPlay(this)" onplay="audioPlay(this)"
                             onpause="audioPause(this)"></audio>
                         <div class="podcast-container" id='podcast-container'>
@@ -3325,7 +3413,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="type2 quiz-wrapper8_1_2" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper8_1_2" id="quiz9-wrapper"
+                        quiz-uuid="ba9e914d-9cc1-4611-810c-936d708a3750">
                         <ul>
                             <li><button onclick="checkQuiz9(this)">умный</button></li>
                             <li><button onclick="checkQuiz9(this)">сильный</button></li>
@@ -3341,7 +3430,7 @@
                     <h3>Прослушайте аудио и выберите правильный ответ</h3>
                     <div class='audio-tts3840 audio-div' id='audio-tts'>
                         <audio class="audio-player3840" id='audio-player'
-                            src="https://Yestoday.pythonanywhere.com/get-audio/3840.mp3" onended="audioOnEnded(this)"
+                            src="https://constystd.ru/media/audio/3840.mp3" onended="audioOnEnded(this)"
                             oncanplay="audioOnCanPlay(this)" onplay="audioPlay(this)"
                             onpause="audioPause(this)"></audio>
                         <div class="podcast-container" id='podcast-container'>
@@ -3361,7 +3450,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="type2 quiz-wrapper9_1_2" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper9_1_2" id="quiz9-wrapper"
+                        quiz-uuid="05b3fe31-b98d-4463-8f5f-b3b00bef8167">
                         <ul>
                             <li><button onclick="checkQuiz9(this)" true>застенчивый</button></li>
                             <li><button onclick="checkQuiz9(this)">опасный</button></li>
@@ -3378,7 +3468,7 @@
                     <h3>Прослушайте аудио и выберите правильный ответ</h3>
                     <div class='audio-tts3841 audio-div' id='audio-tts'>
                         <audio class="audio-player3841" id='audio-player'
-                            src="https://Yestoday.pythonanywhere.com/get-audio/3841.mp3" onended="audioOnEnded(this)"
+                            src="https://constystd.ru/media/audio/3841.mp3" onended="audioOnEnded(this)"
                             oncanplay="audioOnCanPlay(this)" onplay="audioPlay(this)"
                             onpause="audioPause(this)"></audio>
                         <div class="podcast-container" id='podcast-container'>
@@ -3398,7 +3488,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="type2 quiz-wrapper10_1_2" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper10_1_2" id="quiz9-wrapper"
+                        quiz-uuid="69610e8d-2e6f-484f-a45d-a0187920df64">
                         <ul>
                             <li><button onclick="checkQuiz9(this)" true>обожать</button></li>
                             <li><button onclick="checkQuiz9(this)">уважать</button></li>
@@ -3414,7 +3505,7 @@
                     <h3>Прослушайте аудио и выберите правильный ответ</h3>
                     <div class='audio-tts3842 audio-div' id='audio-tts'>
                         <audio class="audio-player3842" id='audio-player'
-                            src="https://Yestoday.pythonanywhere.com/get-audio/3842.mp3" onended="audioOnEnded(this)"
+                            src="https://constystd.ru/media/audio/3842.mp3" onended="audioOnEnded(this)"
                             oncanplay="audioOnCanPlay(this)" onplay="audioPlay(this)"
                             onpause="audioPause(this)"></audio>
                         <div class="podcast-container" id='podcast-container'>
@@ -3434,7 +3525,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="type2 quiz-wrapper11_1_2" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper11_1_2" id="quiz9-wrapper"
+                        quiz-uuid="8986b0b3-1a2b-47f2-84d9-7819b7db22ad">
                         <ul>
                             <li><button onclick="checkQuiz9(this)">честный</button></li>
                             <li><button onclick="checkQuiz9(this)" true>зависимый</button></li>
@@ -3451,7 +3543,7 @@
                     <h3>Прослушайте аудио и выберите правильный ответ</h3>
                     <div class='audio-tts3843 audio-div' id='audio-tts'>
                         <audio class="audio-player3843" id='audio-player'
-                            src="https://Yestoday.pythonanywhere.com/get-audio/3843.mp3" onended="audioOnEnded(this)"
+                            src="https://constystd.ru/media/audio/3843.mp3" onended="audioOnEnded(this)"
                             oncanplay="audioOnCanPlay(this)" onplay="audioPlay(this)"
                             onpause="audioPause(this)"></audio>
                         <div class="podcast-container" id='podcast-container'>
@@ -3471,7 +3563,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="type2 quiz-wrapper12_1_2" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper12_1_2" id="quiz9-wrapper"
+                        quiz-uuid="835c00e1-9cd8-470c-80f9-d3244b22a590">
                         <ul>
                             <li><button onclick="checkQuiz9(this)">заражать</button></li>
                             <li><button onclick="checkQuiz9(this)">заставлять</button></li>
@@ -3487,7 +3580,7 @@
                     <h3>Прослушайте аудио и выберите правильный ответ</h3>
                     <div class='audio-tts3844 audio-div' id='audio-tts'>
                         <audio class="audio-player3844" id='audio-player'
-                            src="https://Yestoday.pythonanywhere.com/get-audio/3844.mp3" onended="audioOnEnded(this)"
+                            src="https://constystd.ru/media/audio/3844.mp3" onended="audioOnEnded(this)"
                             oncanplay="audioOnCanPlay(this)" onplay="audioPlay(this)"
                             onpause="audioPause(this)"></audio>
                         <div class="podcast-container" id='podcast-container'>
@@ -3507,7 +3600,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="type2 quiz-wrapper13_1_2" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper13_1_2" id="quiz9-wrapper"
+                        quiz-uuid="e6f976f9-5c8b-47cb-b30c-0ec1116d03a6">
                         <ul>
                             <li><button onclick="checkQuiz9(this)">симфония</button></li>
                             <li><button onclick="checkQuiz9(this)" true>дефицит</button></li>
@@ -3524,7 +3618,7 @@
                     <h3>Прослушайте аудио и выберите правильный ответ</h3>
                     <div class='audio-tts3845 audio-div' id='audio-tts'>
                         <audio class="audio-player3845" id='audio-player'
-                            src="https://Yestoday.pythonanywhere.com/get-audio/3845.mp3" onended="audioOnEnded(this)"
+                            src="https://constystd.ru/media/audio/3845.mp3" onended="audioOnEnded(this)"
                             oncanplay="audioOnCanPlay(this)" onplay="audioPlay(this)"
                             onpause="audioPause(this)"></audio>
                         <div class="podcast-container" id='podcast-container'>
@@ -3544,7 +3638,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="type2 quiz-wrapper14_1_2" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper14_1_2" id="quiz9-wrapper"
+                        quiz-uuid="09edbb9e-b90e-40b7-87f0-f6933c7cd1c0">
                         <ul>
                             <li><button onclick="checkQuiz9(this)">сбросить трубку</button></li>
                             <li><button onclick="checkQuiz9(this)" true>отменить</button></li>
@@ -3559,7 +3654,7 @@
                     <h3>Прослушайте аудио и выберите правильный ответ</h3>
                     <div class='audio-tts3846 audio-div' id='audio-tts'>
                         <audio class="audio-player3846" id='audio-player'
-                            src="https://Yestoday.pythonanywhere.com/get-audio/3846.mp3" onended="audioOnEnded(this)"
+                            src="https://constystd.ru/media/audio/3846.mp3" onended="audioOnEnded(this)"
                             oncanplay="audioOnCanPlay(this)" onplay="audioPlay(this)"
                             onpause="audioPause(this)"></audio>
                         <div class="podcast-container" id='podcast-container'>
@@ -3580,7 +3675,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="type2 quiz-wrapper15_1_2" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper15_1_2" id="quiz9-wrapper"
+                        quiz-uuid="8797e6bb-0343-41b0-b3af-f7132b0e6a88">
                         <ul>
                             <li><button onclick="checkQuiz9(this)" true>figure out</button></li>
                             <li><button onclick="checkQuiz9(this)">do over</button></li>
@@ -3595,7 +3691,7 @@
                     <h3>Прослушайте аудио и выберите правильный ответ</h3>
                     <div class='audio-tts3847 audio-div' id='audio-tts'>
                         <audio class="audio-player3847" id='audio-player'
-                            src="https://Yestoday.pythonanywhere.com/get-audio/3847.mp3" onended="audioOnEnded(this)"
+                            src="https://constystd.ru/media/audio/3847.mp3" onended="audioOnEnded(this)"
                             oncanplay="audioOnCanPlay(this)" onplay="audioPlay(this)"
                             onpause="audioPause(this)"></audio>
                         <div class="podcast-container" id='podcast-container'>
@@ -3615,7 +3711,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="type2 quiz-wrapper16_1_2" id="quiz9-wrapper">
+                    <div class="type2 quiz-wrapper16_1_2" id="quiz9-wrapper"
+                        quiz-uuid="4ab900a4-7522-4ab8-a392-527a7988602b">
                         <ul>
                             <li><button onclick="checkQuiz9(this)">отдать/вернуть</button></li>
                             <li><button onclick="checkQuiz9(this)">начать</button></li>
@@ -3647,146 +3744,188 @@
         $this.addClass("active");
         $(`.${$this.attr('id')}`).show();
         currentTab = $this.attr('id');
-        showTest();
+        showTab();
     });
-
-    document.querySelectorAll('#galery').forEach(el => {
-        $(el).hide()
-    })
-
-
-    var quizPassed = 0;
-    var score = 0;
-
-    var quizCount = 0;
-    var maxScore = 0;
 
     var is_reloading = true;
 
     function progressBarRefresh() {
-        $(`.${currentTab} #total-progress .progress-bar`).attr("aria-valuenow", quizPassed);
-        $(`.${currentTab} #total-progress .progress-bar`).attr("style", ` width: ${(quizPassed / quizCount) * 100}%; `);
+        if (currentTab == null) {
+            currentTab = $(".nav-link.active").attr('id');
+        }
+        dc = document.querySelector(`.${currentTab}`);
+        quizCount = document.querySelectorAll('[quiz-uuid]').length;
+        maxScore = dc.querySelectorAll('[quiz-uuid]').length;
+
+        score = dc.querySelectorAll('.dropdown-wrapper .answered').length + dc.querySelectorAll('#quiz9-wrapper li.true').length - dc.querySelectorAll('#quiz9-wrapper li.true.answered').length;
+        quizPassed = document.querySelectorAll('.dropdown-wrapper .answered').length + document.querySelectorAll('#quiz9-wrapper li.true').length;
+
+        $(`.${currentTab} #total-progress .progress-bar`).attr("aria-valuenow", score);
+        $(`.${currentTab} #total-progress .progress-bar`).attr("style", ` width: ${(score / maxScore) * 100}%; `);
+        $(`.progress-wrapper`).hide();
+        $(`.${currentTab} .progress-wrapper`).show();
+        if (quizPassed == quizCount) {
+            return showResult();
+        }
     }
 
-    function showTest() {
-        if (currentTab == 'nav-Result') {
-            getResult();
-        } else {
-            is_reloading = true;
+    function setClosestGalery() {
+        try {
             document.querySelectorAll('#galery').forEach(el => {
                 $(el).hide()
             })
-            $('.progress-wrapper').hide();
+            highlightedItems = Array.from(document.querySelectorAll(`.${currentTab} #quiz9-wrapper`)).concat(Array.from(document.querySelectorAll(`.${currentTab} .dropdown`)));
 
-            quizCount = document.querySelectorAll(`.${currentTab} .dropdown`).length + document.querySelectorAll(`.${currentTab} #quiz9-wrapper`).length;
-            maxScore = document.querySelectorAll(`.${currentTab} .dropdown`).length + document.querySelectorAll(`.${currentTab} #quiz9-wrapper`).length;
-
-            quizPassed = 0;
-            score = 0;
-
-            $(`.${currentTab} #total-progress .progress-bar`).attr("aria-valuemax", quizCount);
-            $(`.${currentTab} #total-progress .progress-bar`).attr("aria-valuenow", 0);
-            $(`.${currentTab} #total-progress .progress-bar`).attr("style", " width: 0%; ");
-            $(`.progress-wrapper`).hide();
-            $(`.${currentTab} .progress-wrapper`).show();
-
-            getAnswer(currentTab);
+            currentQuiz = highlightedItems.filter((item) => {
+                return item.querySelectorAll('.wrong-hidden').length == 0;
+            })[0].closest("#galery");
+            $(currentQuiz).fadeIn();
+        } catch (e) {
+            console.log(e);
+            return setNextNav();
         }
     }
 
+    function showTab() {
+        if (currentTab == 'nav-Result') {
+            getResult();
+        } else {
+            setClosestGalery();
+            progressBarRefresh();
+        }
+    }
+
+
+
     function setAnswerDropwown(element) {
-        position = quizList.indexOf(element.parentElement) + 1;
         var parentItem = element.parentElement.parentElement;
-        var parentItem2 = parentItem.parentElement;
+        var parentGalery = element.closest('#galery');
         var newItem = "";
         element.innerText.split(" ").forEach(el => {
             if (el != "") {
-                newItem += `<span class="${"true" ? element.hasAttribute('true') : "false"}">${el}</span>`
+                newItem += `<span class="answered ${"true" ? element.hasAttribute('true') : "false"}">${el}</span>`
             }
         })
-        parentItem.outerHTML = newItem;
 
         if (element.hasAttribute('true')) {
-            score++;
-            quizPassed++;
-            if (!is_reloading) { registerAnswer(currentTab, element.innerText, position, true); }
+            if (!is_reloading) { saveAnswer($(element).closest('.dropdown-menu').attr('quiz-uuid'), { "answer": element.textContent }); }
         } else {
-            quizPassed++;
-            if (!is_reloading) { registerAnswer(currentTab, element.innerText, position, false); }
+            if (save_all_ans == true) {
+                if (!is_reloading) { saveAnswer($(element).closest('.dropdown-menu').attr('quiz-uuid'), { "answer": element.textContent }); }
+            }
         }
-        console.log($(newItem));
-        if (parentItem2.querySelectorAll('.dropdown-toggle').length <= 0) {
-            showNextSlideButton(parentItem2);
+
+        parentItem.outerHTML = newItem;
+
+        if (parentGalery.querySelectorAll('.dropdown-toggle').length <= 0) {
+            showNextSlideButton(parentGalery);
         }
         progressBarRefresh();
     }
 
     function setAnswerDropwownInput(element) {
-        position = quizList.indexOf(element.parentElement) + 1;
         var parentItem = element.parentElement.parentElement;
-        var parentItem2 = parentItem.parentElement;
+        var parentGalery = element.closest('#galery');
         var input = element.parentElement.querySelector("input");
         var newItem = "";
         input.value.split(" ").forEach(el => {
             if (el != "") {
-                newItem += `<span class="${"true" ? element.hasAttribute('true') : "false"}">${el}</span>`
+                newItem += `<span class="answered ${"true" ? input.value.toLowerCase().replace(`’`, `'`).replace(`‘`, `'`) == input.getAttribute('trueanswer').toLowerCase().replace(`’`, `'`).replace(`‘`, `'`) : "false"}">${el}</span>`
             }
         })
-        parentItem.outerHTML = newItem;
+
         if (input.value.toLowerCase().replace(`’`, `'`).replace(`‘`, `'`) == input.getAttribute('trueanswer').toLowerCase().replace(`’`, `'`).replace(`‘`, `'`)) {
-            score++;
-            quizPassed++;
-            if (!is_reloading) { registerAnswer(currentTab, input.value, position, true); }
+            if (!is_reloading) { saveAnswer($(element).closest('.dropdown-menu').attr('quiz-uuid'), { "answer": input.getAttribute('trueanswer').toLowerCase().replace(`’`, `'`).replace(`‘`, `'`) }); }
         } else {
-            quizPassed++;
-            if (!is_reloading) { registerAnswer(currentTab, input.value, position, false); }
+            if (save_all_ans == true) {
+                if (!is_reloading) { saveAnswer($(element).closest('.dropdown-menu').attr('quiz-uuid'), { "answer": input.value }); }
+            }
         }
 
-        if (parentItem2.querySelectorAll('.dropdown-toggle').length <= 0) {
-            showNextSlideButton(parentItem2);
+        parentItem.outerHTML = newItem;
+
+        if (parentGalery.querySelectorAll('.dropdown-toggle').length <= 0) {
+            showNextSlideButton(parentGalery);
         }
         progressBarRefresh();
     }
 
+    function setNextNav() {
+        console.log(currentTab);
+        if (document.querySelectorAll('#myTab .nav-link.disabled').length == document.querySelectorAll('#myTab .nav-link').length) {
+            showResult();
+        }
+        var nextNav;
+        nextNav = document.querySelector(`#myTab #${currentTab}`).nextElementSibling;
+        while (true) {
+            if (!$(nextNav).hasClass('nav-link')) {
+                nextNav = document.querySelector(`#myTab .nav-link`);
+                continue;
+            } else if (nextNav.id == 'nav-Result') {
+                nextNav = document.querySelector(`#myTab .nav-link`);
+                continue;
+            } else if ($(nextNav).hasClass('disabled')) {
+                nextNav = nextNav.nextElementSibling;
+                continue;
+            }
+            break
+        }
+
+        $('#myTab .active').removeClass('active').addClass('disabled');
+        nextNav.click();
+        console.log('2', currentTab);
+    }
+
+    // function setNextNav() {
+    //     if (currentQuiz == null) {
+    //         return showResult();
+    //     }
+    //     currentQuiz.closest('#container-wrapper').classList.forEach(el => {
+    //         if (el != 'container') {
+    //             return document.querySelector(`.nav-link#${el}`).click();
+    //         }
+    //     })
+    // }
 
 
-    function goToNextSlide() {
-        $(currentQuiz).hide();
-        console.log(quizPassed, quizCount);
+
+    function goToNextSlide(btn) {
+        console.log('goToNextSlide');
+        btn.parentElement.remove();
         if (quizPassed < quizCount) {
             currentQuiz = currentQuiz.nextElementSibling;
-            $(currentQuiz).fadeIn();
+            while (currentQuiz == null || currentQuiz.id != 'galery') {
+                setNextNav();
+                setClosestGalery();
+            }
+            setClosestGalery();
         } else {
             showResult();
         }
     }
 
     function showNextSlideButton(galery) {
-        $(galery).append(`<div class="next-slide"><button class="btn btn-block" onclick="goToNextSlide()">Далее</button></div>`).fadeIn();
+        $(galery).append(`<div class="next-slide"><button class="btn btn-block" onclick="goToNextSlide(this)">Далее</button></div>`).fadeIn();
     }
 
     function showResult() {
         $(`.tabs #${currentTab}`).addClass("disabled");
-        if ($(`.tabs .nav-link:not(.disabled)`)) {
-            $(`.tabs .nav-link:not(.disabled)`)[0].click();
-        } else {
-            $(".tabs #nav-Result").removeClass('disabled');
-            $(".tabs #nav-Result").click();
-        }
+
+        $(".tabs #nav-Result").removeClass('disabled');
+        $(".tabs #nav-Result").click();
+
     }
 
 
     function checkQuiz9(btn) {
-        position = quizList.indexOf(btn.parentElement) + 1;
         if (btn.hasAttribute("true")) {
             btn.parentElement.classList.add("true");
-            score++;
-            quizPassed++;
-            if (!is_reloading) { registerAnswer(currentTab, btn.innerText, position, true); }
+            if (!is_reloading) { saveAnswer($(btn).closest('#quiz9-wrapper').attr('quiz-uuid'), { "answer": btn.textContent }); }
         } else {
             btn.parentElement.classList.add("wrong");
-            quizPassed++;
-            if (!is_reloading) { registerAnswer(currentTab, btn.innerText, position, false); }
+            if (save_all_ans == true) {
+                if (!is_reloading) { saveAnswer($(btn).closest('#quiz9-wrapper').attr('quiz-uuid'), { "answer": btn.textContent }); }
+            }
         }
         btn.parentElement.parentElement.querySelectorAll("button:not([true])").forEach(element => {
             element.classList.add("wrong-hidden");
@@ -3794,9 +3933,10 @@
         });
         btn.parentElement.parentElement.querySelectorAll("button[true]").forEach(element => {
             element.parentElement.classList.add("true");
+            element.parentElement.classList.add("answered");
             element.disabled = true;
         });
-        showNextSlideButton(btn.parentElement.parentElement.parentElement);
+        showNextSlideButton(btn.closest('#galery'));
         progressBarRefresh();
     }
 
@@ -3864,7 +4004,6 @@
     function audioTimeLineClick(element, event) {
         let audio = $(element).parents('.audio-tts').find('.audio-player').get(0);
         var percent = event.offsetX / element.offsetWidth;
-        console.log(event.offsetX);
         audio.currentTime = percent * audio.duration;
         $(element).val(percent);
         $(element).parents('.audio-tts').find('.podcast-time').html(toHHMMSS(audio.currentTime) + " / " + toHHMMSS(audio.duration))
@@ -3883,7 +4022,6 @@
         return hours == "00" ? minutes + ':' + seconds : hours + ':' + minutes + ':' + seconds;
     }
 
-    document.querySelector(".nav .active").click();
 
     var pBlock = document.querySelectorAll('.dropdown-wrapper span');
     pBlock.forEach(element => {
@@ -3907,84 +4045,77 @@
     $("#quiz9-wrapper ul").shuffleChildren();
     $(".dropdown-menu").not(':has(input)').shuffleChildren();
 
-    function registerAnswer(nav, answer, position, is_true) {
-        $.post('/speaking_club/register_answer/', {
-            "nav": nav,
+
+    function saveAnswer(quiz_id, answer) {
+        data = {
+            "quiz_id": quiz_id,
             "answer": answer,
-            "is_true": is_true,
-            "position": position,
-        }, function (data) {
-            console.log("register_answer", data);
-            if (data.msg == 'error') {
-                alert("Произошла ошибка");
-                window.location.reload();
-            }
-            if (data.func == 'close') {
-                $(`.tabs #${data.nav}`).addClass("disabled");
-                if ($(`.tabs .nav-link:not(.disabled)`)) {
-                    $(`.tabs .nav-link:not(.disabled)`)[0].click();
-                } else {
-                    $(".tabs #nav-Result").removeClass('disabled');
-                    $(".tabs #nav-Result").click();
-                }
-            }
+        }
+        $.ajax({
+            type: "POST",
+            url: `${window.location.origin}/speaking_club/register_answer/`,
+            data: JSON.stringify(data),
         });
     }
     var quizList;
+    var save_all_ans = true;
+    var user_id;
 
-    function getResult() {
-        window.location.href = '/speaking_club/get_result/'
-    };
+    quiz_ids = Array.from(document.querySelectorAll(`[quiz-uuid]`));
+    quiz_ids = quiz_ids.map(function (el) {
+        return el.getAttribute('quiz-uuid');
+    });
 
-    function getAnswer(nav) {
-        $.post('/speaking_club/get_answer/', {
-            "nav": nav,
-        }, function (data) {
-            console.log("get_answer", data);
-            if (data.msg == 'error') {
-                alert("Произошла ошибка");
-                window.location.reload();
-            }
-            if (data.func == 'close') {
-                $(`.tabs #${data.data}`).addClass("disabled");
-                if ($(`.tabs .nav-link:not(.disabled)`).length > 0) {
-                    $(`.tabs .nav-link:not(.disabled)`)[0].click();
-                } else {
-                    $(".tabs #nav-Result").removeClass('disabled');
-                    $(".tabs #nav-Result").click();
-                }
-            }
-            if (data.func == "next") {
-                // console.log(data.data);
-                quizList = Array.from(document.querySelectorAll(`.${nav} :is(.dropdown-menu, .type2>ul)`));
-                // console.log("quizList", quizList);
-                data.data.forEach((element, i) => {
-                    if ($(quizList[element[0] - 1]).hasClass("dropdown-menu")) {
-                        if ($(quizList[element[0] - 1]).find('input').length > 0) {
-                            quizList[element[0] - 1].querySelector('input').value = element[1];
-                            quizList[element[0] - 1].querySelector('.btn').click();
-                        } else {
-                            $(quizList[element[0] - 1]).find(`button:contains("${element[1]}")`).click();
-                        }
+    if (quiz_ids.length > 0) {
+        $.post(`${window.location.origin}/speaking_club/get_answers/`, {
+            "quiz_ids": quiz_ids.join(';;'),
+            "user_id": user_id,
+        }).done(function (data) {
+            if (data.status == 'OK') {
+                data.answers.forEach(el => {
+                    node = document.querySelector(`[quiz-uuid="${el.quiz_id}"]`);
+                    $el = $(node);
+                    if ($el.attr('id') == 'quiz-wrapper-quiz5') {
+                        $el.find('#textarea').val(el.answer.answer);
+                        $el.find('#submitquiz5').click();
+                    } else if ($el.attr('id') == 'quiz9-wrapper') {
+                        $el.find(`button:contains("${el.answer.answer}")`).click();
+                    } else if ($el.hasClass('dropdown-menu') && $el.find('.dropdown-item').length > 0) {
+                        $el.find(`button:contains("${el.answer.answer}")`).click();
+                    } else if ($el.hasClass('dropdown-menu') && $el.find('input').length > 0) {
+                        $el.find(`input`).val(el.answer.answer);
+                        $el.find(`button`).click();
                     }
-                    // console.log(123, $(quizList[i]).find(`li:contains("${element[0]}")`));
                 })
-                currentQuiz = quizList[data.data.length].closest("#galery");
-                if (data.current_score > quizPassed) {
-                    quizPassed = data.current_score;
-                }
-
-                if (data.max_score > maxScore) {
-                    maxScore = data.max_score;
-                }
-
-                is_reloading = false;
-
-                $(currentQuiz).fadeIn();
+                try {
+                    is_reloading = false;
+                    document.querySelector(".nav .active").click();
+                } catch (e) { }
             }
 
         });
     }
+
+    function getResult() {
+        results = {};
+        document.querySelectorAll(".nav-link").forEach(element => {
+            currentTab = $(element).attr('id');
+            if (currentTab == 'nav-Result') { return }
+            dc = document.querySelector(`.${currentTab}`);
+            score = dc.querySelectorAll('.dropdown-wrapper .answered.true').length + dc.querySelectorAll('#quiz9-wrapper li.true').length - dc.querySelectorAll('#quiz9-wrapper li.true.answered').length;
+            results[currentTab] = score;
+        })
+
+        data = results;
+        $.ajax({
+            type: "POST",
+            url: `${window.location.origin}/speaking_club/register_results/`,
+            data: JSON.stringify(data),
+        });
+        window.location.href = '/speaking_club/get_result/'
+    };
+
+
 
 </script>
 {% endblock %}

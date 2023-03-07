@@ -9,6 +9,8 @@ from django.contrib.postgres.fields import JSONField
 from apps.speaking_clubs.helpers import generate_success_url
 from speaking_club.settings import EMAIL_HOST_USER
 
+from apps.speaking_clubs.helpers import calculate_levels
+
 User = get_user_model()
 
 WEEKDAYS = (
@@ -16,13 +18,13 @@ WEEKDAYS = (
     ('Вторник - Четверг - Суббота', 'Вторник - Четверг - Суббота'),
 )
 
-TEST = {
-    "nav-Writing": [],
-    "nav-Listening": [],
-    "nav-Vocabulary": [],
-    "nav-Grammar": [],
-    "nav-Reading": []
-}
+TEST = [
+    "nav-Writing",
+    "nav-Listening",
+    "nav-Vocabulary",
+    "nav-Grammar",
+    "nav-Reading",
+]
 
 
 def get_test():
@@ -200,7 +202,8 @@ class Student(models.Model):
 
     test = JSONField(
         "Результаты тестов",
-        default=get_test,
+        blank=True,
+        null=True,
     )
 
     def __str__(self):
@@ -211,7 +214,11 @@ class Student(models.Model):
 
     def get_user_level(self):
         chat = self._get_user_chat()
-        return chat.group.level if chat else None
+        if chat:
+            return chat.group.level
+        if self.test:
+            return calculate_levels(self.test)[-1].get('total')
+        return None
 
     def get_user_teacher(self):
         chat = self._get_user_chat()
@@ -282,3 +289,22 @@ class Chat(models.Model):
     class Meta:
         verbose_name = 'Чат'
         verbose_name_plural = 'Чаты'
+
+
+class Answer(models.Model):
+    users = models.ManyToManyField(
+        Student,
+        verbose_name="Пользователь",
+        blank=True,
+    )
+
+    quiz_id = models.UUIDField('№ задания')
+
+    answer = JSONField('Ответ')
+
+    def __str__(self):
+        return f"{self.quiz_id} {self.answer}"
+
+    class Meta:
+        verbose_name = "Ответ ученика"
+        verbose_name_plural = "Ответы учеников"
