@@ -4105,7 +4105,7 @@
             currentTab = $(element).attr('id');
             if (currentTab == 'nav-Result') { return }
             dc = document.querySelector(`.${currentTab}`);
-            score = dc.querySelectorAll('.dropdown-wrapper .answered.true').length + dc.querySelectorAll('#quiz9-wrapper li.true').length - dc.querySelectorAll('#quiz9-wrapper li.true.answered').length;
+            score = dc.querySelectorAll('.dropdown-wrapper .answered.true').length + dc.querySelectorAll('#quiz9-wrapper li.true').length - dc.querySelectorAll('#quiz9-wrapper li.wrong').length;
             results[currentTab] = score;
         })
 
