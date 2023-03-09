@@ -3832,6 +3832,9 @@
         var parentGalery = element.closest('#galery');
         var input = element.parentElement.querySelector("input");
         var newItem = "";
+        if (input.value.toLowerCase().replace(`’`, `'`).replace(`‘`, `'`) == '') {
+            return custom_alert('Введите ответ', 'warning');
+        }
         input.value.split(" ").forEach((el, index) => {
             if (el != "") {
                 newItem += `<span class="${index == 0 ? "answered" : ""} ${input.value.toLowerCase().replace(`’`, `'`).replace(`‘`, `'`) == input.getAttribute('trueanswer').toLowerCase().replace(`’`, `'`).replace(`‘`, `'`) ? "true" : "false"}">${el}</span>`
