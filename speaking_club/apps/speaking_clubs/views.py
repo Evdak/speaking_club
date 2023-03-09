@@ -390,7 +390,7 @@ def get_result(request: HttpRequest):
         ).order_by(
             "students_count",
         ).filter(
-            students_count__lt=5,
+            students_count__lt=3,
             group=group,
         ).first()
         if not chat:

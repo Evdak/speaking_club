@@ -217,6 +217,7 @@ class ChatAdmin(admin.ModelAdmin):
     list_display = (
         'group',
         'teacher',
+        'chat',
         'get_students_count'
     )
 
@@ -224,12 +225,13 @@ class ChatAdmin(admin.ModelAdmin):
         'group__level',
         'group__weekdays',
         'group__time',
+        'chat',
         'teacher',
     )
 
     @ admin.display(description='Кол-во учеников')
     def get_students_count(self, obj):
-        return f"{obj.students_count()}/5"
+        return f"{obj.students_count()}/3"
 
 
 @ admin.register(models.Offer)
