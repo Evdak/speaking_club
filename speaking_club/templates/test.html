@@ -3804,9 +3804,9 @@
         var parentItem = element.parentElement.parentElement;
         var parentGalery = element.closest('#galery');
         var newItem = "";
-        element.innerText.split(" ").forEach(el => {
+        element.innerText.split(" ").forEach((el, index) => {
             if (el != "") {
-                newItem += `<span class="answered ${"true" ? element.hasAttribute('true') : "false"}">${el}</span>`
+                newItem += `<span class="${"answered" ? index == 0 : ""} ${"true" ? element.hasAttribute('true') : "false"}">${el}</span>`
             }
         })
 
@@ -3831,9 +3831,9 @@
         var parentGalery = element.closest('#galery');
         var input = element.parentElement.querySelector("input");
         var newItem = "";
-        input.value.split(" ").forEach(el => {
+        input.value.split(" ").forEach((el, index) => {
             if (el != "") {
-                newItem += `<span class="answered ${"true" ? input.value.toLowerCase().replace(`’`, `'`).replace(`‘`, `'`) == input.getAttribute('trueanswer').toLowerCase().replace(`’`, `'`).replace(`‘`, `'`) : "false"}">${el}</span>`
+                newItem += `<span class="${"answered" ? index == 0 : ""} ${"true" ? input.value.toLowerCase().replace(`’`, `'`).replace(`‘`, `'`) == input.getAttribute('trueanswer').toLowerCase().replace(`’`, `'`).replace(`‘`, `'`) : "false"}">${el}</span>`
             }
         })
 
