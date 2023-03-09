@@ -11,6 +11,7 @@ services:
       - 8080
     ports:
       - "443:8080"
+      - "80:80"
     volumes:
       - ./speaking_club/static:/srv/www/speaking_club/static
       - ./speaking_club/media:/srv/www/speaking_club/media
