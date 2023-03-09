@@ -3806,7 +3806,7 @@
         var newItem = "";
         element.innerText.split(" ").forEach((el, index) => {
             if (el != "") {
-                newItem += `<span class="${"answered" ? index == 0 : ""} ${"true" ? element.hasAttribute('true') : "false"}">${el}</span>`
+                newItem += `<span class="${index == 0 ? "answered" : ""} ${element.hasAttribute('true') ? "true" : "false"}">${el}</span>`
             }
         })
 
@@ -3833,7 +3833,7 @@
         var newItem = "";
         input.value.split(" ").forEach((el, index) => {
             if (el != "") {
-                newItem += `<span class="${"answered" ? index == 0 : ""} ${"true" ? input.value.toLowerCase().replace(`’`, `'`).replace(`‘`, `'`) == input.getAttribute('trueanswer').toLowerCase().replace(`’`, `'`).replace(`‘`, `'`) : "false"}">${el}</span>`
+                newItem += `<span class="${index == 0 ? "answered" : ""} ${input.value.toLowerCase().replace(`’`, `'`).replace(`‘`, `'`) == input.getAttribute('trueanswer').toLowerCase().replace(`’`, `'`).replace(`‘`, `'`) ? "true" : "false"}">${el}</span>`
             }
         })
 
