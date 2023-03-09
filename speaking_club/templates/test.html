@@ -3832,17 +3832,17 @@
         var parentGalery = element.closest('#galery');
         var input = element.parentElement.querySelector("input");
         var newItem = "";
-        if (input.value.toLowerCase().replace(`’`, `'`).replace(`‘`, `'`) == '') {
+        if (input.value.toLowerCase().replace(`’`, `'`).replace(`‘`, `'`).trim() == '') {
             return custom_alert('Введите ответ', 'warning');
         }
         input.value.split(" ").forEach((el, index) => {
             if (el != "") {
-                newItem += `<span class="${index == 0 ? "answered" : ""} ${input.value.toLowerCase().replace(`’`, `'`).replace(`‘`, `'`) == input.getAttribute('trueanswer').toLowerCase().replace(`’`, `'`).replace(`‘`, `'`) ? "true" : "false"}">${el}</span>`
+                newItem += `<span class="${index == 0 ? "answered" : ""} ${input.value.toLowerCase().replace(`’`, `'`).replace(`‘`, `'`).trim() == input.getAttribute('trueanswer').toLowerCase().replace(`’`, `'`).replace(`‘`, `'`).trim() ? "true" : "false"}">${el}</span>`
             }
         })
 
-        if (input.value.toLowerCase().replace(`’`, `'`).replace(`‘`, `'`) == input.getAttribute('trueanswer').toLowerCase().replace(`’`, `'`).replace(`‘`, `'`)) {
-            if (!is_reloading) { saveAnswer($(element).closest('.dropdown-menu').attr('quiz-uuid'), { "answer": input.getAttribute('trueanswer').toLowerCase().replace(`’`, `'`).replace(`‘`, `'`) }); }
+        if (input.value.toLowerCase().replace(`’`, `'`).replace(`‘`, `'`).trim() == input.getAttribute('trueanswer').toLowerCase().replace(`’`, `'`).replace(`‘`, `'`).trim()) {
+            if (!is_reloading) { saveAnswer($(element).closest('.dropdown-menu').attr('quiz-uuid'), { "answer": input.getAttribute('trueanswer').toLowerCase().replace(`’`, `'`).replace(`‘`, `'`).trim() }); }
         } else {
             if (save_all_ans == true) {
                 if (!is_reloading) { saveAnswer($(element).closest('.dropdown-menu').attr('quiz-uuid'), { "answer": input.value }); }
