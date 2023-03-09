@@ -91,6 +91,9 @@ class Offer(models.Model):
         "Цена",
     )
 
+    def __str__(self):
+        return f"{self.period} {self.price}"
+
     class Meta:
         verbose_name = 'Пакет'
         verbose_name_plural = 'Пакеты'
@@ -103,6 +106,9 @@ class OrderGC(models.Model):
     invoice_number = models.BigIntegerField(
         "Номер заказа",
     )
+
+    def __str__(self) -> str:
+        return f"{self.invoice_number} {self.email}"
 
     class Meta:
         verbose_name = 'Заказ c GetCourse'
@@ -163,6 +169,9 @@ class Order(models.Model):
         null=True,
         blank=True,
     )
+
+    def __str__(self) -> str:
+        return f"{self.user} {self.invoice_number}"
 
     class Meta:
         verbose_name = 'Заказ'

@@ -154,7 +154,7 @@ class ExportStudent(ExportCsvMixin):
         return response
 
 
-@ admin.register(models.Student)
+@admin.register(models.Student)
 class StudentAdmin(admin.ModelAdmin, ExportStudent):
     list_display = ExportStudent.list_display
     list_filter = (
@@ -184,7 +184,7 @@ class StudentAdmin(admin.ModelAdmin, ExportStudent):
     get_user_tg.short_description = 'Telegram'
 
 
-@ admin.register(models.Teacher)
+@admin.register(models.Teacher)
 class TeacherAdmin(admin.ModelAdmin):
     list_display = (
         'email',
@@ -193,7 +193,7 @@ class TeacherAdmin(admin.ModelAdmin):
     list_filter = list_display
 
 
-@ admin.register(models.Level)
+@admin.register(models.Level)
 class LevelAdmin(admin.ModelAdmin):
     list_display = (
         'name',
@@ -201,7 +201,7 @@ class LevelAdmin(admin.ModelAdmin):
     list_filter = list_display
 
 
-@ admin.register(models.Group)
+@admin.register(models.Group)
 class GroupAdmin(admin.ModelAdmin):
     list_display = (
         'level',
@@ -212,7 +212,7 @@ class GroupAdmin(admin.ModelAdmin):
     list_filter = list_display
 
 
-@ admin.register(models.Chat)
+@admin.register(models.Chat)
 class ChatAdmin(admin.ModelAdmin):
     list_display = (
         'group',
@@ -229,12 +229,12 @@ class ChatAdmin(admin.ModelAdmin):
         'teacher',
     )
 
-    @ admin.display(description='Кол-во учеников')
+    @admin.display(description='Кол-во учеников')
     def get_students_count(self, obj):
         return f"{obj.students_count()}/3"
 
 
-@ admin.register(models.Offer)
+@admin.register(models.Offer)
 class OfferAdmin(admin.ModelAdmin):
     list_display = (
         'period',
@@ -244,7 +244,7 @@ class OfferAdmin(admin.ModelAdmin):
     list_filter = list_display
 
 
-@ admin.register(models.Order)
+@admin.register(models.Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = (
         'invoice_number',
@@ -257,10 +257,19 @@ class OrderAdmin(admin.ModelAdmin):
     list_filter = list_display
 
 
-@ admin.register(models.OrderGC)
+@admin.register(models.OrderGC)
 class OrderGCAdmin(admin.ModelAdmin):
     list_display = (
         'invoice_number',
         'email',
+    )
+    list_filter = list_display
+
+
+@admin.register(models.Answer)
+class AnswerAdmin(admin.ModelAdmin):
+    list_display = (
+        'quiz_id',
+        'answer',
     )
     list_filter = list_display
