@@ -3760,7 +3760,7 @@
         }
         dc = document.querySelector(`.${currentTab}`);
 
-        score = dc.querySelectorAll('.dropdown-wrapper .answered').length + dc.querySelectorAll('#quiz9-wrapper li.true').length - dc.querySelectorAll('#quiz9-wrapper li.wrong').length;
+        score = dc.querySelectorAll('.dropdown-wrapper .answered').length + dc.querySelectorAll('#quiz9-wrapper li.true').length;
         quizPassed = document.querySelectorAll('.dropdown-wrapper .answered').length + document.querySelectorAll('#quiz9-wrapper li.true').length;
 
         $(`.${currentTab} #total-progress .progress-bar`).attr("aria-valuenow", score);
@@ -3818,7 +3818,7 @@
             }
         }
 
-        parentItem.outerHTML = newItem;
+        parentItem.outerHTML = newItemsc;
 
         if (parentGalery.querySelectorAll('.dropdown-toggle').length <= 0) {
             showNextSlideButton(parentGalery);
