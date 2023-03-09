@@ -11,8 +11,8 @@ from apps.speaking_clubs.views import login
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('social_django.urls', namespace='social')),
-    path('robokassa/', include('robokassa.urls')),
+    # path('robokassa/', include('robokassa.urls')),
     path('speaking_club/', include('speaking_clubs.urls')),
     path('login/', login, name='login'),
-    path('', RedirectView.as_view(url=reverse_lazy('main'))),
+    path('', RedirectView.as_view(url=reverse_lazy('main_gc'))),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
