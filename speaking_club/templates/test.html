@@ -3751,15 +3751,16 @@
 
     var is_reloading = true;
 
+    quizCount = 101;
+    maxScore = 101;
+
     function progressBarRefresh() {
         if (currentTab == null) {
             currentTab = $(".nav-link.active").attr('id');
         }
         dc = document.querySelector(`.${currentTab}`);
-        quizCount = document.querySelectorAll('[quiz-uuid]').length;
-        maxScore = dc.querySelectorAll('[quiz-uuid]').length;
 
-        score = dc.querySelectorAll('.dropdown-wrapper .answered').length + dc.querySelectorAll('#quiz9-wrapper li.true').length - dc.querySelectorAll('#quiz9-wrapper li.true.answered').length;
+        score = dc.querySelectorAll('.dropdown-wrapper .answered').length + dc.querySelectorAll('#quiz9-wrapper li.true').length - dc.querySelectorAll('#quiz9-wrapper li.wrong').length;
         quizPassed = document.querySelectorAll('.dropdown-wrapper .answered').length + document.querySelectorAll('#quiz9-wrapper li.true').length;
 
         $(`.${currentTab} #total-progress .progress-bar`).attr("aria-valuenow", score);
