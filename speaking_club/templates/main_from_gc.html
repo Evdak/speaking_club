@@ -175,25 +175,27 @@
     $("#offers>.col:first-child()").addClass('active');
 
     function finish() {
-        $.post('/speaking_club/update_session/', { 'InvId': $("#user-order-form").val() }, function (data) { });
-        $.post('/speaking_club/order_from_gc/', {
-            weekdays: $("#user-weekdays").text(),
-            time: $("#user-time").text(),
-            name: $("#user-name").text(),
-            offer_id: $("#offers>.col").attr("offer-id"),
-            email: $("#user-email-form").val(),
-            invoice_number: $("#user-order-form").val(),
-        }, function (data) {
-            console.log(data);
-            if (typeof (data) == "string") {
-                document.querySelector('html').innerHTML = data;
-            } else if (data.result == 'ERROR') {
-                custom_alert(data.result, 'danger');
-            }
-            else {
-                window.location.href = data.result;
-            }
+        $.post('/speaking_club/update_session/', { 'InvId': $("#user-order-form").val() }, function (data) {
+            $.post('/speaking_club/order_from_gc/', {
+                weekdays: $("#user-weekdays").text(),
+                time: $("#user-time").text(),
+                name: $("#user-name").text(),
+                offer_id: $("#offers>.col").attr("offer-id"),
+                email: $("#user-email-form").val(),
+                invoice_number: $("#user-order-form").val(),
+            }, function (data) {
+                console.log(data);
+                if (typeof (data) == "string") {
+                    document.querySelector('html').innerHTML = data;
+                } else if (data.result == 'ERROR') {
+                    custom_alert(data.result, 'danger');
+                }
+                else {
+                    window.location.href = data.result;
+                }
+            });
         });
+
     }
 
     function nextStep(element) {
