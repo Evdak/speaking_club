@@ -3778,7 +3778,7 @@
             document.querySelectorAll('#galery').forEach(el => {
                 $(el).hide()
             })
-            highlightedItems = Array.from(document.querySelectorAll(`.${currentTab} #quiz9-wrapper`)).concat(Array.from(document.querySelectorAll(`.${currentTab} .dropdown`)));
+            highlightedItems = Array.from(document.querySelectorAll(`.${currentTab} #quiz9-wrapper, .${currentTab} .dropdown`));
             highlightedItems = highlightedItems.sort((a, b) => { return a.closest('#galery').classList[0] > b.closest('#galery').classList[0] });
 
             currentQuiz = highlightedItems.filter((item) => {
