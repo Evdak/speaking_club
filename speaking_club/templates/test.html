@@ -3778,11 +3778,12 @@
             document.querySelectorAll('#galery').forEach(el => {
                 $(el).hide()
             })
-            highlightedItems = Array.from(document.querySelectorAll(`.${currentTab} #quiz9-wrapper, .${currentTab} .dropdown`));
-            highlightedItems = highlightedItems.sort((a, b) => { return a.closest('#galery').classList[0] > b.closest('#galery').classList[0] });
-
+            highlightedItems = Array.from(document.querySelectorAll(`.${currentTab} #quiz9-wrapper, .${currentTab} .dropdown-wrapper`));
+            highlightedItems = highlightedItems.sort((a, b) => {
+                return Array.from(a.closest('#container-wrapper').children).indexOf(a.closest('#galery')) - Array.from(b.closest('#container-wrapper').children).indexOf(b.closest('#galery'));
+            });
             currentQuiz = highlightedItems.filter((item) => {
-                return item.querySelectorAll('.wrong-hidden').length == 0;
+                return (item.querySelectorAll('.wrong-hidden').length == 0 && item.querySelectorAll('.answered').length == 0);
             })[0].closest("#galery");
             $(currentQuiz).fadeIn();
         } catch (e) {
