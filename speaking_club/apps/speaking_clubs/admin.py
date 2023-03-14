@@ -2,7 +2,7 @@ import csv
 from django.http import HttpResponse
 from django.contrib import admin
 from speaking_clubs import models
-from django.db.models import Count
+from django.db.models import Q
 
 
 if not hasattr(admin, "display"):
@@ -227,17 +227,9 @@ class ChatHasSudentsFilter(admin.SimpleListFilter):
         value = self.value()
 
         if value == 'Есть':
-            return queryset.annotate(
-                students_count=Count('students')
-            ).filter(
-                students_count__gt=0,
-            )
+            return queryset.exclude(students=None)
         else:
-            return queryset.annotate(
-                students_count=Count('students')
-            ).filter(
-                students_count=0,
-            )
+            return queryset.exclude(~Q(students=None))
 
 
 @admin.register(models.Chat)
