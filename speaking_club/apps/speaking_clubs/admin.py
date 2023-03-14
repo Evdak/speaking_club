@@ -212,13 +212,28 @@ class GroupAdmin(admin.ModelAdmin):
     list_filter = list_display
 
 
+class ChatHasSudentsFilter(admin.SimpleListFilter):
+    title = 'Есть студенты'
+    parameter_name = 'Есть студенты'
+
+    def lookups(self, request, model_admin):
+        return ('Есть', 'Нет')
+
+    def queryset(self, request, queryset):
+        value = self.value()
+        if value == 'Есть':
+            return queryset.filter(get_students_count__gt=0)
+        else:
+            return queryset.filter(get_students_count=0)
+
+
 @admin.register(models.Chat)
 class ChatAdmin(admin.ModelAdmin):
     list_display = (
         'group',
         'teacher',
         'chat',
-        'get_students_count'
+        'get_students_count',
     )
 
     list_filter = (
@@ -227,6 +242,7 @@ class ChatAdmin(admin.ModelAdmin):
         'group__time',
         'chat',
         'teacher',
+        ChatHasSudentsFilter,
     )
 
     @admin.display(description='Кол-во учеников')
