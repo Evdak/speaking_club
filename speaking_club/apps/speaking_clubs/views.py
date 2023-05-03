@@ -721,7 +721,7 @@ def register_results_view(request: HttpRequest):
         for key, value in _request.items():
             pass
         logger.warning(f"{key=}, {value=}")
-        if key in models.TEST and value:
+        if key in models.TEST and value is not None:
             student = models.Student.objects.filter(
                 user=request.user
             ).first()
@@ -738,7 +738,7 @@ def register_results_view(request: HttpRequest):
                 }
             )
         else:
-            logger.warning(f"{all([_request.get(el) for el in models.TEST])=}")
+            logger.warning(f"{all([_request.get(el) is not  None for el in models.TEST])=}")
             logger.warning(f"{[_request.get(el) for el in models.TEST]=}")
     except Exception as err:
         logger.error(err)
