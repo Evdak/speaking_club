@@ -14,17 +14,17 @@ from apps.speaking_clubs.helpers import calculate_levels
 User = get_user_model()
 
 WEEKDAYS = (
-    ('Понедельник - Среда - Пятница', 'Понедельник - Среда - Пятница'),
-    ('Понедельник - Среда - Суббота', 'Понедельник - Среда - Суббота'),
+    ('Понедельник - Пятница', 'Понедельник - Пятница'),
+    ('Понедельник - Суббота', 'Понедельник - Суббота'),
 )
 
-TEST = [
-    "nav-Writing",
-    "nav-Listening",
-    "nav-Vocabulary",
-    "nav-Grammar",
-    "nav-Reading",
-]
+TEST = {
+    "nav-Writing": -1,
+    "nav-Listening": -1,
+    "nav-Vocabulary": -1,
+    "nav-Grammar": -1,
+    "nav-Reading": -1,
+}
 
 
 def get_test():
@@ -71,6 +71,9 @@ class Group(models.Model):
 
     def __str__(self):
         return f"{self.level} {self.weekdays} {self.time}"
+
+    def get_time(self) -> str:
+        return f"{int(self.time)}:00 - {int(self.time)+1}:00" if self.time else ""
 
     class Meta:
         verbose_name = 'Группа'
@@ -154,12 +157,16 @@ class Order(models.Model):
     time = models.CharField(
         'Время начала занятия',
         max_length=255,
+        null=True,
+        blank=True,
     )
 
     weekdays = models.CharField(
         "Дни недели",
         max_length=255,
         choices=WEEKDAYS,
+        null=True,
+        blank=True,
     )
 
     order_from_gc = models.OneToOneField(
@@ -211,6 +218,7 @@ class Student(models.Model):
 
     test = JSONField(
         "Результаты тестов",
+        default=get_test(),
         blank=True,
         null=True,
     )

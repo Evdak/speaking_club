@@ -1,3 +1,4 @@
+import logging
 import decimal
 import hashlib
 from urllib import parse
@@ -24,60 +25,65 @@ def define_levels(
 ):
     if 0 <= grammar <= 13:
         grammar = 'A1'
-    elif 14 <= grammar <= 27:
+    elif 14 <= grammar <= 21:
         grammar = 'A2'
-    elif 28 <= grammar:
+    elif 22 <= grammar:
         grammar = 'B1'
 
-    if 0 <= listening <= 6:
+    if 0 <= listening <= 4:
         listening = 'A1'
-    elif 7 <= listening <= 11:
+    elif 5 <= listening <= 7:
         listening = 'A2'
-    elif 12 <= listening:
+    elif 8 <= listening:
         listening = 'B1'
 
-    if 0 <= writing <= 6:
+    if 0 <= writing <= 16:
         writing = 'A1'
-    elif 7 <= writing <= 12:
+    elif 17 <= writing <= 28:
         writing = 'A2'
-    elif 13 <= writing:
+    elif 29 <= writing:
         writing = 'B1'
 
     if 0 <= reading <= 5:
         reading = 'A1'
-    elif 6 <= reading <= 12:
+    elif 6 <= reading <= 9:
         reading = 'A2'
-    elif 13 <= reading:
+    elif 10 <= reading:
         reading = 'B1'
 
-    if 0 <= vocabulary <= 7:
+    if 0 <= vocabulary <= 14:
         vocabulary = 'A1'
-    elif 8 <= vocabulary <= 15:
+    elif 15 <= vocabulary <= 25:
         vocabulary = 'A2'
-    elif 16 <= vocabulary:
+    elif 26 <= vocabulary:
         vocabulary = 'B1'
 
     return {
-        "grammar": grammar,
-        "listening": listening,
-        "writing": writing,
-        "reading": reading,
-        "vocabulary": vocabulary,
+        "grammar": grammar if grammar else "-",
+        "listening": listening if listening else "-",
+        "writing": writing if writing else "-",
+        "reading": reading if reading else "-",
+        "vocabulary": vocabulary if vocabulary else "-",
     }
 
 
 def define_total_level(grammar: str, listening: str, writing: str, reading: str, vocabulary: str):
+    if any([el == -1 or el == '-' for el in (grammar, listening, writing, reading, vocabulary)]):
+        return {
+            "total": "-"
+        }
+
     if (grammar == "A1") and (vocabulary == "A1"):
         return {
             "total": "A1"
         }
 
-    if (grammar == "A1") and (vocabulary == "A2" or vocabulary == "B1") and listening == "A1":
+    if (grammar == "A1") and (vocabulary == "A2" or vocabulary == "B1") and writing == "A1":
         return {
             "total": "A1"
         }
 
-    if (grammar == "A1") and (vocabulary == "A2" or vocabulary == "B1") and (listening == "A2" or listening == "B1"):
+    if (grammar == "A1") and (vocabulary == "A2" or vocabulary == "B1") and (writing == "A2" or writing == "B1"):
         return {
             "total": "A2"
         }
@@ -87,12 +93,12 @@ def define_total_level(grammar: str, listening: str, writing: str, reading: str,
             "total": "A2"
         }
 
-    if (grammar == "A2") and (vocabulary == "A1") and listening == "A1":
+    if (grammar == "A2") and (vocabulary == "A1") and writing == "A1":
         return {
             "total": "A1"
         }
 
-    if (grammar == "A2") and (vocabulary == "A1") and (listening == "A2" or listening == "B1"):
+    if (grammar == "A2") and (vocabulary == "A1") and (writing == "A2" or writing == "B1"):
         return {
             "total": "A2"
         }
@@ -165,7 +171,6 @@ def calculate_signature(*args) -> str:
 
 
 def calculate_levels(_test) -> tuple[dict[str, int], str]:
-    import logging
     logging.warning(_test)
     grammar = _test.get("nav-Grammar")
     writing = _test.get("nav-Writing")
@@ -194,5 +199,7 @@ def calculate_levels(_test) -> tuple[dict[str, int], str]:
         vocabulary=vocabulary,
         reading=reading
     )
+
+    logging.warning(f"{levels=} {total_level=}")
 
     return levels, total_level
