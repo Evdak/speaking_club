@@ -114,12 +114,14 @@ class ExportCsvMixin:
 
 class ExportStudent(ExportCsvMixin):
     list_display = [
+        'id',
         'email',
         'name',
         'get_user_level',
         'get_user_teacher',
         'get_user_chat_url',
         'get_user_tg',
+        'is_paid',
     ]
 
     def export_as_csv(self, request, queryset):
@@ -134,6 +136,7 @@ class ExportStudent(ExportCsvMixin):
             "Куратор",
             "Ссылка на чат",
             "Telegram",
+            "С оплатой",
         ]
 
         response = HttpResponse(content_type='text/csv')
@@ -141,7 +144,7 @@ class ExportStudent(ExportCsvMixin):
         writer = csv.writer(response)
 
         writer.writerow(field_names)
-        list_display_extended = ['id'] + ExportStudent.list_display
+        list_display_extended = ExportStudent.list_display
 
         def _getattr_or_call(obj, field):
             try:
@@ -159,6 +162,7 @@ class ExportStudent(ExportCsvMixin):
 class StudentAdmin(admin.ModelAdmin, ExportStudent):
     list_display = ExportStudent.list_display
     list_filter = (
+        'is_paid',
         'email',
         'name',
         UserLevelFilter,

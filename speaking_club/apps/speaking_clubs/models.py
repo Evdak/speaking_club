@@ -207,10 +207,14 @@ class Student(models.Model):
     user = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
-        verbose_name="Пользователь"
+        verbose_name="Пользователь",
     )
 
-    email = models.EmailField('Почта')
+    email = models.EmailField(
+        'Почта',
+        null=True,
+        blank=True,
+    )
     name = models.CharField(
         'Имя',
         max_length=255,
@@ -221,6 +225,13 @@ class Student(models.Model):
         default=get_test(),
         blank=True,
         null=True,
+    )
+
+    is_paid = models.BooleanField(
+        'С оплатой',
+        default=True,
+        blank=False,
+        null=False,
     )
 
     def __str__(self):

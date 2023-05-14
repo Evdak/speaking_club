@@ -31,11 +31,13 @@
                             <i class="bi bi-book-fill mx-1"></i> Тестирование
                         </a>
                     </li>
+                    {% if request.user.student.is_paid %}
                     <li class="nav-item">
                         <a class="nav-link" href="./my_group/">
                             <i class="bi bi-people-fill mx-1"></i> Группа
                         </a>
                     </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
@@ -76,12 +78,14 @@
             <button type="button" class="btn btn-primary disabled fill m-1 current-tab">
                 Тестирование навыков
             </button>
+            {% if request.user.student.is_paid %}
             <button type="button" class="btn btn-light disabled fill m-1" disabled>
                 Распределение в мини-группы
             </button>
             <button type="button" class="btn btn-light disabled fill m-1" disabled>
                 Практика в занятиях
             </button>
+            {% endif %}
         </div>
 
         <div class="container container-fluid my-5">
@@ -90,12 +94,42 @@
             </h3>
 
             <ol>
-                <li class="fs-5">Оцени уровень грамматики</li>
-                <li class="fs-5">Оцени уровень лексики</li>
-                <li class="fs-5">Оцени уровень письма</li>
-                <li class="fs-5">Оцени уровень чтения</li>
-                <li class="fs-5">Оцени уровень аудирования</li>
-                <li class="fs-5">Подведи общий уровень</li>
+                <li class="fs-5">
+                    Оцени уровень грамматики
+                    {% if test.grammar >= 0 %}
+                    <i class="bi bi-check-all fs-4" style="color: #4BADF4;"></i>
+                    {%endif%}
+                </li>
+                <li class="fs-5">
+                    Оцени уровень лексики
+                    {% if test.vocabulary >= 0 %}
+                    <i class="bi bi-check-all fs-4" style="color: #4BADF4;"></i>
+                    {%endif%}
+                </li>
+                <li class="fs-5">
+                    Оцени уровень письма
+                    {% if test.writing >= 0 %}
+                    <i class="bi bi-check-all fs-4" style="color: #4BADF4;"></i>
+                    {%endif%}
+                </li>
+                <li class="fs-5">
+                    Оцени уровень чтения
+                    {% if test.reading >= 0 %}
+                    <i class="bi bi-check-all fs-4" style="color: #4BADF4;"></i>
+                    {%endif%}
+                </li>
+                <li class="fs-5">
+                    Оцени уровень аудирования
+                    {% if test.listening >= 0 %}
+                    <i class="bi bi-check-all fs-4" style="color: #4BADF4;"></i>
+                    {%endif%}
+                </li>
+                <li class="fs-5">
+                    Подведи общий уровень
+                    {% if request.user.student.get_user_level %}
+                    <span class="text-primary">{{request.user.student.get_user_level}}</span>
+                    {%endif%}
+                </li>
             </ol>
         </div>
 

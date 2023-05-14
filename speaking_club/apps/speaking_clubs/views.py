@@ -19,6 +19,7 @@ from robokassa.forms import RobokassaForm
 from apps.speaking_clubs.helpers import MAX_SCORE, define_levels, define_total_level, calculate_levels
 from apps.speaking_clubs.helpers import generate_success_form
 from apps.speaking_clubs.answers_helpers import get_answers, register_answer
+from speaking_clubs.models import Student
 from speaking_club.settings import GC_SECRET_KEY
 from speaking_clubs import models
 
@@ -37,6 +38,15 @@ def login(request: HttpRequest):
 def index(request: HttpRequest):
     offers = models.Offer.objects.all()
     return render(request, 'main.html', {"offers": offers})
+
+
+def index_no_gc(request: HttpRequest):
+    offers = models.Offer.objects.all()
+    student = request.session.get('student')
+
+    if not student:
+        request.session['no_student'] = True
+    return render(request, 'main_no_gc.html', {"offers": offers})
 
 
 def index_gc(request: HttpRequest):
@@ -183,10 +193,16 @@ def update_session(request: HttpRequest):
 @login_required
 def profile(request: HttpRequest):
     logger = logging.getLogger('profile')
-    student = models.Student.objects.filter(
-        user=request.user
-    ).first()
+    student = models.Student.objects.filter(user=request.user).first()
+    if not student and request.session.get('no_student'):
+        student = models.Student.objects.create(
+            name=request.user.first_name,
+            user=request.user,
+            is_paid=False,
+        )
+        request.session['no_student'] = False
     logger.warning(f'{student=}')
+
     if student:
         block_num = 2
         if student.get_user_level() is None or student.get_user_level() == '-':
@@ -195,6 +211,13 @@ def profile(request: HttpRequest):
             block_num = 3
         if student.get_user_chat_url() is not None:
             block_num = 4
+        if student.is_paid == False:
+            block_num = 2
+
+        _test = {}
+
+        for key, value in student.test.items():
+            _test[key.split('-')[-1].lower()] = value
 
         return render(
             request,
@@ -202,13 +225,12 @@ def profile(request: HttpRequest):
             {
                 'name': student.name,
                 'block_num': block_num,
+                'test': _test,
             }
         )
 
     invoice_number = request.session.get("InvId")
-    logger.warning(f"{request.session.items()=}")
-    logger.warning(f"{invoice_number=}")
-    logger.warning(f"{request.user=}")
+
     if not invoice_number:
         order = models.Order.objects.filter(
             user=request.user,
@@ -253,6 +275,7 @@ def profile_test_results(request: HttpRequest):
     student = models.Student.objects.filter(
         user=request.user
     ).first()
+    logging.warning(f"{student=}")
     if not student:
         logging.warning("ERROR: 'if not student'")
         return render(request, "error.html")
@@ -273,7 +296,7 @@ def profile_test_results(request: HttpRequest):
         user=request.user,
     ).first()
 
-    if not order:
+    if not order and student.is_paid:
         logging.warning("ERROR: 'if not order'")
         return render(request, "error.html")
 
@@ -296,6 +319,9 @@ def profile_my_group(request: HttpRequest):
     student = models.Student.objects.filter(
         user=request.user
     ).first()
+    if student.is_paid == False:
+        return redirect('profile')
+
     if not student:
         logging.warning("ERROR: 'if not student'")
         return render(request, "error.html")
@@ -333,6 +359,13 @@ def profile_my_group(request: HttpRequest):
 @login_required
 @csrf_exempt
 def profile_my_group_choose(request: HttpRequest):
+    student = models.Student.objects.filter(
+        user=request.user
+    ).first()
+    if not student:
+        logging.warning("ERROR: 'if not student'")
+        return render(request, "error.html")
+
     weekdays = request.POST.get('days')
     time = request.POST.get('time')
 
@@ -347,9 +380,6 @@ def profile_my_group_choose(request: HttpRequest):
     student = models.Student.objects.filter(
         user=request.user
     ).first()
-    if not student:
-        logging.warning("ERROR: 'if not student'")
-        return render(request, "error.html")
 
     _test: dict = student.test
 
