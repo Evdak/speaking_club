@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 {% load static %}
 
 {% block title %}
@@ -10,6 +11,7 @@
 <link rel="stylesheet" href="{% static 'css/profile.css' %}">
 
 <div class="main d-lg-flex">
+    {% if request.user.student.email != None %}
     <nav class="navbar navbar-expand-lg bg-white m-3 py-lg-5 rounded-3">
         <div class="container-fluid">
             <a class="navbar-brand mb-lg-5" href="#">
@@ -42,6 +44,7 @@
             </div>
         </div>
     </nav>
+    {% endif %}
 
 
     <div class="container mb-5 m-md-3 py-lg-5">
@@ -57,6 +60,19 @@
                 </ul>
             </div>
         </div>
+
+        {% if request.user.student.email == None %}
+        <div class="container my-4">
+            <div class="alert alert-warning" role="alert">
+                Для того, чтобы продолжить введите ваш адрес электронной почты ниже и нажмите кнопку "Сохранить"
+            </div>
+            <form method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-success w-100">Сохранить</button>
+            </form>
+        </div>
+        {% else %}
 
 
         <div class="container d-flex flex-column float-start my-5 p-3 bg-white rounded-3 fit">
@@ -193,7 +209,7 @@
         </div>
 
         {% endif %}
-
+        {% endif %}
 
     </div>
 </div>

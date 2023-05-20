@@ -19,6 +19,7 @@ from robokassa.forms import RobokassaForm
 from apps.speaking_clubs.helpers import MAX_SCORE, define_levels, define_total_level, calculate_levels
 from apps.speaking_clubs.helpers import generate_success_form
 from apps.speaking_clubs.answers_helpers import get_answers, register_answer
+from speaking_clubs.forms import StudentForm
 from speaking_clubs.models import Student
 from speaking_club.settings import GC_SECRET_KEY
 from speaking_clubs import models
@@ -219,6 +220,14 @@ def profile(request: HttpRequest):
         for key, value in student.test.items():
             _test[key.split('-')[-1].lower()] = value
 
+        if request.method == "POST":
+            form = StudentForm(request.POST, instance=student)
+            if form.is_valid():
+                form.save()
+
+        else:
+            form = StudentForm(instance=student)
+
         return render(
             request,
             "profile.html",
@@ -226,6 +235,7 @@ def profile(request: HttpRequest):
                 'name': student.name,
                 'block_num': block_num,
                 'test': _test,
+                'form': form,
             }
         )
 

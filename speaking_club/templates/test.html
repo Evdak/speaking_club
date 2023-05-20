@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block title %}
 Тест на уровень знаний
 {% endblock %}
@@ -9,6 +9,10 @@
 <head>
     <script
         src="https://myyestoday.ru/pl/cms/layout/js?id=12808&hash=713ecd8e1e1aa77a6d2fa50f279aca8d&bundle=1"></script>
+
+    <script src="{% static 'js/audio.js' %}"></script>
+
+    <link rel="stylesheet" href="{% static 'css/audio.css' %}">
 
     <style>
         @import url("https://myyestoday.ru/pl/cms/layout/css?id=12808&hash=df558f16426d09374a90fbd6d3551640&bundle=1");
@@ -114,6 +118,10 @@
             #quiz9-wrapper.type2 ul li button {
                 width: 100%;
             }
+        }
+
+        #audio-tts>div>div.ft-container {
+            font-size: 1rem !important;
         }
 
         #galery * {
@@ -930,37 +938,24 @@
                 <div class='galery_div1_1' id='galerydiv'>
                     <h3>Прослушайте аудио и выберите правильный ответ</h3>
                     <div class='audio-tts3838 audio-div' id='audio-tts'>
-                        <audio class="audio-player3838" id='audio-player'
-                            src="https://fs.getcourse.ru/fileservice/file/download/a/44237/sc/345/h/a892f97dc21fa5b3858aa3d0c636efed.mp4"
-                            onended="audioOnEnded(this)" oncanplay="audioOnCanPlay(this)" onplay="audioPlay(this)"
-                            onpause="audioPause(this)"></audio>
-                        <div class="podcast-container" id='podcast-container'>
-                            <div class="h-container" id='h-container'>
-                                <div class="podcast-playpause" id='podcast-playpause'>
-                                    <img class="play" id="play"
-                                        src="https://fs.getcourse.ru/fileservice/file/download/a/44237/sc/337/h/cb28b80bb66ad56d3c12fd1885bc3ef8.svg"
-                                        onclick="playPauseClick(this)">
-                                    <img class="pause" id="pause"
-                                        src="https://fs.getcourse.ru/fileservice/file/download/a/44237/sc/197/h/7395c5433ab34099a1d5b9b139efdd5b.svg"
-                                        onclick="playPauseClick(this)">
+                        <audio
+                            src="https://fs.getcourse.ru/fileservice/file/download/a/44237/sc/345/h/a892f97dc21fa5b3858aa3d0c636efed.mp4"></audio>
+                        <div class="podcastt-container podcastt-container-one">
+                            <div class="ht-container">
+                                <div class="podcastt-playpause">
                                 </div>
-                                <div>
-                                    <div class="podcast-title" id='podcast-title'></div>
-                                    <div class="podcast-subtitle" id='podcast-subtitle'></div>
-                                </div>
+                                <div class="podcastt-title"></div>
                             </div>
-                        </div>
-                        <div>
-                            <progress class="podcast-progress" id='podcast-progress' value="0" max="1"
-                                onclick="audioTimeLineClick(this, event)"></progress>
-                            <div class="f-container" id='f-container'>
-                                <div class="podcast-time" id='podcast-time'>00:00 / 00:00</div>
-                                <div class="podcast-speed" id='podcast-speed'>
-                                    <a class="podcast-speed-10 active" href="javascript:void(0)"
-                                        onclick="audioChangeSpeedClick(this)">1x</a> / <a class="podcast-speed-15"
-                                        href="javascript:void(0)" onclick="audioChangeSpeedClick(this)">1.5x</a> / <a
-                                        class="podcast-speed-20" href="javascript:void(0)"
-                                        onclick="audioChangeSpeedClick(this)">2x</a>
+                            <div class="podcastt-progress">
+                                <div id="progress-slider" class="podcastt-progress"></div>
+                            </div>
+                            <div class="ft-container">
+                                <div class="podcastt-time">00:00 / 00:00</div>
+                                <div class="podcastt-speed">
+                                    <a class="podcastt-speed-5" href="javascript:void(0)">0.5x</a> / <a
+                                        class="podcastt-speed-10 active" href="javascript:void(0)">1x</a> / <a
+                                        class="podcastt-speed-15" href="javascript:void(0)">1.5x</a> / <a
+                                        class="podcastt-speed-20" href="javascript:void(0)">2x</a>
                                 </div>
                             </div>
                         </div>
@@ -1020,37 +1015,24 @@
                 <div class='galery_div2_1' id='galerydiv'>
                     <h3>Прослушайте аудио и выберите правильный ответ</h3>
                     <div class='audio-tts3838 audio-div' id='audio-tts'>
-                        <audio class="audio-player3838" id='audio-player'
-                            src="https://fs.getcourse.ru/fileservice/file/download/a/44237/sc/96/h/69981612b5d5deda603d382b041c761f.mp4"
-                            onended="audioOnEnded(this)" oncanplay="audioOnCanPlay(this)" onplay="audioPlay(this)"
-                            onpause="audioPause(this)"></audio>
-                        <div class="podcast-container" id='podcast-container'>
-                            <div class="h-container" id='h-container'>
-                                <div class="podcast-playpause" id='podcast-playpause'>
-                                    <img class="play" id="play"
-                                        src="https://fs.getcourse.ru/fileservice/file/download/a/44237/sc/337/h/cb28b80bb66ad56d3c12fd1885bc3ef8.svg"
-                                        onclick="playPauseClick(this)">
-                                    <img class="pause" id="pause"
-                                        src="https://fs.getcourse.ru/fileservice/file/download/a/44237/sc/197/h/7395c5433ab34099a1d5b9b139efdd5b.svg"
-                                        onclick="playPauseClick(this)">
+                        <audio
+                            src="https://fs.getcourse.ru/fileservice/file/download/a/44237/sc/96/h/69981612b5d5deda603d382b041c761f.mp4"></audio>
+                        <div class="podcastt-container podcastt-container-one">
+                            <div class="ht-container">
+                                <div class="podcastt-playpause">
                                 </div>
-                                <div>
-                                    <div class="podcast-title" id='podcast-title'></div>
-                                    <div class="podcast-subtitle" id='podcast-subtitle'></div>
-                                </div>
+                                <div class="podcastt-title"></div>
                             </div>
-                        </div>
-                        <div>
-                            <progress class="podcast-progress" id='podcast-progress' value="0" max="1"
-                                onclick="audioTimeLineClick(this, event)"></progress>
-                            <div class="f-container" id='f-container'>
-                                <div class="podcast-time" id='podcast-time'>00:00 / 00:00</div>
-                                <div class="podcast-speed" id='podcast-speed'>
-                                    <a class="podcast-speed-10 active" href="javascript:void(0)"
-                                        onclick="audioChangeSpeedClick(this)">1x</a> / <a class="podcast-speed-15"
-                                        href="javascript:void(0)" onclick="audioChangeSpeedClick(this)">1.5x</a> / <a
-                                        class="podcast-speed-20" href="javascript:void(0)"
-                                        onclick="audioChangeSpeedClick(this)">2x</a>
+                            <div class="podcastt-progress">
+                                <div id="progress-slider" class="podcastt-progress"></div>
+                            </div>
+                            <div class="ft-container">
+                                <div class="podcastt-time">00:00 / 00:00</div>
+                                <div class="podcastt-speed">
+                                    <a class="podcastt-speed-5" href="javascript:void(0)">0.5x</a> / <a
+                                        class="podcastt-speed-10 active" href="javascript:void(0)">1x</a> / <a
+                                        class="podcastt-speed-15" href="javascript:void(0)">1.5x</a> / <a
+                                        class="podcastt-speed-20" href="javascript:void(0)">2x</a>
                                 </div>
                             </div>
                         </div>
@@ -1101,37 +1083,24 @@
                 <div class='galery_div3_1' id='galerydiv'>
                     <h3>Прослушайте аудио и выберите правильный ответ</h3>
                     <div class='audio-tts3838 audio-div' id='audio-tts'>
-                        <audio class="audio-player3838" id='audio-player'
-                            src="https://fs.getcourse.ru/fileservice/file/download/a/44237/sc/488/h/e36662f3966aa8e3724154801999e0f6.mp4"
-                            onended="audioOnEnded(this)" oncanplay="audioOnCanPlay(this)" onplay="audioPlay(this)"
-                            onpause="audioPause(this)"></audio>
-                        <div class="podcast-container" id='podcast-container'>
-                            <div class="h-container" id='h-container'>
-                                <div class="podcast-playpause" id='podcast-playpause'>
-                                    <img class="play" id="play"
-                                        src="https://fs.getcourse.ru/fileservice/file/download/a/44237/sc/337/h/cb28b80bb66ad56d3c12fd1885bc3ef8.svg"
-                                        onclick="playPauseClick(this)">
-                                    <img class="pause" id="pause"
-                                        src="https://fs.getcourse.ru/fileservice/file/download/a/44237/sc/197/h/7395c5433ab34099a1d5b9b139efdd5b.svg"
-                                        onclick="playPauseClick(this)">
+                        <audio
+                            src="https://fs.getcourse.ru/fileservice/file/download/a/44237/sc/488/h/e36662f3966aa8e3724154801999e0f6.mp4"></audio>
+                        <div class="podcastt-container podcastt-container-one">
+                            <div class="ht-container">
+                                <div class="podcastt-playpause">
                                 </div>
-                                <div>
-                                    <div class="podcast-title" id='podcast-title'></div>
-                                    <div class="podcast-subtitle" id='podcast-subtitle'></div>
-                                </div>
+                                <div class="podcastt-title"></div>
                             </div>
-                        </div>
-                        <div>
-                            <progress class="podcast-progress" id='podcast-progress' value="0" max="1"
-                                onclick="audioTimeLineClick(this, event)"></progress>
-                            <div class="f-container" id='f-container'>
-                                <div class="podcast-time" id='podcast-time'>00:00 / 00:00</div>
-                                <div class="podcast-speed" id='podcast-speed'>
-                                    <a class="podcast-speed-10 active" href="javascript:void(0)"
-                                        onclick="audioChangeSpeedClick(this)">1x</a> / <a class="podcast-speed-15"
-                                        href="javascript:void(0)" onclick="audioChangeSpeedClick(this)">1.5x</a> / <a
-                                        class="podcast-speed-20" href="javascript:void(0)"
-                                        onclick="audioChangeSpeedClick(this)">2x</a>
+                            <div class="podcastt-progress">
+                                <div id="progress-slider" class="podcastt-progress"></div>
+                            </div>
+                            <div class="ft-container">
+                                <div class="podcastt-time">00:00 / 00:00</div>
+                                <div class="podcastt-speed">
+                                    <a class="podcastt-speed-5" href="javascript:void(0)">0.5x</a> / <a
+                                        class="podcastt-speed-10 active" href="javascript:void(0)">1x</a> / <a
+                                        class="podcastt-speed-15" href="javascript:void(0)">1.5x</a> / <a
+                                        class="podcastt-speed-20" href="javascript:void(0)">2x</a>
                                 </div>
                             </div>
                         </div>
@@ -3110,89 +3079,6 @@
         }
         progressBarRefresh();
     }
-
-    function audioOnCanPlay(element) {
-        $(element).parent().find('.podcast-time').html(toHHMMSS(element.currentTime) + " / " + toHHMMSS(element.duration));
-    }
-
-    function playPauseClick(element) {
-        let that = element;
-        let audio = element.parentElement.parentElement.parentElement.parentElement.querySelector('audio');
-        if ($(audio).hasClass('playing')) {
-            audio.pause();
-        } else {
-            audio.play();
-        }
-
-    }
-    function audioPause(audio) {
-        $(audio).removeClass('playing');
-        $(audio).parent().find('.pause').hide();
-        $(audio).parent().find('.play').show();
-        $(audio).off('timeupdate');
-    }
-
-
-    function audioPlay(audio) {
-        $(audio).addClass('playing');
-        document.querySelectorAll('audio').forEach(element => {
-            if (element != audio) {
-                element.pause();
-            }
-        })
-        $(audio).parent().find('.pause').show();
-        $(audio).parent().find('.play').hide();
-        $(audio).on('timeupdate', function () {
-            $(audio).parent().find('.podcast-progress').attr("value", audio.currentTime / audio.duration);
-            $(audio).parent().find('.podcast-time').html(toHHMMSS(audio.currentTime) + " / " + toHHMMSS(audio.duration))
-        });
-    }
-
-    function audioOnEnded(element) {
-        if ($(element).parent().find('.podcast-playpause').hasClass('playing')) {
-            $(element).parent().find('.podcast-playpause').removeClass('playing');
-        }
-        $(element).stop();
-        $(element).parent().find('.pause').hide();
-        $(element).parent().find('.play').show();
-    }
-
-    function audioChangeSpeedClick(element) {
-        $(element).siblings().removeClass('active');
-        $(element).addClass('active');
-        let audio = $(element).parents('.audio-tts').find('.audio-player').get(0);
-        if ($(element).hasClass('podcast-speed-10')) {
-            audio.playbackRate = 1;
-        }
-        else if ($(element).hasClass('podcast-speed-15')) {
-            audio.playbackRate = 1.5;
-        }
-        else if ($(element).hasClass('podcast-speed-20')) {
-            audio.playbackRate = 2;
-        }
-    }
-
-    function audioTimeLineClick(element, event) {
-        let audio = $(element).parents('.audio-tts').find('.audio-player').get(0);
-        var percent = event.offsetX / element.offsetWidth;
-        audio.currentTime = percent * audio.duration;
-        $(element).val(percent);
-        $(element).parents('.audio-tts').find('.podcast-time').html(toHHMMSS(audio.currentTime) + " / " + toHHMMSS(audio.duration))
-
-    }
-
-    function toHHMMSS(sec) {
-        var sec_num = parseInt(sec, 10);
-        var hours = Math.floor(sec_num / 3600);
-        var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
-        var seconds = sec_num - (hours * 3600) - (minutes * 60);
-
-        if (hours < 10) { hours = "0" + hours; }
-        if (minutes < 10) { minutes = "0" + minutes; }
-        if (seconds < 10) { seconds = "0" + seconds; }
-        return hours == "00" ? minutes + ':' + seconds : hours + ':' + minutes + ':' + seconds;
-    }
-
 
     var pBlock = document.querySelectorAll('.dropdown-wrapper span');
     pBlock.forEach(element => {

@@ -16,6 +16,8 @@ ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'])
 
 DJANGO_APPS = [
     'jazzmin',
+    "crispy_forms",
+    "crispy_bootstrap5",
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -157,3 +159,5 @@ SERVER_EMAIL = EMAIL_HOST_USER
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 STATIC_ROOT = BASE_DIR / 'static'
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
