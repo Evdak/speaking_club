@@ -64,7 +64,7 @@
         {% if request.user.student.email == None %}
         <div class="container my-4">
             <div class="alert alert-warning" role="alert">
-                Для того, чтобы продолжить введите ваш адрес электронной почты ниже и нажмите кнопку "Сохранить"
+                Для того чтобы продолжить, введите ваш адрес электронной почты ниже и нажмите кнопку "Сохранить"
             </div>
             <form method="post">
                 {% csrf_token %}
