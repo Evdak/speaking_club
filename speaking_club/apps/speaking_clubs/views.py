@@ -43,7 +43,9 @@ def index(request: HttpRequest):
 
 def index_no_gc(request: HttpRequest):
     offers = models.Offer.objects.all()
-    student = request.session.get('student')
+    student = None
+    if request.user:
+        student = Student.objects.filter(user=request.user).first()
 
     if not student:
         request.session['no_student'] = True
