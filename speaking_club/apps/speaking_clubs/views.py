@@ -30,7 +30,7 @@ from random import randint
 
 
 def login(request: HttpRequest):
-    logging.warning(f"yec {request.user.id=}")
+    logging.warning(f"login {request.user.id=}")
     if request.user.id:
         return redirect("profile")
     return render(request, 'login.html')
@@ -44,7 +44,7 @@ def index(request: HttpRequest):
 def index_no_gc(request: HttpRequest):
     offers = models.Offer.objects.all()
     student = None
-    if request.user:
+    if request.user.id:
         student = Student.objects.filter(user=request.user).first()
 
     if not student:
@@ -71,16 +71,6 @@ def order_from_gc(request: HttpRequest):
     invoice_number = "".join(re.findall(r"\d+", invoice_number))
 
     offer = models.Offer.objects.first()
-
-    logging.warning((
-        # weekdays,
-        # time,
-        # offer_id,
-        email,
-        offer,
-        name,
-        invoice_number
-    ))
 
     if not all((
         # weekdays,
@@ -139,8 +129,6 @@ def pay_with_robokassa(request: HttpRequest):
     offer = models.Offer.objects.filter(
         id=offer_id
     ).first()
-
-    logging.warning((weekdays, time, offer_id, email, offer, name))
 
     if not all((weekdays, time, offer_id, email, offer, name)):
         logging.warning("ERROR: 'if not all((weekdays, time, offer_id, email, offer, name))'")
@@ -289,7 +277,6 @@ def profile_test_results(request: HttpRequest):
     student = models.Student.objects.filter(
         user=request.user
     ).first()
-    logging.warning(f"{student=}")
     if not student:
         logging.warning("ERROR: 'if not student'")
         return render(request, "error.html")
@@ -315,10 +302,6 @@ def profile_test_results(request: HttpRequest):
         return render(request, "error.html")
 
     levels.update(total_level)
-
-    logging.warning({
-        "levels": levels,
-    })
 
     return render(
         request,
@@ -356,8 +339,6 @@ def profile_my_group(request: HttpRequest):
         block_num = 2
 
     levels.update(total_level)
-
-    logging.warning(f"{student.get_user_level()=}, {block_num=}")
 
     return render(
         request,
@@ -687,8 +668,6 @@ def create_order_from_gc(request: HttpRequest):
         invoice_number = int(request.GET.get('invoice_number'))
         email = request.GET.get('email')
         key = request.GET.get('key')
-
-        logging.warning((invoice_number, email, key))
 
         if all((invoice_number, email, key == GC_SECRET_KEY)):
             models.OrderGC.objects.get_or_create(

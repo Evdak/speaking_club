@@ -171,7 +171,7 @@ def calculate_signature(*args) -> str:
 
 
 def calculate_levels(_test) -> tuple[dict[str, int], str]:
-    logging.warning(_test)
+
     grammar = _test.get("nav-Grammar")
     writing = _test.get("nav-Writing")
     listening = _test.get("nav-Listening")
@@ -199,7 +199,5 @@ def calculate_levels(_test) -> tuple[dict[str, int], str]:
         vocabulary=vocabulary,
         reading=reading
     )
-
-    logging.warning(f"{levels=} {total_level=}")
 
     return levels, total_level
