@@ -49,6 +49,8 @@ def index_no_gc(request: HttpRequest):
 
     if not student:
         request.session['no_student'] = True
+    else:
+        return redirect('profile')
     return render(request, 'main_no_gc.html', {"offers": offers})
 
 
