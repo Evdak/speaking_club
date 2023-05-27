@@ -210,6 +210,10 @@ def profile(request: HttpRequest):
             ).first()
 
         if order:
+            if not order.user:
+                order.user = request.user
+                order.save()
+
             student.is_paid = True
             student.save()
 
