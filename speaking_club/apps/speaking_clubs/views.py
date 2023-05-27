@@ -214,6 +214,7 @@ def profile(request: HttpRequest):
                 order.user = request.user
                 order.save()
 
+            student.email = order.email
             student.is_paid = True
             student.save()
 
