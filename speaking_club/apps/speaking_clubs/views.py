@@ -197,6 +197,22 @@ def profile(request: HttpRequest):
     logger.warning(f'{student=}')
 
     if student:
+        invoice_number = request.session.get("InvId")
+
+        if not invoice_number:
+            order = models.Order.objects.filter(
+                user=request.user,
+            ).first()
+
+        else:
+            order = models.Order.objects.filter(
+                invoice_number=invoice_number,
+            ).first()
+
+        if order:
+            student.is_paid = True
+            student.save()
+
         block_num = 2
         if student.get_user_level() is None or student.get_user_level() == '-':
             block_num = 2
