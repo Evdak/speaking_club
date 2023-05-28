@@ -122,6 +122,7 @@ class ExportStudent(ExportCsvMixin):
         'get_user_chat_url',
         'get_user_tg',
         'is_paid',
+        'stream',
     ]
 
     def export_as_csv(self, request, queryset):
@@ -137,6 +138,7 @@ class ExportStudent(ExportCsvMixin):
             "Ссылка на чат",
             "Telegram",
             "С оплатой",
+            "Поток",
         ]
 
         response = HttpResponse(content_type='text/csv')
@@ -165,6 +167,7 @@ class StudentAdmin(admin.ModelAdmin, ExportStudent):
         'is_paid',
         'email',
         'name',
+        'stream',
         UserLevelFilter,
         UserTeacherFilter,
         UserTGFilter,
@@ -206,6 +209,15 @@ class LevelAdmin(admin.ModelAdmin):
     list_filter = list_display
 
 
+@admin.register(models.Stream)
+class StreamAdmin(admin.ModelAdmin):
+    list_display = (
+        'name',
+        'gc_name',
+    )
+    list_filter = list_display
+
+
 @admin.register(models.Group)
 class GroupAdmin(admin.ModelAdmin):
     list_display = (
@@ -242,6 +254,7 @@ class ChatAdmin(admin.ModelAdmin):
         'group',
         'teacher',
         'chat',
+        'stream',
         'get_students_count',
     )
 
@@ -251,6 +264,7 @@ class ChatAdmin(admin.ModelAdmin):
         'group__time',
         'chat',
         'teacher',
+        'stream',
         ChatHasSudentsFilter,
     )
 
@@ -287,6 +301,7 @@ class OrderGCAdmin(admin.ModelAdmin):
     list_display = (
         'invoice_number',
         'email',
+        'stream',
     )
     list_filter = list_display
 

@@ -51,6 +51,29 @@ class Level(models.Model):
         verbose_name_plural = 'Уровни'
 
 
+class Stream(models.Model):
+    name = models.CharField(
+        'Название',
+        max_length=255,
+        blank=False,
+        null=False,
+    )
+
+    gc_name = models.CharField(
+        'Название в заказе',
+        max_length=255,
+        blank=False,
+        null=False,
+    )
+
+    def __str__(self) -> str:
+        return f"{self.name}"
+
+    class Meta:
+        verbose_name = "Поток"
+        verbose_name_plural = "Потоки"
+
+
 class Group(models.Model):
     level = models.ForeignKey(
         Level,
@@ -108,6 +131,13 @@ class OrderGC(models.Model):
     )
     invoice_number = models.BigIntegerField(
         "Номер заказа",
+    )
+    stream = models.ForeignKey(
+        Stream,
+        verbose_name='Поток',
+        on_delete=models.CASCADE,
+        blank=False,
+        null=False,
     )
 
     def __str__(self) -> str:
@@ -223,8 +253,8 @@ class Student(models.Model):
     test = JSONField(
         "Результаты тестов",
         default=get_test(),
-        blank=True,
-        null=True,
+        blank=False,
+        null=False,
     )
 
     is_paid = models.BooleanField(
@@ -232,6 +262,14 @@ class Student(models.Model):
         default=True,
         blank=False,
         null=False,
+    )
+
+    stream = models.ForeignKey(
+        Stream,
+        verbose_name='Поток',
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
     )
 
     def __str__(self):
@@ -306,6 +344,14 @@ class Chat(models.Model):
         verbose_name='Ученики',
         related_name="chat",
         blank=True,
+    )
+
+    stream = models.ForeignKey(
+        Stream,
+        verbose_name='Поток',
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
     )
 
     def students_count(self):

@@ -214,6 +214,9 @@ def profile(request: HttpRequest):
                 order.user = request.user
                 order.save()
 
+            if order.order_from_gc and not student.stream:
+                student.stream = order.order_from_gc.stream
+
             student.email = order.email
             student.is_paid = True
             student.save()
@@ -446,11 +449,22 @@ def profile_my_group_choose(request: HttpRequest):
         ).filter(
             students_count__lt=3,
             group=group,
+            stream=student.stream,
+        ).first() or models.Chat.objects.annotate(
+            students_count=Count('students')
+        ).order_by(
+            "-students_count",
+        ).filter(
+            students_count__lt=3,
+            group=group,
+            stream=None,
         ).first()
+
         if not chat:
             logging.warning("ERROR: 'if not chat'")
             return render(request, "error.html")
         chat.students.add(student)
+        chat.stream = student.stream
         chat.save()
 
     return redirect('profile_my_group')
@@ -689,11 +703,17 @@ def create_order_from_gc(request: HttpRequest):
         invoice_number = int(request.GET.get('invoice_number'))
         email = request.GET.get('email')
         key = request.GET.get('key')
+        stream = request.GET.get('product')
 
-        if all((invoice_number, email, key == GC_SECRET_KEY)):
+        stream = models.Stream.objects.filter(
+            gc_name=stream.split('|')[0].strip()
+        ).first()
+
+        if all((invoice_number, email, stream, key == GC_SECRET_KEY)):
             models.OrderGC.objects.get_or_create(
                 email=email,
                 invoice_number=invoice_number,
+                stream=stream,
             )
             return JsonResponse({"status": "OK"})
     except Exception as err:
