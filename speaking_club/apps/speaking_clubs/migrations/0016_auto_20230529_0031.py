@@ -13,9 +13,8 @@ def insert_data(apps, schema_editor):
     Chat = apps.get_model('speaking_clubs', 'Chat')
 
     stream = Stream.objects.filter(name='Поток 14').first()
-    Chat.objects.filter().first()
 
-    chats = models.Chat.objects.annotate(
+    chats = Chat.objects.annotate(
         students_count=Count('students')
     ).filter(
         students_count__gt=0,
