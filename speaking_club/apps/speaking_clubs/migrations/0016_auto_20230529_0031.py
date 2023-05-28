@@ -11,6 +11,7 @@ def insert_data(apps, schema_editor):
     Stream = apps.get_model('speaking_clubs', 'Stream')
     Student = apps.get_model('speaking_clubs', 'Student')
     Chat = apps.get_model('speaking_clubs', 'Chat')
+    Order = apps.get_model('speaking_clubs', 'Order')
 
     stream = Stream.objects.filter(name='Поток 14').first()
 
@@ -28,7 +29,7 @@ def insert_data(apps, schema_editor):
 
     for student in students:
 
-        order = models.Order.objects.filter(
+        order = Order.objects.filter(
             user=student.user,
         ).first()
 
