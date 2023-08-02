@@ -273,6 +273,13 @@ class Student(models.Model):
         null=True,
     )
 
+    is_done_by_manager = models.BooleanField(
+        'Обработан',
+        blank=False,
+        null=False,
+        default=False,
+    )
+
     def __str__(self):
         return f"{self.name} {self.email}"
 

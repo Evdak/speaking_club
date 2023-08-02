@@ -123,6 +123,7 @@ class ExportStudent(ExportCsvMixin):
         'get_user_tg',
         'is_paid',
         'stream',
+        'is_done_by_manager',
     ]
 
     def export_as_csv(self, request, queryset):
@@ -139,6 +140,7 @@ class ExportStudent(ExportCsvMixin):
             "Telegram",
             "С оплатой",
             "Поток",
+            "Обработан",
         ]
 
         response = HttpResponse(content_type='text/csv')
@@ -171,6 +173,7 @@ class StudentAdmin(admin.ModelAdmin, ExportStudent):
         UserLevelFilter,
         UserTeacherFilter,
         UserTGFilter,
+        'is_done_by_manager',
     )
     actions = ["export_as_csv"]
 
