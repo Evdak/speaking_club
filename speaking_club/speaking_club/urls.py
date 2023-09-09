@@ -13,6 +13,10 @@ urlpatterns = [
     path('auth/', include('social_django.urls', namespace='social')),
     # path('robokassa/', include('robokassa.urls')),
     path('speaking_club/', include('speaking_clubs.urls')),
+    path('individual_lessons/', include('individual_lessons.urls')),
     path('login/', login, name='login'),
     path('', RedirectView.as_view(url=reverse_lazy('main_gc'))),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

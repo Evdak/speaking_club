@@ -16,6 +16,7 @@ ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'])
 
 DJANGO_APPS = [
     'jazzmin',
+    "django_bootstrap5",
     "crispy_forms",
     "crispy_bootstrap5",
 
@@ -29,6 +30,7 @@ DJANGO_APPS = [
 
 LOCAL_APPS = [
     'social_django',
+    'individual_lessons',
     'speaking_clubs',
     'robokassa',
 ]
@@ -116,11 +118,6 @@ USE_L10N = True
 # USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.0/howto/static-files/
-
-STATIC_URL = '/static/'
-
 SOCIAL_AUTH_TELEGRAM_BOT_TOKEN = env.str('SOCIAL_AUTH_TELEGRAM_BOT_TOKEN', '')
 
 # Default profile url
@@ -158,6 +155,14 @@ EMAIL_USE_SSL = True
 SERVER_EMAIL = EMAIL_HOST_USER
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
+STATIC_URL = '/static/'
+
 STATIC_ROOT = BASE_DIR / 'static'
+
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = BASE_DIR / 'media'
+
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"

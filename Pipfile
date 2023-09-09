@@ -6,18 +6,22 @@ name = "pypi"
 [packages]
 django = "==2.2.27"
 django-environ = "==0.4.4"
-social-auth-core = {file = "https://github.com/python-social-auth/social-core/archive/master.zip"}
-social-auth-app-django = "==2.1.0"
+social-auth-core = "*"
+social-auth-app-django = "*"
 django-robokassa3 = "*"
 psycopg2-binary = "*"
 gunicorn = "*"
 gevent = "*"
 django-jazzmin = "*"
 crispy-bootstrap5 = "*"
+Pillow = "*"
+django-bootstrap5 = "*"
+pyzoom = "*"
 
 [dev-packages]
 autopep8 = "*"
 black = "*"
+ipython = "*"
 
 [requires]
 python_version = "3.10"
