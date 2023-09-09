@@ -1,3 +1,4 @@
+from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpRequest, JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
@@ -14,6 +15,7 @@ from individual_lessons.helpers import create_meeting
 import logging
 
 
+@csrf_exempt
 def index(request: HttpRequest, gc_user: str):
     student = IndividualStudent.objects.filter(
         gc_user=gc_user,
@@ -143,6 +145,7 @@ def index(request: HttpRequest, gc_user: str):
         logging.error(f"{student=}")
 
 
+@csrf_exempt
 def get_date(request: HttpRequest, gc_user: str):
     if request.method == 'GET':
         student = IndividualStudent.objects.filter(
@@ -184,6 +187,7 @@ def get_date(request: HttpRequest, gc_user: str):
     )
 
 
+@csrf_exempt
 def change_teacher(request: HttpRequest, gc_user: str):
     if request.method == 'POST':
         student = IndividualStudent.objects.filter(
@@ -201,6 +205,7 @@ def change_teacher(request: HttpRequest, gc_user: str):
     return redirect("individual_lessons_index", gc_user)
 
 
+@csrf_exempt
 def delete_lesson(request: HttpRequest, gc_user: str):
     if request.method == 'POST':
         student = IndividualStudent.objects.filter(
