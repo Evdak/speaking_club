@@ -70,6 +70,7 @@
 
 
 <div class="container my-5" id="myLessons">
+    {% if my_lessons %}
     <h1>Ваши ближайшие занятия</h1>
 
     {% for les in my_lessons %}
@@ -91,15 +92,17 @@
             </div>
         </form>
     </div>
-
     {% endfor %}
+    {% endif %}
 </div>
 
 <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous"> -->
 
 
-
+<div class="container">
+    <h1>Расписание вашего преподавателя</h1>
+</div>
 <div class="container my-4 bg-white p-4 rounded-3">
     <div id="carouselExample" class="carousel slide">
         <div class="carousel-inner">
