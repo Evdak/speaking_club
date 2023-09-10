@@ -4,7 +4,7 @@ from django.core.files.base import File
 from django.db.models.base import Model
 from django.forms.utils import ErrorList
 
-from .models import IndividualLesson, IndividualStudent
+from .models import IndividualLesson, IndividualStudent, IndividualTopic
 from datetime import datetime
 from django.utils import timezone
 
@@ -61,6 +61,8 @@ class IndividualLessonCreateForm(forms.ModelForm):
         instance = kwargs.get('instance')
         if instance:
             self.fields['teacher'].initial = str(instance.teacher)
+
+        self.fields['topic'].queryset = IndividualTopic.objects.filter(level=self.fields['student']._queryset.first().level)
 
 
 class IndividualLessonForm(forms.ModelForm):
