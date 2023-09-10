@@ -18,7 +18,7 @@
         </div>
         <div class="col-6">
             <div class="d-flex gap-3 align-items-end">
-                <img src="{{student.teacher.photo.url}}" alt="" class="img-fluid">
+                <img src="{{student.teacher.photo.url}}" alt="" class="img-fluid rounded-3">
                 <div>
                     <h4>Ваш преподаватель</h4>
                     <h2>{{student.teacher}}</h2>
@@ -232,7 +232,7 @@
     const carouselExampleElement = document.querySelector('#carouselExample')
 
     const carousel = new bootstrap.Carousel(carouselExampleElement, {
-        // interval: 1000,
+        interval: false,
         wrap: false
     });
 
@@ -255,6 +255,7 @@
 
 
     function currentWeek(btn) {
+        console.log('currentWeek');
         carousel.to(0);
     }
 </script>
