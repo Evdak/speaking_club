@@ -139,6 +139,8 @@ SOCIAL_AUTH_PIPELINE = (
     "social_core.pipeline.social_auth.load_extra_data",
     "social_core.pipeline.user.user_details",
 )
+SECURE_CROSS_ORIGIN_OPENER_POLICY = None
+
 GC_SECRET_KEY = env.str("GC_SECRET_KEY", "")
 
 ROBOKASSA_LOGIN = env.str("ROBOKASSA_LOGIN", "")
