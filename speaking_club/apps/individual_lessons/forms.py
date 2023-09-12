@@ -27,7 +27,7 @@ class IndividualLessonCreateForm(forms.ModelForm):
                 "max": (timezone.now() + timezone.timedelta(days=14)).date(),
             },
         ),
-        label='Дата',
+        label="Дата",
         required=True,
     )
 
@@ -40,10 +40,10 @@ class IndividualLessonCreateForm(forms.ModelForm):
     class Meta:
         model = IndividualLesson
         exclude = (
-            'status',
-            'zoom_id',
-            'zoom_url',
-            'zoom_password',
+            "status",
+            "zoom_id",
+            "zoom_url",
+            "zoom_password",
         )
         widgets = {
             "student": forms.HiddenInput(),
@@ -53,54 +53,72 @@ class IndividualLessonCreateForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(IndividualLessonCreateForm, self).__init__(*args, **kwargs)
-        self.fields['topic'].required = True
-        self.fields['student'].required = True
+        self.fields["topic"].required = True
+        self.fields["student"].required = True
 
-        self.fields['teacher'].disabled = True
+        self.fields["teacher"].disabled = True
 
-        instance = kwargs.get('instance')
+        instance = kwargs.get("instance")
         if instance:
-            self.fields['teacher'].initial = str(instance.teacher)
+            self.fields["teacher"].initial = str(instance.teacher)
 
-        self.fields['topic'].queryset = IndividualTopic.objects.filter(level=self.fields['student']._queryset.first().level)
+        self.fields["topic"].queryset = IndividualTopic.objects.filter(
+            level=self.fields["student"]._queryset.first().level
+        )
 
 
 class IndividualLessonForm(forms.ModelForm):
     class Meta:
         model = IndividualLesson
         exclude = (
-            'status',
-            'zoom_id',
-            'zoom_password',
+            "status",
+            "zoom_id",
+            "zoom_password",
         )
         widgets = {
             "id": forms.HiddenInput(),
             "student": forms.HiddenInput(),
             "zoom_url": forms.HiddenInput(),
-            # "date": forms.TextInput(),
-            # "time": forms.TextInput(),
-            # "teacher": forms.TextInput(),
-            # "topic": forms.TextInput(),
         }
 
     def __init__(self, *args, **kwargs):
         super(IndividualLessonForm, self).__init__(*args, **kwargs)
-        self.fields['student'].disabled = True
-        self.fields['date'].disabled = True
-        self.fields['time'].disabled = True
-        self.fields['teacher'].disabled = True
-        self.fields['topic'].disabled = True
+        self.fields["student"].disabled = True
+        self.fields["date"].disabled = True
+        self.fields["time"].disabled = True
+        self.fields["teacher"].disabled = True
+        self.fields["topic"].disabled = True
 
-        self.fields['student'].required = False
-        self.fields['date'].required = False
-        self.fields['time'].required = False
-        self.fields['teacher'].required = False
-        self.fields['topic'].required = False
-        self.fields['zoom_url'].required = True
+        self.fields["student"].required = False
+        self.fields["date"].required = False
+        self.fields["time"].required = False
+        self.fields["teacher"].required = False
+        self.fields["topic"].required = False
+        self.fields["zoom_url"].required = True
 
-        instance = kwargs.get('instance')
+        instance = kwargs.get("instance")
         if instance:
-            self.fields['teacher'].initial = str(instance.teacher)
+            self.fields["teacher"].initial = str(instance.teacher)
+
+
+class IndividualLessonTeacherForm(IndividualLessonForm):
+    class Meta:
+        model = IndividualLesson
+        exclude = (
+            "zoom_id",
+            "zoom_password",
+        )
+        widgets = {
+            "id": forms.HiddenInput(),
+            "teacher": forms.HiddenInput(),
+            "zoom_url": forms.HiddenInput(),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(IndividualLessonTeacherForm, self).__init__(*args, **kwargs)
+        self.fields["status"].disabled = True
+
+        self.fields["status"].required = True
 
 
 class ChangeTeacherForm(forms.ModelForm):
