@@ -2,6 +2,9 @@
 {% load crispy_forms_tags %}
 {% load static %}
 
+
+{% load custom_filters %}
+
 {% block title %}
 Индивидуальные уроки
 {% endblock %}
@@ -12,7 +15,7 @@
     <div class="row">
         <div class="col-6">
             <h1>{% now "F Y" %}</h1>
-            <h4>Ваше текущее время: {% now "d/m/Y H:i" %}</h4>
+            <h4>Ваше текущее время: {% now "H:i" %} МСК</h4>
             <h4>Осталось занятий: {{student.hours_paid}}</h4>
             <h4><a href="">Получать уведомления в telegram</a></h4>
         </div>
@@ -49,9 +52,9 @@
 
 <div class="container my-5">
     <div id="new-lesson">
-        <p class="d-inline-flex gap-1">
-            <a class="btn btn-primary" data-bs-toggle="collapse" href="#newLesson" role="button" aria-expanded="false"
-                aria-controls="newLesson">
+        <p class="d-inline-flex gap-1 w-100">
+            <a class="btn btn-primary fs-4 px-4 w-100" data-bs-toggle="collapse" href="#newLesson" role="button"
+                aria-expanded="false" aria-controls="newLesson">
                 + Добавить урок
             </a>
         </p>
@@ -62,8 +65,8 @@
                     {{ form|crispy }}
                 </div>
                 <div class="d-flex">
-                    <button type="submit" class="btn btn-primary w-100 mx-1">Сохранить</button>
-                    <button type="cancel" class="btn btn-secondary w-100 mx-1">Отменить</button>
+                    <button type="submit" class="btn btn-color-save w-100 mx-1">Сохранить</button>
+                    <button type="cancel" class="btn btn-color-cancel w-100 mx-1">Отменить</button>
                 </div>
             </form>
         </div>
@@ -134,7 +137,8 @@
                         </div>
 
                         {% for lesson in data.lessons_on_date %}
-                        <div class="mx-1 fs-5">
+                        <div
+                            class="mx-1 fs-5 {% if lesson.datetime|iso_format_with_colon <= now|iso_format_with_colon %} text-secondary {% endif %}">
                             {{lesson.time}}
                         </div>
                         {% endfor %}
@@ -155,7 +159,8 @@
                         </div>
 
                         {% for lesson in data.lessons_on_date %}
-                        <div class="mx-1 fs-5">
+                        <div
+                            class="mx-1 fs-5 {% if lesson.datetime|iso_format_with_colon <= now|iso_format_with_colon %} text-secondary {% endif %}">
                             {{lesson.time}}
                         </div>
                         {% endfor %}
@@ -176,7 +181,8 @@
                         </div>
 
                         {% for lesson in data.lessons_on_date %}
-                        <div class="mx-1 fs-5">
+                        <div
+                            class="mx-1 fs-5 {% if lesson.datetime|iso_format_with_colon <= now|iso_format_with_colon %} text-secondary {% endif %}">
                             {{lesson.time}}
                         </div>
                         {% endfor %}
@@ -202,9 +208,10 @@
         }
     })
 
-    $('#newLesson form #div_id_date input').on('input', function (e) {
+    $('#newLesson form #div_id_date input').on('change', function (e) {
         date = $('#newLesson form #div_id_date input').val();
         if (date) {
+            console.log(`date=${date}`)
             $.getJSON(
                 "{% url 'individual_lessons_get_date' gc_user %}",
                 {
@@ -220,7 +227,7 @@
                         time_select.innerHTML = html;
                         time_select.disabled = false;
                     } else {
-                        alert('Нет доступного времени для записи');
+                        // alert('Нет доступного времени для записи');
                     }
                 }
             );
@@ -307,9 +314,19 @@
     .img-fluid {
         width: -webkit-fill-available;
         aspect-ratio: 1;
-        border-radius: 20px;
-        max-width: 250px;
-        max-height: 250px;
+        border-radius: .9rem;
+        max-width: 150px;
+        max-height: 150px;
+    }
+
+    .btn-color-save {
+        background-color: #5EBF69;
+        color: #FFF;
+    }
+
+    .btn-color-cancel {
+        background-color: #BD9F8F;
+        color: #FFF;
     }
 </style>
 

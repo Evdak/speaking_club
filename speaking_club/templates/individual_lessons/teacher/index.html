@@ -12,14 +12,14 @@
 
 <div class="container my-5">
     <div class="row">
-        <div class="col-6">
+        <div class="col-12 col-md-6">
             <h1>{% now "F Y" %}</h1>
-            <h4>Ваше текущее время: {% now "d/m/Y H:i" %}</h4>
+            <h4>Ваше текущее время: {% now "H:i" %} МСК</h4>
             <h4><a href="">Получать уведомления в telegram</a></h4>
         </div>
-        <div class="col-6">
+        <div class="col-12 col-md-6">
             <div class="d-flex gap-3 flex-column align-items-center">
-                <div class="col-6">
+                <div class="d-flex justify-content-center">
                     <img src="{{teacher.photo.url}}" alt="" class="img-fluid rounded-3">
                 </div>
                 <div>
@@ -38,7 +38,7 @@
     {% if my_lessons %}
     <h1>Ваши ближайшие занятия</h1>
 
-    {% for les in my_lessons %}
+    {% for les in my_lessons|slice:":3" %}
     <div class="container my-4">
         <form method="post" action="{% url 'individual_lessons_delete_lesson' gc_user %}" class="row">
             {% csrf_token %}
@@ -56,6 +56,27 @@
         </form>
     </div>
     {% endfor %}
+    {% if my_lessons|length > 3 %}
+    <button class="btn btn-primary" onclick="$('#other-lessons').show();$(this).hide()">Показать еще</button>
+    {% for les in my_lessons|slice:"3:" %}
+    <div class="container" id="other-lessons" style="display: none;">
+        <form method="post" action="{% url 'individual_lessons_delete_lesson' gc_user %}" class="row">
+            {% csrf_token %}
+            <div class="col-10 bg-white p-3 rounded-3">
+                <div class="d-flex gap-4">
+                    {{ les|crispy }}
+                </div>
+            </div>
+            <div class="col-2 d-flex gap-2 lessonsBtn d-flex align-items-center">
+                <a class="btn btn-primary fs-4 w-100 {% if les.date.value|date:'Y-m-d' != now|date:'Y-m-d' %} disabled {% endif %}"
+                    href="{{les.zoom_url.value}}">
+                    <span class="fs-5">Войти</span>
+                </a>
+            </div>
+        </form>
+    </div>
+    {% endfor %}
+    {% endif %}
     {% endif %}
 </div>
 
@@ -98,7 +119,8 @@
                             datetime="{{lesson.datetime|iso_format_with_colon}}">
                             {% if lesson.student %}
                             <span class="d-inline-block" tabindex="0" data-bs-toggle="popover"
-                                data-bs-trigger="hover focus" data-bs-content="Урок с {{lesson.student}}">
+                                data-bs-trigger="hover focus"
+                                data-bs-content="Урок с {{lesson.student}} | {{lesson.student.level}} | {{lesson.topic}}">
                                 {{lesson.time}}
                             </span>
                             {% else %}
@@ -392,9 +414,9 @@
     .img-fluid {
         width: -webkit-fill-available;
         aspect-ratio: 1;
-        border-radius: 20px;
-        max-width: 250px;
-        max-height: 250px;
+        border-radius: .9rem;
+        max-width: 150px;
+        max-height: 150px;
     }
 </style>
 

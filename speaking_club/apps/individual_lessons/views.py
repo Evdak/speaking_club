@@ -19,7 +19,7 @@ from individual_lessons.models import (
     IndividualStudent,
     IndividualTeacher,
 )
-from individual_lessons.helpers import create_meeting
+from individual_lessons.helpers import create_meeting, delete_meeting
 
 import logging
 
@@ -55,7 +55,6 @@ def index(request: HttpRequest, gc_user: str):
     student = IndividualStudent.objects.filter(
         gc_user=gc_user,
     ).first()
-    form = None
     if student:
         if request.method == "POST":
             if student.hours_paid > 0:
@@ -78,7 +77,7 @@ def index(request: HttpRequest, gc_user: str):
                                 date=form.cleaned_data.get("date"),
                                 student=student,
                             ).count()
-                            > 4
+                            >= 4
                         ):
                             logging.warning("add_lesson: error 2")
                             messages.error(
@@ -97,7 +96,7 @@ def index(request: HttpRequest, gc_user: str):
                             lesson.topic = form.cleaned_data.get("topic")
                             lesson.status = "Забронирован"
                             meeting = create_meeting(student, lesson)
-                            if meeting.get("status") != 1:
+                            if meeting and meeting.get("status") != 1:
                                 logging.warning(f"{meeting=}")
                                 messages.error(
                                     request, "Не удалось создать занятие в Zoom"
@@ -105,7 +104,7 @@ def index(request: HttpRequest, gc_user: str):
                             else:
                                 lesson.zoom_url = meeting["meeting_url"]
                                 lesson.zoom_password = meeting["password"]
-                                # lesson.zoom_id = meeting['id']
+                                lesson.zoom_id = meeting['id']
                                 lesson.save()
 
                                 student.hours_paid -= 1
@@ -116,13 +115,12 @@ def index(request: HttpRequest, gc_user: str):
             else:
                 messages.error(request, f"Оплатите еще занятия")
 
-        if not form:
-            form = IndividualLessonCreateForm(
-                initial={
-                    "student": student,
-                    "teacher": student.teacher,
-                }
-            )
+        form = IndividualLessonCreateForm(
+            initial={
+                "student": student,
+                "teacher": student.teacher,
+            }
+        )
 
         my_lessons = (
             IndividualLesson.objects.filter(
@@ -135,11 +133,15 @@ def index(request: HttpRequest, gc_user: str):
                     output_field=DateTimeField(),
                 )
             )
+            .filter(
+                _datetime__gt=timezone.now(),
+                _datetime__lt=timezone.now() + timezone.timedelta(days=1),
+            )
             .order_by("_datetime")
             .all()
         )
 
-        my_lessons = [el for el in my_lessons if el.datetime() >= timezone.now()]
+        # my_lessons = [el for el in my_lessons if el.datetime() >= timezone.now()]
 
         my_lessons = [IndividualLessonForm(instance=el) for el in my_lessons]
 
@@ -259,7 +261,7 @@ def get_date(request: HttpRequest, gc_user: str):
                 .order_by("_datetime")
             )
             if date == timezone.now().date():
-                lessons.filter(
+                lessons = lessons.filter(
                     time__gt=((timezone.now() + timezone.timedelta(minutes=15)).time()),
                 )
             lessons = lessons.all()
@@ -319,23 +321,23 @@ def delete_lesson(request: HttpRequest, gc_user: str):
                 lesson.student = None
                 lesson.topic = None
 
-                lesson.zoom_url = None
-                lesson.zoom_password = None
-                lesson.zoom_id = None
-                lesson.status = "Создан"
-                lesson.save()
-                if timezone.now() <= lesson.datetime() - timezone.timedelta(hours=8):
-                    student.hours_paid += 1
-                elif (
-                    lesson.datetime() - timezone.timedelta(hours=3)
-                    <= timezone.now()
-                    <= lesson.datetime()
-                ):
-                    lesson.status = "Почти отменен"
-                lesson.save()
-                student.save()
+                meeting_deleted = delete_meeting(student, lesson)
+                if meeting_deleted:
+                    lesson.zoom_url = None
+                    lesson.zoom_password = None
+                    lesson.zoom_id = None
+                    lesson.status = 'Создан'
+                    lesson.save()
+                    if timezone.now() <= lesson.datetime() - timezone.timedelta(hours=8):
+                        student.hours_paid += 1
+                    elif lesson.datetime() - timezone.timedelta(hours=3) <= timezone.now() <= lesson.datetime():
+                        lesson.status = 'Почти отменен'
+                    lesson.save()
+                    student.save()
 
-                messages.success(request, f"Занятие отменено")
+                    messages.success(request, f'Занятие отменено')
+                else:
+                    messages.error(request, f'Не удалось отменить занятие в Zoom')
         else:
             logging.warning(f"delete_lesson: error 2 {form.errors=} {form.data=}")
             messages.error(request, "Не удалось отменить занятие")
@@ -361,11 +363,15 @@ def index_teacher(request: HttpRequest, gc_user: str):
                     output_field=DateTimeField(),
                 )
             )
+            .filter(
+                _datetime__gt=timezone.now(),
+                _datetime__lt=timezone.now() + timezone.timedelta(days=1),
+            )
             .order_by("_datetime")
             .all()
         )
 
-        my_lessons = [el for el in my_lessons if el.datetime() >= timezone.now()]
+        # my_lessons = [el for el in my_lessons if el.datetime() >= timezone.now()]
 
         my_lessons = [IndividualLessonTeacherForm(instance=el) for el in my_lessons]
 

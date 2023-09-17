@@ -25,7 +25,7 @@ def create_meeting(student: IndividualStudent, lesson: IndividualLesson):
     )
 
     if response.status_code != 200:
-        print("Unable to get access token")
+        logging.warning("Unable to get access token")
     response_data = response.json()
     access_token = response_data["access_token"]
 
@@ -45,12 +45,14 @@ def create_meeting(student: IndividualStudent, lesson: IndividualLesson):
     )
 
     if resp.status_code != 201:
-        print("Unable to generate meeting link")
+        logging.warning("Unable to generate meeting link")
+        return None
     response_data = resp.json()
 
-    print(f"{response_data=}")
+    logging.warning(f"{response_data=}")
 
     content = {
+        "id": response_data["uuid"],
         "meeting_url": response_data["join_url"],
         "password": response_data["password"],
         "meetingTime": response_data["start_time"],
@@ -61,3 +63,33 @@ def create_meeting(student: IndividualStudent, lesson: IndividualLesson):
     }
 
     return content
+
+
+def delete_meeting(student: IndividualStudent, lesson: IndividualLesson):
+    data = {
+        "grant_type": "client_credentials",
+        "account_id": student.teacher.zoom_key,
+        "client_secret": student.teacher.zoom_sec,
+    }
+    response = requests.post(auth_token_url,
+                             auth=(student.teacher.zoom_client, student.teacher.zoom_sec),
+                             data=data)
+
+    if response.status_code != 200:
+        logging.warning("Unable to get access token")
+        return False
+    response_data = response.json()
+    access_token = response_data["access_token"]
+
+    headers = {
+        "Authorization": f"Bearer {access_token}",
+        "Content-Type": "application/json"
+    }
+
+    resp = requests.delete(f"{api_base_url}/meetings/{lesson.zoom_id}", headers=headers)
+
+    if resp.status_code != 204:
+        logging.warning(f'{resp.json()=}')
+        return False
+
+    return True

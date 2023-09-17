@@ -31,7 +31,7 @@ class IndividualTopic(models.Model):
     )
 
     def __str__(self) -> str:
-        return f"{self.name} {self.level}"
+        return f"{self.name}"
 
     class Meta:
         verbose_name = 'Тема'
