@@ -12,10 +12,10 @@
 
 <div class="container my-5">
     <div class="row">
-        <div class="col-12 col-md-6">
+        <div class="col-12 col-md-6 d-flex flex-column justify-content-center">
             <h1>{% now "F Y" %}</h1>
             <h4>Ваше текущее время: {% now "H:i" %} МСК</h4>
-            <h4><a href="">Получать уведомления в telegram</a></h4>
+            <!-- <h4><a href="">Получать уведомления в telegram</a></h4> -->
         </div>
         <div class="col-12 col-md-6">
             <div class="d-flex gap-3 flex-column align-items-center">
@@ -87,10 +87,10 @@
 <div class="container">
     <h1>Ваше расписание</h1>
 </div>
-<div class="container my-4 bg-white p-4 rounded-3">
+<div class="container my-4 bg-white p-0 p-md-3 rounded-3">
     <div id="carouselExample" class="carousel slide">
         <div class="carousel-inner">
-            <div class="d-flex flex-row gap-3 mb-4">
+            <div class="d-flex flex-row gap-3 mb-4 pt-3 p-md-3 justify-content-center justify-content-xl-start">
                 <button class="btn fs-4" data-bs-target="#carouselExample" data-bs-slide="prev" disabled>
                     <i class="bi bi-arrow-left-circle-fill text-primary"></i>
                 </button>
@@ -104,7 +104,7 @@
             <div class="carousel-item active">
                 <div class="row">
                     {% for data in calendar|slice:":7" %}
-                    <div class="col text-center">
+                    <div class="text-center col col-calendar">
                         <div>
                             {{ data.lesson_date|date:"D" }}
                             <br>
@@ -115,7 +115,7 @@
                         </div>
 
                         {% for lesson in data.lessons_on_date %}
-                        <div class="lesson mx-1 fs-5 {% if lesson.student %}lesson-student{% endif %} {% if lesson.id %}lesson-booked{% endif %}"
+                        <div class="lesson fs-5 my-1 {% if lesson.student %}lesson-student{% endif %} {% if lesson.id %}lesson-booked{% endif %}"
                             datetime="{{lesson.datetime|iso_format_with_colon}}">
                             {% if lesson.student %}
                             <span class="d-inline-block" tabindex="0" data-bs-toggle="popover"
@@ -135,7 +135,7 @@
             <div class="carousel-item">
                 <div class="row">
                     {% for data in calendar|slice:"7:14" %}
-                    <div class="col text-center">
+                    <div class="text-center col col-calendar">
                         <div>
                             {{ data.lesson_date|date:"D" }}
                             <br>
@@ -145,11 +145,12 @@
                         </div>
 
                         {% for lesson in data.lessons_on_date %}
-                        <div class="lesson mx-1 fs-5 {% if lesson.student %}lesson-student{% endif %} {% if lesson.id %}lesson-booked{% endif %}"
+                        <div class="lesson fs-5 my-1 {% if lesson.student %}lesson-student{% endif %} {% if lesson.id %}lesson-booked{% endif %}"
                             datetime="{{lesson.datetime|iso_format_with_colon}}">
                             {% if lesson.student %}
                             <span class="d-inline-block" tabindex="0" data-bs-toggle="popover"
-                                data-bs-trigger="hover focus" data-bs-content="Урок с {{lesson.student}}">
+                                data-bs-trigger="hover focus"
+                                data-bs-content="Урок с {{lesson.student}} | {{lesson.student.level}} | {{lesson.topic}}">
                                 {{lesson.time}}
                             </span>
                             {% else %}
@@ -164,7 +165,7 @@
             <div class="carousel-item">
                 <div class="row">
                     {% for data in calendar|slice:"14:21" %}
-                    <div class="col text-center">
+                    <div class="text-center col col-calendar">
                         <div>
                             {{ data.lesson_date|date:"D" }}
                             <br>
@@ -174,11 +175,12 @@
                         </div>
 
                         {% for lesson in data.lessons_on_date %}
-                        <div class="lesson mx-1 fs-5 {% if lesson.student %}lesson-student{% endif %} {% if lesson.id %}lesson-booked{% endif %}"
+                        <div class="lesson fs-5 my-1 {% if lesson.student %}lesson-student{% endif %} {% if lesson.id %}lesson-booked{% endif %}"
                             datetime="{{lesson.datetime|iso_format_with_colon}}">
                             {% if lesson.student %}
                             <span class="d-inline-block" tabindex="0" data-bs-toggle="popover"
-                                data-bs-trigger="hover focus" data-bs-content="Урок с {{lesson.student}}">
+                                data-bs-trigger="hover focus"
+                                data-bs-content="Урок с {{lesson.student}} | {{lesson.student.level}} | {{lesson.topic}}">
                                 {{lesson.time}}
                             </span>
                             {% else %}
@@ -193,7 +195,7 @@
             <div class="carousel-item">
                 <div class="row">
                     {% for data in calendar|slice:"21:28" %}
-                    <div class="col text-center">
+                    <div class="text-center col col-calendar">
                         <div>
                             {{ data.lesson_date|date:"D" }}
                             <br>
@@ -203,11 +205,12 @@
                         </div>
 
                         {% for lesson in data.lessons_on_date %}
-                        <div class="lesson mx-1 fs-5 {% if lesson.student %}lesson-student{% endif %} {% if lesson.id %}lesson-booked{% endif %}"
+                        <div class="lesson fs-5 my-1 {% if lesson.student %}lesson-student{% endif %} {% if lesson.id %}lesson-booked{% endif %}"
                             datetime="{{lesson.datetime|iso_format_with_colon}}">
                             {% if lesson.student %}
                             <span class="d-inline-block" tabindex="0" data-bs-toggle="popover"
-                                data-bs-trigger="hover focus" data-bs-content="Урок с {{lesson.student}}">
+                                data-bs-trigger="hover focus"
+                                data-bs-content="Урок с {{lesson.student}} | {{lesson.student.level}} | {{lesson.topic}}">
                                 {{lesson.time}}
                             </span>
                             {% else %}
@@ -222,7 +225,7 @@
             <div class="carousel-item">
                 <div class="row">
                     {% for data in calendar|slice:"28:35" %}
-                    <div class="col text-center">
+                    <div class="text-center col col-calendar">
                         <div>
                             {{ data.lesson_date|date:"D" }}
                             <br>
@@ -232,11 +235,12 @@
                         </div>
 
                         {% for lesson in data.lessons_on_date %}
-                        <div class="lesson mx-1 fs-5 {% if lesson.student %}lesson-student{% endif %} {% if lesson.id %}lesson-booked{% endif %}"
+                        <div class="lesson fs-5 my-1 {% if lesson.student %}lesson-student{% endif %} {% if lesson.id %}lesson-booked{% endif %}"
                             datetime="{{lesson.datetime|iso_format_with_colon}}">
                             {% if lesson.student %}
                             <span class="d-inline-block" tabindex="0" data-bs-toggle="popover"
-                                data-bs-trigger="hover focus" data-bs-content="Урок с {{lesson.student}}">
+                                data-bs-trigger="hover focus"
+                                data-bs-content="Урок с {{lesson.student}} | {{lesson.student.level}} | {{lesson.topic}}">
                                 {{lesson.time}}
                             </span>
                             {% else %}
@@ -417,6 +421,19 @@
         border-radius: .9rem;
         max-width: 150px;
         max-height: 150px;
+    }
+
+
+    .col-calendar {
+        flex: 0 0 auto;
+        width: calc(100% / 7);
+    }
+
+    @media (max-width: 768px) {
+        .col-calendar {
+            flex: 0 0 auto;
+            width: calc(100% / 8);
+        }
     }
 </style>
 

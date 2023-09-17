@@ -437,6 +437,8 @@ def change_lessons(request: HttpRequest, gc_user: str):
             if datetime >= timezone.now():
                 lesson: IndividualLesson
                 created: bool
+                if datetime <= (timezone.now() + timezone.timedelta(days=7)):
+                    return HttpResponseBadRequest("Нельзя менять расписание меньше чем за неделю")
                 lesson, created = IndividualLesson.objects.get_or_create(
                     teacher=teacher,
                     date=datetime.date(),
