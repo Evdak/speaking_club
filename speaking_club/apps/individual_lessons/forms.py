@@ -63,7 +63,7 @@ class IndividualLessonCreateForm(forms.ModelForm):
             self.fields["teacher"].initial = str(instance.teacher)
 
         self.fields["topic"].queryset = IndividualTopic.objects.filter(
-            level=self.fields["student"]._queryset.first().level
+            level__name=self.fields["student"]._queryset.first().level
         )
 
 

@@ -19,6 +19,7 @@ from robokassa.forms import RobokassaForm
 from apps.speaking_clubs.helpers import MAX_SCORE, define_levels, define_total_level, calculate_levels
 from apps.speaking_clubs.helpers import generate_success_form
 from apps.speaking_clubs.answers_helpers import get_answers, register_answer
+from individual_lessons.models import IndividualStudent, IndividualTeacher
 from speaking_clubs.forms import StudentForm
 from speaking_clubs.models import Student
 from speaking_club.settings import GC_SECRET_KEY
@@ -216,6 +217,15 @@ def profile(request: HttpRequest):
 
             if order.order_from_gc and not student.stream:
                 student.stream = order.order_from_gc.stream
+
+            if order.order_from_gc and order.order_from_gc.hours_paid:
+                ind_student, created = IndividualStudent.objects.get_or_create(
+                    gc_user=order.order_from_gc.user_id,
+                    student=student,
+                    hours_paid=order.order_from_gc.hours_paid,
+                )
+                if created:
+                    ind_student.teacher = IndividualTeacher.objects.order_by('?')[0]
 
             student.email = order.email
             student.is_paid = True
@@ -703,17 +713,27 @@ def create_order_from_gc(request: HttpRequest):
         invoice_number = int(request.GET.get('invoice_number'))
         email = request.GET.get('email')
         key = request.GET.get('key')
-        stream = request.GET.get('product')
+        user_id = request.GET.get('uid')
+        product = request.GET.get('product')
 
         stream = models.Stream.objects.filter(
-            gc_name=stream.split('|')[0].strip()
+            gc_name=product.split('|')[0].strip()
         ).first()
 
-        if all((invoice_number, email, stream, key == GC_SECRET_KEY)):
+        hours_paid = None
+        if product.lower().startswith('elite'):
+            try:
+                hours_paid = int(product.split('|')[1].split()[0].strip())
+            except Exception as err:
+                logging.error(f"{err=}")
+
+        if all((invoice_number, email, (stream or hours_paid), user_id, key == GC_SECRET_KEY)):
             models.OrderGC.objects.get_or_create(
                 email=email,
                 invoice_number=invoice_number,
                 stream=stream,
+                user_id=user_id,
+                product=product,
             )
             return JsonResponse({"status": "OK"})
     except Exception as err:

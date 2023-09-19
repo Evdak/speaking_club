@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils import timezone
 
+from speaking_clubs.models import Level, Student
+
 
 class IndividualLevel(models.Model):
     name = models.CharField(
@@ -23,7 +25,7 @@ class IndividualTopic(models.Model):
     )
 
     level = models.ForeignKey(
-        IndividualLevel,
+        Level,
         on_delete=models.CASCADE,
         verbose_name='Уровень',
         null=False,
@@ -86,14 +88,10 @@ class IndividualStudent(models.Model):
         'ID с GetCourse',
     )
 
-    first_name = models.CharField(
-        'Имя',
-        max_length=255,
-    )
-
-    last_name = models.CharField(
-        'Фамилия',
-        max_length=255,
+    student = models.OneToOneField(
+        Student,
+        on_delete=models.CASCADE,
+        verbose_name='Ученик',
     )
 
     hours_paid = models.PositiveIntegerField(
@@ -111,16 +109,16 @@ class IndividualStudent(models.Model):
         blank=True,
     )
 
-    level = models.ForeignKey(
-        IndividualLevel,
-        on_delete=models.CASCADE,
-        verbose_name='Уровень',
-        null=True,
-        blank=True,
-    )
-
     def __str__(self) -> str:
-        return f"{self.first_name} {self.last_name}"
+        return f"{self.first_name}"
+
+    @property
+    def level(self) -> str:
+        return self.student.get_user_level()
+
+    @property
+    def first_name(self) -> str:
+        return self.student.name
 
     class Meta:
         verbose_name = 'Ученик'

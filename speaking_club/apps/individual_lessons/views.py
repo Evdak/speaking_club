@@ -56,6 +56,16 @@ def index(request: HttpRequest, gc_user: str):
         gc_user=gc_user,
     ).first()
     if student:
+        if student.level in (None, '-'):
+            return render(
+                request,
+                "individual_lessons/redirect.html",
+                {
+                    "header": 'Сначала пройдите тестирование',
+                    "url": reverse("profile_test_results")
+                }
+            )
+
         if request.method == "POST":
             if student.hours_paid > 0:
                 form = IndividualLessonCreateForm(request.POST)
@@ -214,7 +224,14 @@ def index(request: HttpRequest, gc_user: str):
             },
         )
     else:
-        logging.error(f"{student=}")
+        return render(
+            request,
+            "individual_lessons/redirect.html",
+            {
+                "header": 'Сначала пройдите регистрацию',
+                "url": reverse("main_gc")
+            }
+        )
 
 
 @csrf_exempt

@@ -9,7 +9,7 @@ api_base_url = "https://api.zoom.us/v2"
 
 
 def create_meeting(student: IndividualStudent, lesson: IndividualLesson):
-    topic = f"Занятие с {student.first_name} {student.last_name}"
+    topic = f"Занятие с {student.first_name}"
     duration = "30"
     start_date = lesson.date.isoformat()
     start_time = lesson.time.isoformat()

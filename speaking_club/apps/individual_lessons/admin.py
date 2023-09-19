@@ -4,15 +4,6 @@ from django.contrib.admin.decorators import register
 from individual_lessons.models import *
 
 
-@register(IndividualLevel)
-class IndividualLevelAdmin(admin.ModelAdmin):
-    list_display = (
-        'name',
-    )
-
-    list_filter = list_display
-
-
 @register(IndividualTopic)
 class IndividualTopicAdmin(admin.ModelAdmin):
     list_display = (
@@ -28,7 +19,6 @@ class IndividualTeacherAdmin(admin.ModelAdmin):
     list_display = (
         'gc_user',
         'first_name',
-        'last_name',
     )
 
     list_filter = list_display
@@ -38,11 +28,10 @@ class IndividualTeacherAdmin(admin.ModelAdmin):
 class IndividualStudentAdmin(admin.ModelAdmin):
     list_display = (
         'gc_user',
-        'first_name',
-        'last_name',
+        # 'first_name',
         'hours_paid',
         'teacher',
-        'level',
+        # 'level',
     )
 
     list_filter = list_display

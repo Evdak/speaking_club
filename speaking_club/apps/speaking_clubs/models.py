@@ -133,16 +133,31 @@ class OrderGC(models.Model):
     invoice_number = models.BigIntegerField(
         "Номер заказа",
     )
+    user_id = models.CharField(
+        "ID c GetCourse",
+        max_length=255,
+    )
     stream = models.ForeignKey(
         Stream,
         verbose_name='Поток',
         on_delete=models.CASCADE,
-        blank=False,
-        null=False,
+        blank=True,
+        null=True,
+    )
+    product = models.CharField(
+        'Назваание предложения',
+        max_length=255,
     )
 
     def __str__(self) -> str:
         return f"{self.invoice_number} {self.email}"
+
+    @property
+    def hours_paid(self) -> int | None:
+        import logging
+        logging.warning(f"{self.product.lower().startswith('elite')=}")
+        if self.product.lower().startswith('elite'):
+            return int(self.product.split('|')[1].split()[0].strip())
 
     class Meta:
         verbose_name = 'Заказ c GetCourse'
@@ -159,21 +174,13 @@ class Order(models.Model):
     )
 
     invoice_number = models.PositiveIntegerField(
-        "Номер закза",
+        "Номер заказа",
     )
 
     offer = models.ForeignKey(
         Offer,
         on_delete=models.CASCADE,
         verbose_name="Пакет",
-    )
-
-    user = models.OneToOneField(
-        User,
-        on_delete=models.CASCADE,
-        verbose_name="Пользователь",
-        null=True,
-        blank=True,
     )
 
     name = models.CharField(
@@ -304,6 +311,16 @@ class Student(models.Model):
 
     def get_user_tg(self):
         return f"@{self.user.username}" if self.user.username else None
+
+    @property
+    def gc_user(self) -> str | None:
+        if self.is_paid:
+            return self.user.order.order_from_gc.user_id
+
+    @property
+    def hours_paid(self) -> str | None:
+        if self.is_paid and self.user.order.order_from_gc.hours_paid:
+            return self.user.order.order_from_gc.hours_paid
 
     class Meta:
         verbose_name = 'Студент'

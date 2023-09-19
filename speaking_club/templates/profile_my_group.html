@@ -34,10 +34,18 @@
                                 <i class="bi bi-book-fill mx-1"></i> Тестирование
                             </a>
                         </li>
-                        {% if request.user.student.is_paid %}
+                        {% if request.user.student.is_paid and request.user.student.stream %}
                         <li class="nav-item">
                             <a class="nav-link active" href=".">
                                 <i class="bi bi-people-fill mx-1"></i> Группа
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% if request.user.student.is_paid and request.user.student.hours_paid %}
+                        <li class="nav-item">
+                            <a class="nav-link active"
+                                href="{% url 'individual_lessons_index' request.user.student.gc_user %}">
+                                <i class="bi bi-backpack-fill mx-1"></i> Индивидуальные занятия
                             </a>
                         </li>
                         {% endif %}
