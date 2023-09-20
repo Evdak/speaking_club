@@ -16,7 +16,12 @@ from django.db import IntegrityError
 from django.db.models import Count
 
 from robokassa.forms import RobokassaForm
-from apps.speaking_clubs.helpers import MAX_SCORE, define_levels, define_total_level, calculate_levels
+from apps.speaking_clubs.helpers import (
+    MAX_SCORE,
+    define_levels,
+    define_total_level,
+    calculate_levels,
+)
 from apps.speaking_clubs.helpers import generate_success_form
 from apps.speaking_clubs.answers_helpers import get_answers, register_answer
 from individual_lessons.models import IndividualStudent, IndividualTeacher
@@ -34,12 +39,12 @@ def login(request: HttpRequest):
     logging.warning(f"login {request.user.id=}")
     if request.user.id:
         return redirect("profile")
-    return render(request, 'login.html')
+    return render(request, "login.html")
 
 
 def index(request: HttpRequest):
     offers = models.Offer.objects.all()
-    return render(request, 'main.html', {"offers": offers})
+    return render(request, "main.html", {"offers": offers})
 
 
 def index_no_gc(request: HttpRequest):
@@ -49,15 +54,15 @@ def index_no_gc(request: HttpRequest):
         student = Student.objects.filter(user=request.user).first()
 
     if not student:
-        request.session['no_student'] = True
+        request.session["no_student"] = True
     else:
-        return redirect('profile')
-    return render(request, 'main_no_gc.html', {"offers": offers})
+        return redirect("profile")
+    return render(request, "main_no_gc.html", {"offers": offers})
 
 
 def index_gc(request: HttpRequest):
     offers = models.Offer.objects.all()
-    return render(request, 'main_from_gc.html', {"offers": offers})
+    return render(request, "main_from_gc.html", {"offers": offers})
 
 
 @csrf_exempt
@@ -73,16 +78,20 @@ def order_from_gc(request: HttpRequest):
 
     offer = models.Offer.objects.first()
 
-    if not all((
-        # weekdays,
-        # time,
-        # offer_id,
-        email,
-        offer,
-        name,
-        invoice_number
-    )):
-        logging.warning("ERROR: 'if not all((weekdays, time, offer_id, email, offer, name))'")
+    if not all(
+        (
+            # weekdays,
+            # time,
+            # offer_id,
+            email,
+            offer,
+            name,
+            invoice_number,
+        )
+    ):
+        logging.warning(
+            "ERROR: 'if not all((weekdays, time, offer_id, email, offer, name))'"
+        )
         return render(request, "error.html")
 
     # try:
@@ -99,7 +108,12 @@ def order_from_gc(request: HttpRequest):
     ).first()
 
     if not order_from_gc:
-        return JsonResponse({"status": "ERROR", "result": "Заказ не найден. Email или № заказа неверен, попробуйте еще раз"})
+        return JsonResponse(
+            {
+                "status": "ERROR",
+                "result": "Заказ не найден. Email или № заказа неверен, попробуйте еще раз",
+            }
+        )
 
     try:
         order, _ = models.Order.objects.get_or_create(
@@ -114,7 +128,7 @@ def order_from_gc(request: HttpRequest):
     except IntegrityError:
         pass
 
-    request.session['InvId'] = invoice_number
+    request.session["InvId"] = invoice_number
 
     return JsonResponse({"status": "OK", "result": "/login"})
 
@@ -127,23 +141,24 @@ def pay_with_robokassa(request: HttpRequest):
     email: str = request.POST.get("email")
     name: str = request.POST.get("name")
 
-    offer = models.Offer.objects.filter(
-        id=offer_id
-    ).first()
+    offer = models.Offer.objects.filter(id=offer_id).first()
 
     if not all((weekdays, time, offer_id, email, offer, name)):
-        logging.warning("ERROR: 'if not all((weekdays, time, offer_id, email, offer, name))'")
+        logging.warning(
+            "ERROR: 'if not all((weekdays, time, offer_id, email, offer, name))'"
+        )
         return render(request, "error.html")
 
     try:
-        time = int(time.split(':')[0])
+        time = int(time.split(":")[0])
 
     except Exception as err:
-
         logging.warning(f"ERROR: {str(err)}")
         return render(request, "error.html")
 
-    invoice_numbers = [el.invoice_number for el in models.Order.objects.all()] + [el.invoice_number for el in models.OrderGC.objects.all()]
+    invoice_numbers = [el.invoice_number for el in models.Order.objects.all()] + [
+        el.invoice_number for el in models.OrderGC.objects.all()
+    ]
 
     invoice_number = randint(1, (2**31) - 1)
 
@@ -159,43 +174,47 @@ def pay_with_robokassa(request: HttpRequest):
         name=name,
     )
 
-    form = RobokassaForm(initial={
-        'OutSum': order.offer.price,
-        'InvId': order.invoice_number,
-        # 'Desc': order.offer.description,
-        'Email': order.email,
-        # 'IncCurrLabel': '',
-        # 'Culture': 'ru'
-    })
+    form = RobokassaForm(
+        initial={
+            "OutSum": order.offer.price,
+            "InvId": order.invoice_number,
+            # 'Desc': order.offer.description,
+            "Email": order.email,
+            # 'IncCurrLabel': '',
+            # 'Culture': 'ru'
+        }
+    )
 
-    return JsonResponse({'url': form.get_redirect_url()})
+    return JsonResponse({"url": form.get_redirect_url()})
 
 
 @csrf_exempt
 def update_session(request: HttpRequest):
-    if not request.is_ajax() or not request.method == 'POST':
-        return HttpResponseNotAllowed(['POST'])
+    if not request.is_ajax() or not request.method == "POST":
+        return HttpResponseNotAllowed(["POST"])
     try:
-        invid = int(request.POST.get('InvId'))
+        invid = int(request.POST.get("InvId"))
         if invid:
-            request.session['InvId'] = invid
+            request.session["InvId"] = invid
     except:
-        return HttpResponseServerError('Ошибка при обработке платежа, обратитесь в поддержку')
-    return HttpResponse('ok')
+        return HttpResponseServerError(
+            "Ошибка при обработке платежа, обратитесь в поддержку"
+        )
+    return HttpResponse("ok")
 
 
 @login_required
 def profile(request: HttpRequest):
-    logger = logging.getLogger('profile')
+    logger = logging.getLogger("profile")
     student = models.Student.objects.filter(user=request.user).first()
-    if not student and request.session.get('no_student'):
+    if not student and request.session.get("no_student"):
         student = models.Student.objects.create(
             name=request.user.first_name,
             user=request.user,
             is_paid=False,
         )
-        request.session['no_student'] = False
-    logger.warning(f'{student=}')
+        request.session["no_student"] = False
+    logger.warning(f"{student=}")
 
     if student:
         invoice_number = request.session.get("InvId")
@@ -225,14 +244,14 @@ def profile(request: HttpRequest):
                     hours_paid=order.order_from_gc.hours_paid,
                 )
                 if created:
-                    ind_student.teacher = IndividualTeacher.objects.order_by('?')[0]
+                    ind_student.teacher = IndividualTeacher.objects.order_by("?")[0]
 
             student.email = order.email
             student.is_paid = True
             student.save()
 
         block_num = 2
-        if student.get_user_level() is None or student.get_user_level() == '-':
+        if student.get_user_level() is None or student.get_user_level() == "-":
             block_num = 2
         if student.get_user_level() != "-" and student.get_user_chat_url() is None:
             block_num = 3
@@ -244,7 +263,7 @@ def profile(request: HttpRequest):
         _test = {}
 
         for key, value in student.test.items():
-            _test[key.split('-')[-1].lower()] = value
+            _test[key.split("-")[-1].lower()] = value
 
         if request.method == "POST":
             form = StudentForm(request.POST, instance=student)
@@ -258,11 +277,11 @@ def profile(request: HttpRequest):
             request,
             "profile.html",
             {
-                'name': student.name,
-                'block_num': block_num,
-                'test': _test,
-                'form': form,
-            }
+                "name": student.name,
+                "block_num": block_num,
+                "test": _test,
+                "form": form,
+            },
         )
 
     invoice_number = request.session.get("InvId")
@@ -279,7 +298,11 @@ def profile(request: HttpRequest):
 
     if not order:
         logger.error("if not order")
-        return render(request, "error.html", {'text': 'Ваш профиль не найден среди наших студентов'})
+        return render(
+            request,
+            "error.html",
+            {"text": "Ваш профиль не найден среди наших студентов"},
+        )
 
     if not order.user:
         order.user = request.user
@@ -295,22 +318,24 @@ def profile(request: HttpRequest):
         except IntegrityError:
             pass
     elif order.user != request.user:
-        return render(request, "error.html", {'text': 'К данному заказу привязан другой Telegram аккаунт'})
+        return render(
+            request,
+            "error.html",
+            {"text": "К данному заказу привязан другой Telegram аккаунт"},
+        )
 
-    return redirect('profile')
+    return redirect("profile")
 
 
 @login_required
 def profile_logout(request: HttpRequest):
     logout(request)
-    return redirect('main_gc')
+    return redirect("main_gc")
 
 
 @login_required
 def profile_test_results(request: HttpRequest):
-    student = models.Student.objects.filter(
-        user=request.user
-    ).first()
+    student = models.Student.objects.filter(user=request.user).first()
     if not student:
         logging.warning("ERROR: 'if not student'")
         return render(request, "error.html")
@@ -319,13 +344,15 @@ def profile_test_results(request: HttpRequest):
 
     levels, total_level = calculate_levels(_test)
 
-    level = models.Level.objects.filter(
-        name=total_level.get('total')
-    ).first()
+    level = models.Level.objects.filter(name=total_level.get("total")).first()
 
-    if not level and total_level.get('total') != '-':
+    if not level and total_level.get("total") != "-":
         logging.warning("ERROR: 'if not level'")
-        return render(request, "error.html", {'text': 'Ошибка при обработке результатов, обратитесь в поддержку'})
+        return render(
+            request,
+            "error.html",
+            {"text": "Ошибка при обработке результатов, обратитесь в поддержку"},
+        )
 
     order = models.Order.objects.filter(
         user=request.user,
@@ -339,33 +366,32 @@ def profile_test_results(request: HttpRequest):
 
     return render(
         request,
-        "profile_test_results.html",  {
+        "profile_test_results.html",
+        {
             "levels": levels,
-        }
+        },
     )
 
 
 @login_required
 def profile_my_group(request: HttpRequest):
-    student = models.Student.objects.filter(
-        user=request.user
-    ).first()
+    student = models.Student.objects.filter(user=request.user).first()
     if student.is_paid == False:
-        return redirect('profile')
+        return redirect("profile")
 
     if not student:
         logging.warning("ERROR: 'if not student'")
         return render(request, "error.html")
 
     if not student.test:
-        return redirect('test')
+        return redirect("test")
 
     _test: dict = student.test
 
     levels, total_level = calculate_levels(_test)
 
     block_num = 0
-    if student.get_user_level() is None or student.get_user_level() == '-':
+    if student.get_user_level() is None or student.get_user_level() == "-":
         block_num = 0
     elif not student.chat.first():
         block_num = 1
@@ -376,50 +402,48 @@ def profile_my_group(request: HttpRequest):
 
     return render(
         request,
-        "profile_my_group.html",  {
+        "profile_my_group.html",
+        {
             "levels": levels,
             "chat": student.chat.first(),
             "block_num": block_num,
             "chat": student.chat.first(),
-        }
+        },
     )
 
 
 @login_required
 @csrf_exempt
 def profile_my_group_choose(request: HttpRequest):
-    student = models.Student.objects.filter(
-        user=request.user
-    ).first()
+    student = models.Student.objects.filter(user=request.user).first()
     if not student:
         logging.warning("ERROR: 'if not student'")
         return render(request, "error.html")
 
-    weekdays = request.POST.get('days')
-    time = request.POST.get('time')
+    weekdays = request.POST.get("days")
+    time = request.POST.get("time")
 
     try:
-        time = int(time.split(':')[0])
+        time = int(time.split(":")[0])
 
     except Exception as err:
-
         print(f"ERROR: {str(err)}")
         return render(request, "error.html")
 
-    student = models.Student.objects.filter(
-        user=request.user
-    ).first()
+    student = models.Student.objects.filter(user=request.user).first()
 
     _test: dict = student.test
 
     levels, total_level = calculate_levels(_test)
 
-    level = models.Level.objects.filter(
-        name=total_level.get('total')
-    ).first()
+    level = models.Level.objects.filter(name=total_level.get("total")).first()
     if not level:
         logging.warning("ERROR: 'if not level'")
-        return render(request, "error.html", {'text': 'Ошибка при обработке результатов, обратитесь в поддержку'})
+        return render(
+            request,
+            "error.html",
+            {"text": "Ошибка при обработке результатов, обратитесь в поддержку"},
+        )
 
     order = models.Order.objects.filter(
         user=request.user,
@@ -434,14 +458,16 @@ def profile_my_group_choose(request: HttpRequest):
         return render(request, "error.html")
 
     group = models.Group.objects.filter(
-        level=level,
-        weekdays=order.weekdays,
-        time=order.time
+        level=level, weekdays=order.weekdays, time=order.time
     ).first()
 
     if not group:
         logging.warning("ERROR: 'if not group'")
-        return render(request, "error.html", {'text': 'Не удалось найти свободную группу, обратитесь в поддержку'})
+        return render(
+            request,
+            "error.html",
+            {"text": "Не удалось найти свободную группу, обратитесь в поддержку"},
+        )
 
     student = models.Student.objects.filter(
         user=request.user,
@@ -452,23 +478,28 @@ def profile_my_group_choose(request: HttpRequest):
         return render(request, "error.html")
 
     if not student.chat.first():
-        chat = models.Chat.objects.annotate(
-            students_count=Count('students')
-        ).order_by(
-            "-students_count",
-        ).filter(
-            students_count__lt=3,
-            group=group,
-            stream=student.stream,
-        ).first() or models.Chat.objects.annotate(
-            students_count=Count('students')
-        ).order_by(
-            "-students_count",
-        ).filter(
-            students_count__lt=3,
-            group=group,
-            stream=None,
-        ).first()
+        chat = (
+            models.Chat.objects.annotate(students_count=Count("students"))
+            .order_by(
+                "-students_count",
+            )
+            .filter(
+                students_count__lt=3,
+                group=group,
+                stream=student.stream,
+            )
+            .first()
+            or models.Chat.objects.annotate(students_count=Count("students"))
+            .order_by(
+                "-students_count",
+            )
+            .filter(
+                students_count__lt=3,
+                group=group,
+                stream=None,
+            )
+            .first()
+        )
 
         if not chat:
             logging.warning("ERROR: 'if not chat'")
@@ -477,24 +508,22 @@ def profile_my_group_choose(request: HttpRequest):
         chat.stream = student.stream
         chat.save()
 
-    return redirect('profile_my_group')
+    return redirect("profile_my_group")
 
 
 @login_required
 def test(request: HttpRequest, test_name: str):
-    student = models.Student.objects.filter(
-        user=request.user
-    ).first()
+    student = models.Student.objects.filter(user=request.user).first()
     if not student:
         logging.warning("ERROR: 'if not student'")
         return render(request, "error.html")
 
-    if test_name not in ('grammar', 'listening', 'writing', 'reading', 'vocabulary'):
-        return redirect('profile_test_results')
+    if test_name not in ("grammar", "listening", "writing", "reading", "vocabulary"):
+        return redirect("profile_test_results")
 
     levels, total_level = calculate_levels(student.test)
     if levels.get(test_name) != -1:
-        return redirect('profile_test_results')
+        return redirect("profile_test_results")
     return render(request, "test.html", {"test_name": test_name})
 
 
@@ -562,33 +591,19 @@ def test(request: HttpRequest, test_name: str):
 @login_required
 @csrf_exempt
 def get_answer(request: HttpRequest):
-    student = models.Student.objects.filter(
-        user=request.user
-    ).first()
+    student = models.Student.objects.filter(user=request.user).first()
     if not student:
-        return JsonResponse(
-            {
-                "msg": "error"
-            }
-        )
+        return JsonResponse({"msg": "error"})
 
-    nav = request.POST.get('nav')
+    nav = request.POST.get("nav")
 
     if not all([nav]):
-        return JsonResponse(
-            {
-                "msg": "error"
-            }
-        )
+        return JsonResponse({"msg": "error"})
 
     _test: dict = student.test
 
     if _test.get(nav) is None:
-        return JsonResponse(
-            {
-                "msg": "error"
-            }
-        )
+        return JsonResponse({"msg": "error"})
 
     result = _test.get(nav)
 
@@ -615,26 +630,26 @@ def get_answer(request: HttpRequest):
 @login_required
 @csrf_exempt
 def get_result(request: HttpRequest):
-    student = models.Student.objects.filter(
-        user=request.user
-    ).first()
+    student = models.Student.objects.filter(user=request.user).first()
     if not student:
         logging.warning("ERROR: 'if not student'")
         return render(request, "error.html")
 
     if not student.test:
-        return redirect('test')
+        return redirect("test")
 
     _test: dict = student.test
 
     levels, total_level = calculate_levels(_test)
 
-    level = models.Level.objects.filter(
-        name=total_level.get('total')
-    ).first()
+    level = models.Level.objects.filter(name=total_level.get("total")).first()
     if not level:
         logging.warning("ERROR: 'if not level'")
-        return render(request, "error.html", {'text': 'Ошибка при обработке результатов, обратитесь в поддержку'})
+        return render(
+            request,
+            "error.html",
+            {"text": "Ошибка при обработке результатов, обратитесь в поддержку"},
+        )
 
     order = models.Order.objects.filter(
         user=request.user,
@@ -645,14 +660,16 @@ def get_result(request: HttpRequest):
         return render(request, "error.html")
 
     group = models.Group.objects.filter(
-        level=level,
-        weekdays=order.weekdays,
-        time=order.time
+        level=level, weekdays=order.weekdays, time=order.time
     ).first()
 
     if not group:
         logging.warning("ERROR: 'if not group'")
-        return render(request, "error.html", {'text': 'Не удалось найти свободную группу, обратитесь в поддержку'})
+        return render(
+            request,
+            "error.html",
+            {"text": "Не удалось найти свободную группу, обратитесь в поддержку"},
+        )
 
     student = models.Student.objects.filter(
         user=request.user,
@@ -663,14 +680,17 @@ def get_result(request: HttpRequest):
         return render(request, "error.html")
 
     if not student.chat.first():
-        chat = models.Chat.objects.annotate(
-            students_count=Count('students')
-        ).order_by(
-            "-students_count",
-        ).filter(
-            students_count__lt=3,
-            group=group,
-        ).first()
+        chat = (
+            models.Chat.objects.annotate(students_count=Count("students"))
+            .order_by(
+                "-students_count",
+            )
+            .filter(
+                students_count__lt=3,
+                group=group,
+            )
+            .first()
+        )
         if not chat:
             logging.warning("ERROR: 'if not chat'")
             return render(request, "error.html")
@@ -681,19 +701,18 @@ def get_result(request: HttpRequest):
 
     return render(
         request,
-        "result.html",  {
+        "result.html",
+        {
             "levels": levels,
             "chat": student.chat.first(),
             "user_name": student.name,
-        }
+        },
     )
 
 
 def my_order(request: HttpRequest):
-    request.GET.get('InvId')
-    order = models.Order.objects.filter(
-        invoice_number=request.GET.get("InvId")
-    ).first()
+    request.GET.get("InvId")
+    order = models.Order.objects.filter(invoice_number=request.GET.get("InvId")).first()
 
     if order:
         form = generate_success_form(
@@ -702,7 +721,7 @@ def my_order(request: HttpRequest):
             signature=request.GET.get("SignatureValue"),
         )
 
-        return render('email.html', {'form': form})
+        return render("email.html", {"form": form})
     else:
         return render(request, "error.html")
 
@@ -710,24 +729,32 @@ def my_order(request: HttpRequest):
 @csrf_exempt
 def create_order_from_gc(request: HttpRequest):
     try:
-        invoice_number = int(request.GET.get('invoice_number'))
-        email = request.GET.get('email')
-        key = request.GET.get('key')
-        user_id = request.GET.get('uid')
-        product = request.GET.get('product')
+        invoice_number = int(request.GET.get("invoice_number"))
+        email = request.GET.get("email")
+        key = request.GET.get("key")
+        user_id = request.GET.get("uid")
+        product = request.GET.get("product")
 
         stream = models.Stream.objects.filter(
-            gc_name=product.split('|')[0].strip()
+            gc_name=product.split("|")[0].strip()
         ).first()
 
         hours_paid = None
-        if product.lower().startswith('elite'):
+        if product.lower().startswith("elite"):
             try:
-                hours_paid = int(product.split('|')[1].split()[0].strip())
+                hours_paid = int(product.split("|")[1].split()[0].strip())
             except Exception as err:
                 logging.error(f"{err=}")
 
-        if all((invoice_number, email, (stream or hours_paid), user_id, key == GC_SECRET_KEY)):
+        if all(
+            (
+                invoice_number,
+                email,
+                (stream or hours_paid),
+                user_id,
+                key == GC_SECRET_KEY,
+            )
+        ):
             models.OrderGC.objects.get_or_create(
                 email=email,
                 invoice_number=invoice_number,
@@ -736,6 +763,10 @@ def create_order_from_gc(request: HttpRequest):
                 product=product,
             )
             return JsonResponse({"status": "OK"})
+        else:
+            logging.warning(
+                f"{(invoice_number, email, (stream or hours_paid), user_id, key == GC_SECRET_KEY)}"
+            )
     except Exception as err:
         logging.critical(err)
     return HttpResponseBadRequest()
@@ -745,7 +776,7 @@ def create_order_from_gc(request: HttpRequest):
 @csrf_exempt
 def register_answer_view(request: HttpRequest):
     _request = json.loads(request.body)
-    quiz_id = _request.get('quiz_id')
+    quiz_id = _request.get("quiz_id")
     answer = _request.get("answer")
 
     if all((quiz_id, answer)):
@@ -769,10 +800,10 @@ def register_answer_view(request: HttpRequest):
 @login_required
 @csrf_exempt
 def get_answers_view(request: HttpRequest):
-    quiz_ids = request.POST.get('quiz_ids')
+    quiz_ids = request.POST.get("quiz_ids")
 
     try:
-        quiz_ids = quiz_ids.split(';;')
+        quiz_ids = quiz_ids.split(";;")
     except:
         quiz_ids = None
 
@@ -780,10 +811,12 @@ def get_answers_view(request: HttpRequest):
         try:
             answers = get_answers(request.user, quiz_ids=quiz_ids)
 
-            return JsonResponse({
-                "status": "OK",
-                "answers": answers,
-            })
+            return JsonResponse(
+                {
+                    "status": "OK",
+                    "answers": answers,
+                }
+            )
         except Exception as err:
             logging.error(err)
 
@@ -798,7 +831,7 @@ def get_answers_view(request: HttpRequest):
 @login_required
 @csrf_exempt
 def register_results_view(request: HttpRequest):
-    logger = logging.getLogger('register_results_view')
+    logger = logging.getLogger("register_results_view")
     _request: dict = json.loads(request.body)
     logger.warning(f"{_request=}")
     try:
@@ -806,9 +839,7 @@ def register_results_view(request: HttpRequest):
             pass
         logger.warning(f"{key=}, {value=}")
         if key in models.TEST and value is not None:
-            student = models.Student.objects.filter(
-                user=request.user
-            ).first()
+            student = models.Student.objects.filter(user=request.user).first()
             logger.warning(f"{student=}")
             logger.warning(f"{student.test=}")
             student.test[key] = value
@@ -822,7 +853,9 @@ def register_results_view(request: HttpRequest):
                 }
             )
         else:
-            logger.warning(f"{all([_request.get(el) is not  None for el in models.TEST])=}")
+            logger.warning(
+                f"{all([_request.get(el) is not  None for el in models.TEST])=}"
+            )
             logger.warning(f"{[_request.get(el) for el in models.TEST]=}")
     except Exception as err:
         logger.error(err)
