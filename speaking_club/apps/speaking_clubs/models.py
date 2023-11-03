@@ -14,9 +14,10 @@ from apps.speaking_clubs.helpers import calculate_levels
 User = get_user_model()
 
 WEEKDAYS = (
-    ('Понедельник - Пятница', 'Понедельник - Пятница'),
-    ('Понедельник - Суббота', 'Понедельник - Суббота'),
-    ('Среда - Суббота', 'Среда - Суббота'),
+    ("Понедельник - Пятница", "Понедельник - Пятница"),
+    ("Среда - Суббота", "Среда - Суббота"),
+    ("Понедельник - Суббота", "Понедельник - Суббота"),
+    ("Понедельник - Четверг", "Понедельник - Четверг"),
 )
 
 TEST = {
@@ -34,34 +35,34 @@ def get_test():
 
 class Level(models.Model):
     name = models.CharField(
-        'Имя',
+        "Имя",
         max_length=255,
         choices=(
-            ('A1', 'A1'),
-            ('A2', 'A2'),
-            ('B1', 'B1'),
-            ('B2', 'B2'),
-        )
+            ("A1", "A1"),
+            ("A2", "A2"),
+            ("B1", "B1"),
+            ("B2", "B2"),
+        ),
     )
 
     def __str__(self):
         return f"{self.name}"
 
     class Meta:
-        verbose_name = 'Уровень'
-        verbose_name_plural = 'Уровни'
+        verbose_name = "Уровень"
+        verbose_name_plural = "Уровни"
 
 
 class Stream(models.Model):
     name = models.CharField(
-        'Название',
+        "Название",
         max_length=255,
         blank=False,
         null=False,
     )
 
     gc_name = models.CharField(
-        'Название в заказе',
+        "Название в заказе",
         max_length=255,
         blank=False,
         null=False,
@@ -78,18 +79,18 @@ class Stream(models.Model):
 class Group(models.Model):
     level = models.ForeignKey(
         Level,
-        verbose_name='Уровень',
+        verbose_name="Уровень",
         on_delete=models.CASCADE,
     )
 
     weekdays = models.CharField(
-        'День недели',
+        "День недели",
         max_length=255,
         choices=WEEKDAYS,
     )
 
     time = models.CharField(
-        'Время начала занятия',
+        "Время начала занятия",
         max_length=255,
     )
 
@@ -100,8 +101,8 @@ class Group(models.Model):
         return f"{int(self.time)}:00 - {int(self.time)+1}:00" if self.time else ""
 
     class Meta:
-        verbose_name = 'Группа'
-        verbose_name_plural = 'Группы'
+        verbose_name = "Группа"
+        verbose_name_plural = "Группы"
 
 
 class Offer(models.Model):
@@ -122,8 +123,8 @@ class Offer(models.Model):
         return f"{self.period} {self.price}"
 
     class Meta:
-        verbose_name = 'Пакет'
-        verbose_name_plural = 'Пакеты'
+        verbose_name = "Пакет"
+        verbose_name_plural = "Пакеты"
 
 
 class OrderGC(models.Model):
@@ -139,13 +140,13 @@ class OrderGC(models.Model):
     )
     stream = models.ForeignKey(
         Stream,
-        verbose_name='Поток',
+        verbose_name="Поток",
         on_delete=models.CASCADE,
         blank=True,
         null=True,
     )
     product = models.CharField(
-        'Назваание предложения',
+        "Назваание предложения",
         max_length=255,
     )
 
@@ -154,14 +155,13 @@ class OrderGC(models.Model):
 
     @property
     def hours_paid(self) -> int | None:
-        import logging
-        logging.warning(f"{self.product.lower().startswith('elite')=}")
-        if self.product.lower().startswith('elite'):
-            return int(self.product.split('|')[1].split()[0].strip())
+        if self.product.lower().startswith("elite"):
+            splitter = "|" if "|" else "•"
+            return int(self.product.split(splitter)[1].split()[0].strip())
 
     class Meta:
-        verbose_name = 'Заказ c GetCourse'
-        verbose_name_plural = 'Заказы c GetCourse'
+        verbose_name = "Заказ c GetCourse"
+        verbose_name_plural = "Заказы c GetCourse"
 
 
 class Order(models.Model):
@@ -193,7 +193,7 @@ class Order(models.Model):
     )
 
     time = models.CharField(
-        'Время начала занятия',
+        "Время начала занятия",
         max_length=255,
         null=True,
         blank=True,
@@ -210,7 +210,7 @@ class Order(models.Model):
     order_from_gc = models.OneToOneField(
         OrderGC,
         on_delete=models.CASCADE,
-        verbose_name='Заказ с GetCourse',
+        verbose_name="Заказ с GetCourse",
         null=True,
         blank=True,
     )
@@ -219,8 +219,8 @@ class Order(models.Model):
         return f"{self.user} {self.invoice_number}"
 
     class Meta:
-        verbose_name = 'Заказ'
-        verbose_name_plural = 'Заказы'
+        verbose_name = "Заказ"
+        verbose_name_plural = "Заказы"
 
 
 def payment_received(sender: SuccessNotification, **kwargs):
@@ -228,12 +228,11 @@ def payment_received(sender: SuccessNotification, **kwargs):
 
     if order:
         url = generate_success_url(
-            cost=kwargs.get("OutSum"),
-            number=kwargs.get("InvId")
+            cost=kwargs.get("OutSum"), number=kwargs.get("InvId")
         )
 
         msg = f"""Успешная оплата, ваш заказ можно получить по ссылке: {url}"""
-        subject, from_email, to = 'Успешная оплата', EMAIL_HOST_USER, order.email
+        subject, from_email, to = "Успешная оплата", EMAIL_HOST_USER, order.email
         msg = EmailMultiAlternatives(subject, msg, from_email, [to])
         msg.send()
 
@@ -249,12 +248,12 @@ class Student(models.Model):
     )
 
     email = models.EmailField(
-        'Почта',
+        "Почта",
         null=True,
         blank=True,
     )
     name = models.CharField(
-        'Имя',
+        "Имя",
         max_length=255,
     )
 
@@ -266,7 +265,7 @@ class Student(models.Model):
     )
 
     is_paid = models.BooleanField(
-        'С оплатой',
+        "С оплатой",
         default=True,
         blank=False,
         null=False,
@@ -274,14 +273,14 @@ class Student(models.Model):
 
     stream = models.ForeignKey(
         Stream,
-        verbose_name='Поток',
+        verbose_name="Поток",
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
     )
 
     is_done_by_manager = models.BooleanField(
-        'Обработан',
+        "Обработан",
         blank=False,
         null=False,
         default=False,
@@ -298,7 +297,7 @@ class Student(models.Model):
         if chat:
             return chat.group.level
         if self.test:
-            return calculate_levels(self.test)[-1].get('total')
+            return calculate_levels(self.test)[-1].get("total")
         return None
 
     def get_user_teacher(self):
@@ -323,28 +322,28 @@ class Student(models.Model):
             return self.user.order.order_from_gc.hours_paid
 
     class Meta:
-        verbose_name = 'Студент'
-        verbose_name_plural = 'Студенты'
+        verbose_name = "Студент"
+        verbose_name_plural = "Студенты"
 
 
 class Teacher(models.Model):
-    email = models.EmailField('Почта')
+    email = models.EmailField("Почта")
     name = models.CharField(
-        'Имя',
+        "Имя",
         max_length=255,
     )
 
     groups = models.ManyToManyField(
         Group,
-        verbose_name='Группы',
+        verbose_name="Группы",
     )
 
     def __str__(self):
         return f"{self.name} {self.email}"
 
     class Meta:
-        verbose_name = 'Куратор'
-        verbose_name_plural = 'Кураторы'
+        verbose_name = "Куратор"
+        verbose_name_plural = "Кураторы"
 
 
 class Chat(models.Model):
@@ -354,26 +353,26 @@ class Chat(models.Model):
 
     group = models.ForeignKey(
         Group,
-        verbose_name='Группа',
+        verbose_name="Группа",
         on_delete=models.CASCADE,
     )
 
     teacher = models.ForeignKey(
         Teacher,
-        verbose_name='Куратор',
+        verbose_name="Куратор",
         on_delete=models.CASCADE,
     )
 
     students = models.ManyToManyField(
         Student,
-        verbose_name='Ученики',
+        verbose_name="Ученики",
         related_name="chat",
         blank=True,
     )
 
     stream = models.ForeignKey(
         Stream,
-        verbose_name='Поток',
+        verbose_name="Поток",
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
@@ -386,8 +385,8 @@ class Chat(models.Model):
         return f"{self.group} № {self.id}"
 
     class Meta:
-        verbose_name = 'Чат'
-        verbose_name_plural = 'Чаты'
+        verbose_name = "Чат"
+        verbose_name_plural = "Чаты"
 
 
 class Answer(models.Model):
@@ -397,9 +396,9 @@ class Answer(models.Model):
         blank=True,
     )
 
-    quiz_id = models.UUIDField('№ задания')
+    quiz_id = models.UUIDField("№ задания")
 
-    answer = JSONField('Ответ')
+    answer = JSONField("Ответ")
 
     def __str__(self):
         return f"{self.quiz_id} {self.answer}"

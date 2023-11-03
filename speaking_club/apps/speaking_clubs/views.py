@@ -458,7 +458,9 @@ def profile_my_group_choose(request: HttpRequest):
         return render(request, "error.html")
 
     group = models.Group.objects.filter(
-        level=level, weekdays=order.weekdays, time=order.time
+        level=level,
+        weekdays=order.weekdays,
+        time=order.time,
     ).first()
 
     if not group:
@@ -735,14 +737,16 @@ def create_order_from_gc(request: HttpRequest):
         user_id = request.GET.get("uid")
         product = request.GET.get("product")
 
+        splitter = "|" if "|" else "•"
+
         stream = models.Stream.objects.filter(
-            gc_name=product.split("|")[0].strip()
+            gc_name=product.split(splitter)[0].strip()
         ).first()
 
         hours_paid = None
         if product.lower().startswith("elite"):
             try:
-                hours_paid = int(product.split("|")[1].split()[0].strip())
+                hours_paid = int(product.split(splitter)[1].split()[0].strip())
             except Exception as err:
                 logging.error(f"{err=}")
 
