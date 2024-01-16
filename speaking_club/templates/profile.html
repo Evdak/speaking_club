@@ -95,24 +95,28 @@
         {% if block_num == 2 %}
 
         <!-- Тестирование навыков -->
-        <div class="container container-fluid d-block d-md-flex p-0" id="tabs">
-            <button type="button" class="btn btn-primary disabled fill m-1">
-                Подключить телеграм
-            </button>
-            <button type="button" class="btn btn-primary disabled fill m-1 current-tab">
-                Тестирование навыков
-            </button>
-            {% if request.user.student.is_paid and request.user.student.stream %}
-            <button type="button" class="btn btn-light disabled fill m-1" disabled>
-                Распределение в мини-группы
-            </button>
-            <button type="button" class="btn btn-light disabled fill m-1" disabled>
-                Практика в занятиях
-            </button>
+        <div class="container container-fluid d-flex flex-column p-0" id="tabs">
+            <h3>Этапы:</h3>
+            <ul class="p-0 list-unstyled">
+                <li class="fs-5 my-1">
+                    <span class="p-1 px-2">Подключить телеграм</span> <i class="bi bi-check-all fs-4"
+                        style="color: #4BADF4;"></i>
+                </li>
+                <li class="fs-5 my-1 current-5">
+                    <span class="p-1 px-2 border border-primary rounded-5">Тестирование навыков</span>
+                </li>
+                {% if request.user.student.is_paid and request.user.student.stream %}
+                <li class="fs-5 my-1 text-secondary">
+                    <span class="p-1 px-2">Распределение в мини-группы</span>
+                </li>
+                <li class="fs-5 my-1 text-secondary">
+                    <span class="p-1 px-2">Практика в занятиях</span>
+                </li>
+            </ul>
             {% endif %}
         </div>
 
-        <div class="container container-fluid my-5">
+        <div class="container container-fluid my-5 p-0">
             <h3>
                 Задачи этапа:
             </h3>
@@ -159,22 +163,27 @@
 
         {% elif block_num == 3 %}
         <!-- Распределение в мини-группы -->
-        <div class="container container-fluid d-block d-md-flex p-0" id="tabs">
-            <button type="button" class="btn btn-primary disabled fill m-1">
-                Подключить телеграм
-            </button>
-            <button type="button" class="btn btn-primary disabled fill m-1">
-                Тестирование навыков
-            </button>
-            <button type="button" class="btn btn-primary disabled fill m-1 current-tab">
-                Распределение в мини-группы
-            </button>
-            <button type="button" class="btn btn-light fill disabled m-1" disabled>
-                Практика в занятиях
-            </button>
+        <div class="container container-fluid d-flex flex-column p-0" id="tabs">
+            <h3>Этапы:</h3>
+            <ul class="p-0 list-unstyled">
+                <li class="fs-5 my-1">
+                    <span class="p-1 px-2">Подключить телеграм</span> <i class="bi bi-check-all fs-4"
+                        style="color: #4BADF4;"></i>
+                </li>
+                <li class="fs-5 my-1">
+                    <span class="p-1 px-2">Тестирование навыков</span> <i class="bi bi-check-all fs-4"
+                        style="color: #4BADF4;"></i>
+                </li>
+                <li class="fs-5 my-1 current-tab">
+                    <span class="p-1 px-2 border border-primary rounded-5">Распределение в мини-группы </span>
+                </li>
+                <li class="fs-5 my-1 text-secondary">
+                    <span class="p-1 px-2">Практика в занятиях</span>
+                </li>
+            </ul>
         </div>
 
-        <div class="container container-fluid my-5">
+        <div class="container container-fluid my-5 p-0">
             <h3>
                 Задачи этапа:
             </h3>
@@ -190,22 +199,28 @@
 
         {% elif block_num == 4 %}
         <!-- Практика в занятиях -->
-        <div class="container container-fluid d-block d-md-flex p-0" id="tabs">
-            <button type="button" class="btn btn-primary disabled fill m-1">
-                Подключить телеграм
-            </button>
-            <button type="button" class="btn btn-primary disabled fill m-1">
-                Тестирование навыков
-            </button>
-            <button type="button" class="btn btn-primary disabled fill m-1">
-                Распределение в мини-группы
-            </button>
-            <button type="button" class="btn btn-primary disabled fill m-1 current-tab">
-                Практика в занятиях
-            </button>
+        <div class="container container-fluid d-flex flex-column p-0" id="tabs">
+            <h3>Этапы:</h3>
+            <ul class="p-0 list-unstyled">
+                <li class="fs-5 my-1">
+                    <span class="p-1 px-2">Подключить телеграм</span> <i class="bi bi-check-all fs-4"
+                        style="color: #4BADF4;"></i>
+                </li>
+                <li class="fs-5 my-1">
+                    <span class="p-1 px-2">Тестирование навыков</span> <i class="bi bi-check-all fs-4"
+                        style="color: #4BADF4;"></i>
+                </li>
+                <li class="fs-5 my-1">
+                    <span class="p-1 px-2">Распределение в мини-группы</span> <i class="bi bi-check-all fs-4"
+                        style="color: #4BADF4;"></i>
+                </li>
+                <li class="fs-5 my-1 current-5">
+                    <span class="p-1 px-2 border border-primary rounded-5">Практика в занятиях </span>
+                </li>
+            </ul>
         </div>
 
-        <div class="container container-fluid my-5">
+        <div class="container container-fluid my-5 p-0">
             <h3>
                 Задачи этапа:
             </h3>

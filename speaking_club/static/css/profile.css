@@ -21,8 +21,9 @@ body {
 }
 
 .current-tab {
-    background-color: var(--current-tab-bg) !important;
-    border-color: var(--current-tab-bg) !important;
+    /* background-color: var(--current-tab-bg) !important;
+    border-color: var(--current-tab-bg) !important; */
+    width: fit-content;
 }
 
 
