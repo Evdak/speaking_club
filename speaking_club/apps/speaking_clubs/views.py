@@ -251,14 +251,14 @@ def profile(request: HttpRequest):
             student.save()
 
         block_num = 2
-        # if student.get_user_level() is None or student.get_user_level() == "-":
-        #     block_num = 2
-        # if student.get_user_level() != "-" and student.get_user_chat_url() is None:
-        #     block_num = 3
-        # if student.get_user_chat_url() is not None:
-        #     block_num = 4
-        # if student.is_paid == False:
-        #     block_num = 2
+        if student.get_user_level() is None or student.get_user_level() == "-":
+            block_num = 2
+        if student.get_user_level() != "-" and student.get_user_chat_url() is None:
+            block_num = 3
+        if student.get_user_chat_url() is not None:
+            block_num = 4
+        if student.is_paid == False:
+            block_num = 2
 
         _test = {}
 
