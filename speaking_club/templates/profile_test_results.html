@@ -42,8 +42,7 @@
                     {% endif %}
                     {% if request.user.student.is_paid and request.user.student.hours_paid %}
                     <li class="nav-item">
-                        <a class="nav-link active"
-                            href="{% url 'individual_lessons_index' request.user.student.gc_user %}">
+                        <a class="nav-link" href="{% url 'individual_lessons_index' request.user.student.gc_user %}">
                             <i class="bi bi-backpack-fill mx-1"></i> Индивидуальные занятия
                         </a>
                     </li>

@@ -1,4 +1,5 @@
-from django.contrib.auth import logout
+from django.contrib.auth import logout, authenticate
+
 import json
 import re
 from django.shortcuts import render, redirect
@@ -58,6 +59,24 @@ def index_no_gc(request: HttpRequest):
     else:
         return redirect("profile")
     return render(request, "main_no_gc.html", {"offers": offers})
+
+
+def index_no_user(request: HttpRequest, gc_id: str):
+    student = None
+    if request.user.id:
+        student = Student.objects.filter(user=request.user).first()
+    else:
+        user, _ = models.User.objects.get_or_create(
+            username=gc_id,
+            password=f"{gc_id*3}",
+        )
+        user.save()
+        user = authenticate(username=gc_id, password=f"{gc_id*3}")
+        request.user = user
+
+    if not student:
+        request.session["no_student"] = True
+    return redirect("profile")
 
 
 def index_gc(request: HttpRequest):
