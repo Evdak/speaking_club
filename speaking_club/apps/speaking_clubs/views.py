@@ -31,6 +31,8 @@ from speaking_clubs.models import Student
 from speaking_club.settings import GC_SECRET_KEY
 from speaking_clubs import models
 
+from django.contrib.auth.models import User
+
 import logging
 
 from random import randint
@@ -66,13 +68,15 @@ def index_no_user(request: HttpRequest, gc_id: str):
     if request.user.id:
         student = Student.objects.filter(user=request.user).first()
     else:
-        user, _ = models.User.objects.get_or_create(
-            username=gc_id,
-            password=f"{gc_id*3}",
+        user = User.objects.create_user(
+            gc_id,
+            "",
+            f"{gc_id*3}",
         )
         user.save()
         user = authenticate(username=gc_id, password=f"{gc_id*3}")
-        request.user = user
+        # request.user = user
+        logging.warning(f"{user=}")
 
     if not student:
         request.session["no_student"] = True
