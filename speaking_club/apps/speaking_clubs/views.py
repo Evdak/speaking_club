@@ -80,7 +80,7 @@ def index_no_user(request: HttpRequest, gc_id: str):
         logging.warning(f"{user=}")
         if user is not None:
             logging.warning(f"yes")
-            # login(request, user)
+            login(request)
             
         logging.warning(f"{request.user=}")
 
