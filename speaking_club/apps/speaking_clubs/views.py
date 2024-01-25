@@ -1,4 +1,4 @@
-from django.contrib.auth import logout, authenticate
+from django.contrib.auth import logout, authenticate, login
 
 import json
 import re
@@ -76,9 +76,10 @@ def index_no_user(request: HttpRequest, gc_id: str):
                 f"{gc_id*3}",
             )
         user.save()
-        # user = authenticate(username=gc_id, password=f"{gc_id*3}")
-        request.user = user
-        logging.warning(f"{user=}")
+        user = authenticate(request, username=gc_id, password=f"{gc_id*3}")
+        if user is not None:
+            login(request, user)
+        logging.warning(f"{request.user=}")
 
     if not student:
         request.session["no_student"] = True
