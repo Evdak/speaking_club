@@ -1,4 +1,5 @@
-from django.contrib.auth import logout, authenticate, login
+from django.contrib.auth import logout, authenticate
+from django.contrib.auth import login as _login
 
 import json
 import re
@@ -75,12 +76,11 @@ def index_no_user(request: HttpRequest, gc_id: str):
                 "",
                 f"{gc_id*3}",
             )
-        user.save()
+            user.save()
         user = authenticate(request, username=gc_id, password=f"{gc_id*3}")
         logging.warning(f"{user=}")
         if user is not None:
-            logging.warning(f"yes")
-            login(request)
+            _login(request, user)
             
         logging.warning(f"{request.user=}")
 
