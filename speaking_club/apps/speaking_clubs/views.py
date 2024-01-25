@@ -77,8 +77,11 @@ def index_no_user(request: HttpRequest, gc_id: str):
             )
         user.save()
         user = authenticate(request, username=gc_id, password=f"{gc_id*3}")
+        logging.warning(f"{user=}")
         if user is not None:
+            logging.warning(f"yes")
             login(request, user)
+            
         logging.warning(f"{request.user=}")
 
     if not student:
