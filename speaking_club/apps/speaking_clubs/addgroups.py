@@ -168,7 +168,7 @@ def main():
                         return
                     gr_num += 1
                     urls = [
-                        "https://t.me/+h2RBCStzPd1jZTJi  ",
+                        "https://t.me/+h2RBCStzPd1jZTJi",
                         "https://t.me/+lvgpvq-tmbE4ZDUy",
                         "https://t.me/+S-7EUB8jmSY2MmYy",
                     ]
