@@ -1,6 +1,7 @@
 import csv
 from django.http import HttpResponse
 from django.contrib import admin
+from speaking_clubs.helpers import MAX_SCORE, calculate_levels
 from speaking_clubs import models
 from django.db.models import Q
 
@@ -141,6 +142,17 @@ class ExportStudent(ExportCsvMixin):
             "С оплатой",
             "Поток",
             "Обработан",
+            "Навык «Грамматика»",
+            "Баллы «Грамматика»",
+            "Навык «Лексика»",
+            "Баллы «Лексика»",
+            "Навык «Письмо»",
+            "Баллы «Письмо»",
+            "Навык «Аудирование»",
+            "Баллы «Аудирование»",
+            "Навык «Чтение»",
+            "Баллы «Чтение»",
+            "Общий уровень",
         ]
 
         response = HttpResponse(content_type='text/csv')
@@ -150,14 +162,30 @@ class ExportStudent(ExportCsvMixin):
         writer.writerow(field_names)
         list_display_extended = ExportStudent.list_display
 
-        def _getattr_or_call(obj, field):
+        def _calculate_levels(obj: models.Student):
+            levels, total_level = calculate_levels(obj.test)
+            result = []
+            result.append(levels.get('grammar', '-'))
+            result.append(f"{obj.test.get('nav-Grammar', '0')}/{MAX_SCORE.get('nav-Grammar', 0)}")
+            result.append(levels.get('vocabulary', '-'))
+            result.append(f"{obj.test.get('nav-Vocabulary', '0')}/{MAX_SCORE.get('nav-Vocabulary', 0)}")
+            result.append(levels.get('writing', '-'))
+            result.append(f"{obj.test.get('nav-Writing', '0')}/{MAX_SCORE.get('nav-Writing', 0)}")
+            result.append(levels.get('listening', '-'))
+            result.append(f"{obj.test.get('nav-Listening', '0')}/{MAX_SCORE.get('nav-Listening', 0)}")
+            result.append(levels.get('reading', '-'))
+            result.append(f"{obj.test.get('nav-Reading', '0')}/{MAX_SCORE.get('nav-Reading', 0)}")
+            result.append(total_level.get('total', '-'))
+            return result
+
+        def _getattr_or_call(obj: models.Student, field):
             try:
                 return getattr(obj, field)()
             except TypeError:
                 return getattr(obj, field)
 
         for obj in queryset:
-            row = writer.writerow([_getattr_or_call(obj, field) for field in list_display_extended])
+            row = writer.writerow([_getattr_or_call(obj, field) for field in list_display_extended] + _calculate_levels(obj))
 
         return response
 
@@ -175,7 +203,7 @@ class StudentAdmin(admin.ModelAdmin, ExportStudent):
         UserTGFilter,
         'is_done_by_manager',
     )
-    actions = ["export_as_csv"]
+    actions = ["export_as_csv", "remove_test_results", "remove_test_results_with_group"]
 
     def get_user_level(self, obj):
         return obj.get_user_level()
@@ -188,6 +216,32 @@ class StudentAdmin(admin.ModelAdmin, ExportStudent):
 
     def get_user_tg(self, obj):
         return obj.get_user_tg()
+
+    def remove_test_results(self, request, queryset):
+        for el in queryset:
+            el.test = models.get_test()
+            el.save()
+            el.answer_set.clear()
+
+    def remove_test_results_with_group(self, request, queryset):
+        for el in queryset:
+            el.test = models.get_test()
+            el.is_paid = False
+            el.save()
+            
+            el.answer_set.clear()
+            el.chat.clear()
+            
+            try:
+                if el.user.order:
+                    try:
+                        el.user.order.order_from_gc.delete()
+                    except models.OrderGC.DoesNotExist:
+                        pass
+                    el.user.order.delete()
+            except models.Order.DoesNotExist:
+                pass
+
 
     get_user_level.short_description = 'Уровень'
     get_user_teacher.short_description = 'Куратор'
