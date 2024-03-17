@@ -4,13 +4,13 @@ from speaking_clubs.models import Chat, Stream, Group, Level
 def main():
     levels = ["A1", "A2", "B1"]
     times = ["18", "19", "20"]
-    weeks = ["Вторник - Четверг", "Вторник - Пятница"]
+    weeks = ["Понедельник - Суббота", "Понедельник - Пятница"]
 
     ch_num = 0
     gr_num = 0
 
     reser = Stream.objects.filter(name="Занято").first()
-    cur_stream = Stream.objects.filter(name="21 поток").first()
+    cur_stream = Stream.objects.filter(name="22 поток").first()
 
     if not all((reser, cur_stream)):
         print(f"{reser=} {cur_stream=}")
@@ -23,7 +23,7 @@ def main():
     for level in levels:
         for time in times:
             for week in weeks:
-                if level == "A1" and time == "18" and week == "Вторник - Четверг":
+                if level == "A1" and time == "18" and week == "Понедельник - Пятница":
                     gr = Group.objects.filter(
                         level__name=level, weekdays=week, time=time
                     ).first()
@@ -34,7 +34,6 @@ def main():
                     urls = [
                         "https://t.me/+pxCN_-Mlyj0wOWMy",
                         "https://t.me/+7tooEEHH-_dmNDQy",
-                        "https://t.me/+YNnOXQRFGhc3YjQy",
                     ]
                     for url in urls:
                         ch = Chat.objects.filter(chat=url).first()
@@ -46,7 +45,7 @@ def main():
                             ch.save()
                             ch_num += 1
 
-                if level == "A1" and time == "18" and week == "Вторник - Пятница":
+                if level == "A1" and time == "18" and week == "Понедельник - Суббота":
                     gr = Group.objects.filter(
                         level__name=level, weekdays=week, time=time
                     ).first()
@@ -56,7 +55,6 @@ def main():
                     gr_num += 1
                     urls = [
                         "https://t.me/+V3hyl727fvxjYTMy",
-                        "https://t.me/+Wtdc7WcAVrM1YjNi",
                         "https://t.me/+iJ8mRKlaA_o3OTRi",
                     ]
                     for url in urls:
@@ -69,7 +67,7 @@ def main():
                             ch.save()
                             ch_num += 1
 
-                if level == "A1" and time == "19" and week == "Вторник - Четверг":
+                if level == "A1" and time == "19" and week == "Понедельник - Пятница":
                     gr = Group.objects.filter(
                         level__name=level, weekdays=week, time=time
                     ).first()
@@ -78,7 +76,6 @@ def main():
                         return
                     gr_num += 1
                     urls = [
-                        "https://t.me/+beb50e_PTpNjYjZi",
                         "https://t.me/+DmzlCcJ7jZRmYjUy",
                         "https://t.me/+araxYPNxnP4yZDMy",
                     ]
@@ -91,7 +88,7 @@ def main():
                             ch.group = gr
                             ch.save()
                             ch_num += 1
-                if level == "A1" and time == "19" and week == "Вторник - Пятница":
+                if level == "A1" and time == "19" and week == "Понедельник - Суббота":
                     gr = Group.objects.filter(
                         level__name=level, weekdays=week, time=time
                     ).first()
@@ -101,7 +98,6 @@ def main():
                     gr_num += 1
                     urls = [
                         "https://t.me/+twVdCJeq7Vk2YjRi",
-                        "https://t.me/+J45yW2I_pSw2Njhi",
                         "https://t.me/+vpYF6usMJck3ZTI6",
                     ]
                     for url in urls:
@@ -113,7 +109,7 @@ def main():
                             ch.group = gr
                             ch.save()
                             ch_num += 1
-                if level == "A1" and time == "20" and week == "Вторник - Четверг":
+                if level == "A1" and time == "20" and week == "Понедельник - Пятница":
                     gr = Group.objects.filter(
                         level__name=level, weekdays=week, time=time
                     ).first()
@@ -136,7 +132,7 @@ def main():
                             ch.save()
                             ch_num += 1
 
-                if level == "A1" and time == "20" and week == "Вторник - Пятница":
+                if level == "A1" and time == "20" and week == "Понедельник - Суббота":
                     gr = Group.objects.filter(
                         level__name=level, weekdays=week, time=time
                     ).first()
@@ -145,7 +141,6 @@ def main():
                         return
                     gr_num += 1
                     urls = [
-                        "https://t.me/+dJjhjuOFssQ2MmMy",
                         "https://t.me/+8ERMFQwDQl04Zjli",
                         "https://t.me/+DfuwoA_Kpcw1ZTFi",
                     ]
@@ -159,7 +154,7 @@ def main():
                             ch.save()
                             ch_num += 1
 
-                if level == "A2" and time == "18" and week == "Вторник - Четверг":
+                if level == "A2" and time == "18" and week == "Понедельник - Пятница":
                     gr = Group.objects.filter(
                         level__name=level, weekdays=week, time=time
                     ).first()
@@ -170,7 +165,6 @@ def main():
                     urls = [
                         "https://t.me/+h2RBCStzPd1jZTJi",
                         "https://t.me/+lvgpvq-tmbE4ZDUy",
-                        "https://t.me/+S-7EUB8jmSY2MmYy",
                     ]
                     for url in urls:
                         ch = Chat.objects.filter(chat=url).first()
@@ -182,7 +176,7 @@ def main():
                             ch.save()
                             ch_num += 1
 
-                if level == "A2" and time == "18" and week == "Вторник - Пятница":
+                if level == "A2" and time == "18" and week == "Понедельник - Суббота":
                     gr = Group.objects.filter(
                         level__name=level, weekdays=week, time=time
                     ).first()
@@ -205,7 +199,7 @@ def main():
                             ch.save()
                             ch_num += 1
 
-                if level == "A2" and time == "19" and week == "Вторник - Четверг":
+                if level == "A2" and time == "19" and week == "Понедельник - Пятница":
                     gr = Group.objects.filter(
                         level__name=level, weekdays=week, time=time
                     ).first()
@@ -214,7 +208,6 @@ def main():
                         return
                     gr_num += 1
                     urls = [
-                        "https://t.me/+VjoH6wH3_CxjZGRi",
                         "https://t.me/+Ak_H2qD_1UI4ODYy",
                         "https://t.me/+7m_zxHtF8UgxYjYy",
                     ]
@@ -227,7 +220,7 @@ def main():
                             ch.group = gr
                             ch.save()
                             ch_num += 1
-                if level == "A2" and time == "19" and week == "Вторник - Пятница":
+                if level == "A2" and time == "19" and week == "Понедельник - Суббота":
                     gr = Group.objects.filter(
                         level__name=level, weekdays=week, time=time
                     ).first()
@@ -238,7 +231,7 @@ def main():
                     urls = [
                         "https://t.me/+0Y4sXPoOwr40Yzcy",
                         "https://t.me/+USdyqxnU9IlhYzgy",
-                        "https://t.me/+WuoicPRiSY0zNDNi ",
+                        "https://t.me/+WuoicPRiSY0zNDNi",
                     ]
                     for url in urls:
                         ch = Chat.objects.filter(chat=url).first()
@@ -250,7 +243,7 @@ def main():
                             ch.save()
                             ch_num += 1
 
-                if level == "A2" and time == "20" and week == "Вторник - Четверг":
+                if level == "A2" and time == "20" and week == "Понедельник - Пятница":
                     gr = Group.objects.filter(
                         level__name=level, weekdays=week, time=time
                     ).first()
@@ -261,7 +254,6 @@ def main():
                     urls = [
                         "https://t.me/+5s9dW4NUmdliMmQ6",
                         "https://t.me/+8TNlfe5HGTI2MzAy",
-                        "https://t.me/+FOws-ybkRoRiOTgy",
                     ]
                     for url in urls:
                         ch = Chat.objects.filter(chat=url).first()
@@ -273,7 +265,7 @@ def main():
                             ch.save()
                             ch_num += 1
 
-                if level == "A2" and time == "20" and week == "Вторник - Пятница":
+                if level == "A2" and time == "20" and week == "Понедельник - Суббота":
                     gr = Group.objects.filter(
                         level__name=level, weekdays=week, time=time
                     ).first()
@@ -295,7 +287,7 @@ def main():
                             ch.group = gr
                             ch.save()
                             ch_num += 1
-                if level == "B1" and time == "18" and week == "Вторник - Четверг":
+                if level == "B1" and time == "18" and week == "Понедельник - Пятница":
                     gr = Group.objects.filter(
                         level__name=level, weekdays=week, time=time
                     ).first()
@@ -304,7 +296,6 @@ def main():
                         return
                     gr_num += 1
                     urls = [
-                        "https://t.me/+_tHqpsvwGedhYzFi",
                         "https://t.me/+cB0TFI5v3Os2YjMy",
                     ]
                     for url in urls:
@@ -316,7 +307,7 @@ def main():
                             ch.group = gr
                             ch.save()
                             ch_num += 1
-                if level == "B1" and time == "18" and week == "Вторник - Пятница":
+                if level == "B1" and time == "18" and week == "Понедельник - Суббота":
                     gr = Group.objects.filter(
                         level__name=level, weekdays=week, time=time
                     ).first()
@@ -337,7 +328,7 @@ def main():
                             ch.group = gr
                             ch.save()
                             ch_num += 1
-                if level == "B1" and time == "19" and week == "Вторник - Четверг":
+                if level == "B1" and time == "19" and week == "Понедельник - Пятница":
                     gr = Group.objects.filter(
                         level__name=level, weekdays=week, time=time
                     ).first()
@@ -358,7 +349,7 @@ def main():
                             ch.group = gr
                             ch.save()
                             ch_num += 1
-                if level == "B1" and time == "19" and week == "Вторник - Пятница":
+                if level == "B1" and time == "19" and week == "Понедельник - Суббота":
                     gr = Group.objects.filter(
                         level__name=level, weekdays=week, time=time
                     ).first()
@@ -379,7 +370,7 @@ def main():
                             ch.group = gr
                             ch.save()
                             ch_num += 1
-                if level == "B1" and time == "20" and week == "Вторник - Четверг":
+                if level == "B1" and time == "20" and week == "Понедельник - Пятница":
                     gr = Group.objects.filter(
                         level__name=level, weekdays=week, time=time
                     ).first()
@@ -400,7 +391,7 @@ def main():
                             ch.group = gr
                             ch.save()
                             ch_num += 1
-                if level == "B1" and time == "20" and week == "Вторник - Пятница":
+                if level == "B1" and time == "20" and week == "Понедельник - Суббота":
                     gr = Group.objects.filter(
                         level__name=level, weekdays=week, time=time
                     ).first()
