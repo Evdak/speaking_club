@@ -1,6 +1,8 @@
 from django.contrib.auth import logout, authenticate
 from django.contrib.auth import login as _login
 
+from django.utils import timezone
+
 import json
 import re
 from django.shortcuts import render, redirect
@@ -20,6 +22,7 @@ from django.db.models import Count
 from robokassa.forms import RobokassaForm
 from apps.speaking_clubs.helpers import (
     MAX_SCORE,
+    MAX_SCORE_2,
     define_levels,
     define_total_level,
     calculate_levels,
@@ -371,7 +374,7 @@ def profile_test_results(request: HttpRequest):
 
     _test: dict = student.test
 
-    levels, total_level = calculate_levels(_test)
+    levels, total_level = calculate_levels(_test, student.is_test_2)
 
     level = models.Level.objects.filter(name=total_level.get("total")).first()
 
@@ -392,12 +395,23 @@ def profile_test_results(request: HttpRequest):
         return render(request, "error.html")
 
     levels.update(total_level)
+    
+    if levels.get("total") != '-' and not student.is_test_2 and not student.finished_test_1:
+        student.finished_test_1 = timezone.now()
+        student.save()
+    
+    show_clear_btn = False
+    if not student.is_test_2 and student.finished_test_1:
+        if timezone.now() > (student.finished_test_1 + timezone.timedelta(weeks=10)):
+            show_clear_btn = True
+    logging.warning(f"{show_clear_btn=}")
 
     return render(
         request,
         "profile_test_results.html",
         {
             "levels": levels,
+            "show_clear_btn": show_clear_btn,
         },
     )
 
@@ -417,7 +431,7 @@ def profile_my_group(request: HttpRequest):
 
     _test: dict = student.test
 
-    levels, total_level = calculate_levels(_test)
+    levels, total_level = calculate_levels(_test, student.is_test_2)
 
     block_num = 0
     if student.get_user_level() is None or student.get_user_level() == "-":
@@ -463,7 +477,7 @@ def profile_my_group_choose(request: HttpRequest):
 
     _test: dict = student.test
 
-    levels, total_level = calculate_levels(_test)
+    levels, total_level = calculate_levels(_test, student.is_test_2)
 
     level = models.Level.objects.filter(name=total_level.get("total")).first()
     if not level:
@@ -552,9 +566,11 @@ def test(request: HttpRequest, test_name: str):
     if test_name not in ("grammar", "listening", "writing", "reading", "vocabulary"):
         return redirect("profile_test_results")
 
-    levels, total_level = calculate_levels(student.test)
+    levels, total_level = calculate_levels(student.test, student.is_test_2)
     if levels.get(test_name) != -1:
         return redirect("profile_test_results")
+    if student.is_test_2:
+        return render(request, "test2.html", {"test_name": test_name})
     return render(request, "test.html", {"test_name": test_name})
 
 
@@ -638,7 +654,9 @@ def get_answer(request: HttpRequest):
 
     result = _test.get(nav)
 
-    if len(result) >= MAX_SCORE.get(nav):
+    score_dict = MAX_SCORE if not student.is_test_2 else MAX_SCORE_2
+
+    if len(result) >= score_dict.get(nav):
         return JsonResponse(
             {
                 "msg": "OK",
@@ -652,7 +670,7 @@ def get_answer(request: HttpRequest):
             "msg": "OK",
             "func": "next",
             "data": result,
-            "max_score": MAX_SCORE.get(nav),
+            "max_score": score_dict.get(nav),
             "current_score": len(result),
         }
     )
@@ -671,7 +689,7 @@ def get_result(request: HttpRequest):
 
     _test: dict = student.test
 
-    levels, total_level = calculate_levels(_test)
+    levels, total_level = calculate_levels(_test, student.is_test_2)
 
     level = models.Level.objects.filter(name=total_level.get("total")).first()
     if not level:
@@ -899,3 +917,15 @@ def register_results_view(request: HttpRequest):
             "msg": "Произошла ошибка, попробуйте еще раз или обратитесь в поддержку",
         }
     )
+
+def reset(request):
+    student = models.Student.objects.filter(user=request.user).first()
+    if not student:
+        logging.warning("ERROR: 'if not student'")
+        return render(request, "error.html")
+
+    student.test = models.get_test()
+    student.is_test_2 = True
+    student.save()
+    student.answer_set.clear()
+    return redirect("profile_test_results")

@@ -24,4 +24,5 @@ urlpatterns = [
     path("register_answer/", views.register_answer_view, name="register_answer"),
     path("get_answers/", views.get_answers_view, name="get_answers"),
     path("register_results/", views.register_results_view, name="register_results"),
+    path("reset/", views.reset, name="reset"),
 ]
