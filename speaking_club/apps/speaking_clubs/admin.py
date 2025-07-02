@@ -163,7 +163,7 @@ class ExportStudent(ExportCsvMixin):
         list_display_extended = ExportStudent.list_display
 
         def _calculate_levels(obj: models.Student):
-            levels, total_level = calculate_levels(obj.test)
+            levels, total_level = calculate_levels(obj.test, obj.is_test_2)
             result = []
             result.append(levels.get('grammar', '-'))
             result.append(f"{obj.test.get('nav-Grammar', '0')}/{MAX_SCORE.get('nav-Grammar', 0)}")

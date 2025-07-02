@@ -183,6 +183,10 @@
                 </div>
             </div>
         </div>
+
+        {% if show_clear_btn %}
+        <a class="btn btn-primary mt-5 w-100" href="{% url 'reset' %}">Перейти к новому тесту</a>
+        {% endif %}
     </div>
 </div>
 

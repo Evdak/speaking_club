@@ -290,6 +290,18 @@ class Student(models.Model):
         default=False,
     )
 
+    is_test_2 = models.BooleanField(
+        "Перешел к тесту 2",
+        default=False,
+    )
+
+    finished_test_1 = models.DateTimeField(
+        "Время завершения 1 теста",
+        default=None,
+        null=True,
+        blank=True,
+    )
+
     def __str__(self):
         return f"{self.name} {self.email}"
 
@@ -301,7 +313,7 @@ class Student(models.Model):
         if chat:
             return chat.group.level
         if self.test:
-            return calculate_levels(self.test)[-1].get("total")
+            return calculate_levels(self.test, self.is_test_2)[-1].get("total")
         return None
 
     def get_user_teacher(self):
