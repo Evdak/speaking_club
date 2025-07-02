@@ -17,7 +17,8 @@ services:
       - ./speaking_club/media:/srv/www/speaking_club/media
       - ./speaking_club/logs:/srv/www/speaking_club/logs
       - ./docker/nginx:/etc/nginx/conf.d
-      - /etc/ssl/:/etc/ssl
+      - /etc/letsencrypt/live/ystdtalk.ru/fullchain.pem:/etc/letsencrypt/live/ystdtalk.ru/fullchain.pem
+      - /etc/letsencrypt/live/ystdtalk.ru/privkey.pem:/etc/letsencrypt/live/ystdtalk.ru/privkey.pem
     depends_on:
       - python
 
