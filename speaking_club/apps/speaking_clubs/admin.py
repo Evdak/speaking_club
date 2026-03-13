@@ -7,29 +7,34 @@ from django.db.models import Q
 
 
 if not hasattr(admin, "display"):
+
     def display(description):
         def decorator(fn):
             fn.short_description = description
             return fn
+
         return decorator
+
     setattr(admin, "display", display)
 
 
 class UserLevelFilter(admin.SimpleListFilter):
-    title = 'Уровень'
-    parameter_name = 'Уровень'
+    title = "Уровень"
+    parameter_name = "Уровень"
 
     def lookups(self, request, model_admin):
         def _get_group(student: models.Student):
             try:
-                res = (student.chat.first().group.level, student.chat.first().group.level)
+                res = (
+                    student.chat.first().group.level,
+                    student.chat.first().group.level,
+                )
                 if all(res):
                     return res
             except AttributeError:
                 pass
-        res = [
-            _get_group(el) for el in models.Student.objects.all()
-        ]
+
+        res = [_get_group(el) for el in models.Student.objects.all()]
 
         res = [el for el in res if el]
 
@@ -43,8 +48,8 @@ class UserLevelFilter(admin.SimpleListFilter):
 
 
 class UserTeacherFilter(admin.SimpleListFilter):
-    title = 'Куратор'
-    parameter_name = 'Куратор'
+    title = "Куратор"
+    parameter_name = "Куратор"
 
     def lookups(self, request, model_admin):
 
@@ -56,9 +61,7 @@ class UserTeacherFilter(admin.SimpleListFilter):
             except AttributeError:
                 pass
 
-        res = [
-            _get_teacher(el) for el in models.Student.objects.all()
-        ]
+        res = [_get_teacher(el) for el in models.Student.objects.all()]
 
         res = [el for el in res if el]
 
@@ -75,8 +78,8 @@ class UserTeacherFilter(admin.SimpleListFilter):
 
 
 class UserTGFilter(admin.SimpleListFilter):
-    title = 'Ник в TG'
-    parameter_name = 'Ник в TG'
+    title = "Ник в TG"
+    parameter_name = "Ник в TG"
 
     def lookups(self, request, model_admin):
         res = [
@@ -100,13 +103,13 @@ class ExportCsvMixin:
         meta = self.model._meta
         field_names = [field.name for field in meta.fields]
 
-        response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
+        response = HttpResponse(content_type="text/csv")
+        response["Content-Disposition"] = "attachment; filename={}.csv".format(meta)
         writer = csv.writer(response)
 
         writer.writerow(field_names)
         for obj in queryset:
-            row = writer.writerow([getattr(obj, field) for field in field_names])
+            writer.writerow([getattr(obj, field) for field in field_names])
 
         return response
 
@@ -115,16 +118,16 @@ class ExportCsvMixin:
 
 class ExportStudent(ExportCsvMixin):
     list_display = [
-        'id',
-        'email',
-        'name',
-        'get_user_level',
-        'get_user_teacher',
-        'get_user_chat_url',
-        'get_user_tg',
-        'is_paid',
-        'stream',
-        'is_done_by_manager',
+        "id",
+        "email",
+        "name",
+        "get_user_level",
+        "get_user_teacher",
+        "get_user_chat_url",
+        "get_user_tg",
+        "is_paid",
+        "stream",
+        "is_done_by_manager",
     ]
 
     def export_as_csv(self, request, queryset):
@@ -155,8 +158,8 @@ class ExportStudent(ExportCsvMixin):
             "Общий уровень",
         ]
 
-        response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
+        response = HttpResponse(content_type="text/csv")
+        response["Content-Disposition"] = "attachment; filename={}.csv".format(meta)
         writer = csv.writer(response)
 
         writer.writerow(field_names)
@@ -165,17 +168,27 @@ class ExportStudent(ExportCsvMixin):
         def _calculate_levels(obj: models.Student):
             levels, total_level = calculate_levels(obj.test, obj.is_test_2)
             result = []
-            result.append(levels.get('grammar', '-'))
-            result.append(f"{obj.test.get('nav-Grammar', '0')}/{MAX_SCORE.get('nav-Grammar', 0)}")
-            result.append(levels.get('vocabulary', '-'))
-            result.append(f"{obj.test.get('nav-Vocabulary', '0')}/{MAX_SCORE.get('nav-Vocabulary', 0)}")
-            result.append(levels.get('writing', '-'))
-            result.append(f"{obj.test.get('nav-Writing', '0')}/{MAX_SCORE.get('nav-Writing', 0)}")
-            result.append(levels.get('listening', '-'))
-            result.append(f"{obj.test.get('nav-Listening', '0')}/{MAX_SCORE.get('nav-Listening', 0)}")
-            result.append(levels.get('reading', '-'))
-            result.append(f"{obj.test.get('nav-Reading', '0')}/{MAX_SCORE.get('nav-Reading', 0)}")
-            result.append(total_level.get('total', '-'))
+            result.append(levels.get("grammar", "-"))
+            result.append(
+                f"{obj.test.get('nav-Grammar', '0')}/{MAX_SCORE.get('nav-Grammar', 0)}"
+            )
+            result.append(levels.get("vocabulary", "-"))
+            result.append(
+                f"{obj.test.get('nav-Vocabulary', '0')}/{MAX_SCORE.get('nav-Vocabulary', 0)}"
+            )
+            result.append(levels.get("writing", "-"))
+            result.append(
+                f"{obj.test.get('nav-Writing', '0')}/{MAX_SCORE.get('nav-Writing', 0)}"
+            )
+            result.append(levels.get("listening", "-"))
+            result.append(
+                f"{obj.test.get('nav-Listening', '0')}/{MAX_SCORE.get('nav-Listening', 0)}"
+            )
+            result.append(levels.get("reading", "-"))
+            result.append(
+                f"{obj.test.get('nav-Reading', '0')}/{MAX_SCORE.get('nav-Reading', 0)}"
+            )
+            result.append(total_level.get("total", "-"))
             return result
 
         def _getattr_or_call(obj: models.Student, field):
@@ -185,7 +198,10 @@ class ExportStudent(ExportCsvMixin):
                 return getattr(obj, field)
 
         for obj in queryset:
-            row = writer.writerow([_getattr_or_call(obj, field) for field in list_display_extended] + _calculate_levels(obj))
+            writer.writerow(
+                [_getattr_or_call(obj, field) for field in list_display_extended]
+                + _calculate_levels(obj)
+            )
 
         return response
 
@@ -194,14 +210,14 @@ class ExportStudent(ExportCsvMixin):
 class StudentAdmin(admin.ModelAdmin, ExportStudent):
     list_display = ExportStudent.list_display
     list_filter = (
-        'is_paid',
-        'email',
-        'name',
-        'stream',
+        "is_paid",
+        "email",
+        "name",
+        "stream",
         UserLevelFilter,
         UserTeacherFilter,
         UserTGFilter,
-        'is_done_by_manager',
+        "is_done_by_manager",
     )
     actions = ["export_as_csv", "remove_test_results", "remove_test_results_with_group"]
 
@@ -228,10 +244,10 @@ class StudentAdmin(admin.ModelAdmin, ExportStudent):
             el.test = models.get_test()
             el.is_paid = False
             el.save()
-            
+
             el.answer_set.clear()
             el.chat.clear()
-            
+
             try:
                 if el.user.order:
                     try:
@@ -242,35 +258,32 @@ class StudentAdmin(admin.ModelAdmin, ExportStudent):
             except models.Order.DoesNotExist:
                 pass
 
-
-    get_user_level.short_description = 'Уровень'
-    get_user_teacher.short_description = 'Куратор'
-    get_user_chat_url.short_description = 'Ссылка на чат'
-    get_user_tg.short_description = 'Telegram'
+    get_user_level.short_description = "Уровень"
+    get_user_teacher.short_description = "Куратор"
+    get_user_chat_url.short_description = "Ссылка на чат"
+    get_user_tg.short_description = "Telegram"
 
 
 @admin.register(models.Teacher)
 class TeacherAdmin(admin.ModelAdmin):
     list_display = (
-        'email',
-        'name',
+        "email",
+        "name",
     )
     list_filter = list_display
 
 
 @admin.register(models.Level)
 class LevelAdmin(admin.ModelAdmin):
-    list_display = (
-        'name',
-    )
+    list_display = ("name",)
     list_filter = list_display
 
 
 @admin.register(models.Stream)
 class StreamAdmin(admin.ModelAdmin):
     list_display = (
-        'name',
-        'gc_name',
+        "name",
+        "gc_name",
     )
     list_filter = list_display
 
@@ -278,28 +291,28 @@ class StreamAdmin(admin.ModelAdmin):
 @admin.register(models.Group)
 class GroupAdmin(admin.ModelAdmin):
     list_display = (
-        'level',
-        'weekdays',
-        'time',
+        "level",
+        "weekdays",
+        "time",
     )
 
     list_filter = list_display
 
 
 class ChatHasSudentsFilter(admin.SimpleListFilter):
-    title = 'Есть студенты'
-    parameter_name = 'Есть студенты'
+    title = "Есть студенты"
+    parameter_name = "Есть студенты"
 
     def lookups(self, request, model_admin):
         return (
-            ('Есть', 'Есть'),
-            ('Нет', 'Нет'),
+            ("Есть", "Есть"),
+            ("Нет", "Нет"),
         )
 
     def queryset(self, request, queryset):
         value = self.value()
 
-        if value == 'Есть':
+        if value == "Есть":
             return queryset.exclude(students=None)
         else:
             return queryset.exclude(~Q(students=None))
@@ -308,24 +321,24 @@ class ChatHasSudentsFilter(admin.SimpleListFilter):
 @admin.register(models.Chat)
 class ChatAdmin(admin.ModelAdmin):
     list_display = (
-        'group',
-        'teacher',
-        'chat',
-        'stream',
-        'get_students_count',
+        "group",
+        "teacher",
+        "chat",
+        "stream",
+        "get_students_count",
     )
 
     list_filter = (
-        'group__level',
-        'group__weekdays',
-        'group__time',
-        'chat',
-        'teacher',
-        'stream',
+        "group__level",
+        "group__weekdays",
+        "group__time",
+        "chat",
+        "teacher",
+        "stream",
         ChatHasSudentsFilter,
     )
 
-    @admin.display(description='Кол-во учеников')
+    @admin.display(description="Кол-во учеников")
     def get_students_count(self, obj):
         return f"{obj.students_count()}/3"
 
@@ -333,9 +346,9 @@ class ChatAdmin(admin.ModelAdmin):
 @admin.register(models.Offer)
 class OfferAdmin(admin.ModelAdmin):
     list_display = (
-        'period',
-        'description',
-        'price',
+        "period",
+        "description",
+        "price",
     )
     list_filter = list_display
 
@@ -343,12 +356,12 @@ class OfferAdmin(admin.ModelAdmin):
 @admin.register(models.Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = (
-        'invoice_number',
-        'offer',
-        'user',
-        'email',
-        'time',
-        'weekdays',
+        "invoice_number",
+        "offer",
+        "user",
+        "email",
+        "time",
+        "weekdays",
     )
     list_filter = list_display
 
@@ -356,9 +369,9 @@ class OrderAdmin(admin.ModelAdmin):
 @admin.register(models.OrderGC)
 class OrderGCAdmin(admin.ModelAdmin):
     list_display = (
-        'invoice_number',
-        'email',
-        'stream',
+        "invoice_number",
+        "email",
+        "stream",
     )
     list_filter = list_display
 
@@ -366,7 +379,7 @@ class OrderGCAdmin(admin.ModelAdmin):
 @admin.register(models.Answer)
 class AnswerAdmin(admin.ModelAdmin):
     list_display = (
-        'quiz_id',
-        'answer',
+        "quiz_id",
+        "answer",
     )
     list_filter = list_display

@@ -1,4 +1,4 @@
-FROM python:3.10
+FROM python:3.11
 
 COPY ./speaking_club /srv/www/speaking_club
 WORKDIR /srv/www/speaking_club

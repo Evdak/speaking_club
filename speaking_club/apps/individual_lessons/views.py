@@ -6,7 +6,6 @@ from django.utils import timezone
 from django.contrib import messages
 
 from django.db.models import Count, ExpressionWrapper, F, DateTimeField
-from django.db.models.functions import TruncDate
 
 from individual_lessons.forms import (
     IndividualLessonCreateForm,
@@ -91,7 +90,7 @@ def index(request: HttpRequest, gc_user: str):
                         ):
                             logging.warning("add_lesson: error 2")
                             messages.error(
-                                request, f"Нельзя забронировать больше 4 занятий в день"
+                                request, "Нельзя забронировать больше 4 занятий в день"
                             )
                         elif (
                             lesson.date == timezone.now().date()
@@ -119,11 +118,11 @@ def index(request: HttpRequest, gc_user: str):
 
                                 student.hours_paid -= 1
                                 student.save()
-                                messages.success(request, f"Занятие забронировано")
+                                messages.success(request, "Занятие забронировано")
                 else:
                     logging.warning(f"{form.errors}")
             else:
-                messages.error(request, f"Оплатите еще занятия")
+                messages.error(request, "Оплатите еще занятия")
 
         form = IndividualLessonCreateForm(
             initial={
@@ -309,7 +308,7 @@ def change_teacher(request: HttpRequest, gc_user: str):
         logging.warning(f"{form.data=}")
         if form.is_valid():
             form.save()
-            messages.success(request, f"Учитель сменен")
+            messages.success(request, "Учитель сменен")
         else:
             messages.error(request, "Не удалось сменить учителя")
 
@@ -355,9 +354,9 @@ def delete_lesson(request: HttpRequest, gc_user: str):
                     lesson.save()
                     student.save()
 
-                    messages.success(request, f"Занятие отменено")
+                    messages.success(request, "Занятие отменено")
                 else:
-                    messages.error(request, f"Не удалось отменить занятие в Zoom")
+                    messages.error(request, "Не удалось отменить занятие в Zoom")
         else:
             logging.warning(f"delete_lesson: error 2 {form.errors=} {form.data=}")
             messages.error(request, "Не удалось отменить занятие")
@@ -398,7 +397,6 @@ def index_teacher(request: HttpRequest, gc_user: str):
         today = timezone.now()
         day_of_week = today.weekday()
         start_of_week = today - timezone.timedelta(days=day_of_week)
-        end_of_week = start_of_week + timezone.timedelta(days=21)
 
         calendar = []
 

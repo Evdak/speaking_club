@@ -1,14 +1,7 @@
-from typing import Any, Dict, Mapping, Optional, Type, Union
 from django import forms
-from django.core.files.base import File
-from django.db.models.base import Model
-from django.forms.utils import ErrorList
 
 from .models import IndividualLesson, IndividualStudent, IndividualTopic
-from datetime import datetime
 from django.utils import timezone
-
-import logging
 
 
 class IndividualLessonCreateForm(forms.ModelForm):

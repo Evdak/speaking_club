@@ -1,4 +1,4 @@
-from speaking_clubs.models import Chat, Stream, Group, Level, Teacher
+from speaking_clubs.models import Chat, Stream, Group, Teacher
 
 
 def main():
@@ -40,7 +40,9 @@ def main():
                         if not ch:
                             print(f"not ch '{level}' '{time}' '{week}' '{url}'")
                             th = Teacher.objects.first()
-                            ch = Chat.objects.create(chat=url, teacher=th, group=gr, stream=None)
+                            ch = Chat.objects.create(
+                                chat=url, teacher=th, group=gr, stream=None
+                            )
                         if ch:
                             ch.stream = None
                             ch.group = gr
@@ -63,7 +65,9 @@ def main():
                         if not ch:
                             print(f"not ch '{level}' '{time}' '{week}' '{url}'")
                             th = Teacher.objects.first()
-                            ch = Chat.objects.create(chat=url, teacher=th, group=gr, stream=None)
+                            ch = Chat.objects.create(
+                                chat=url, teacher=th, group=gr, stream=None
+                            )
                         if ch:
                             ch.stream = None
                             ch.group = gr
@@ -87,7 +91,9 @@ def main():
                         if not ch:
                             print(f"not ch '{level}' '{time}' '{week}' '{url}'")
                             th = Teacher.objects.first()
-                            ch = Chat.objects.create(chat=url, teacher=th, group=gr, stream=None)
+                            ch = Chat.objects.create(
+                                chat=url, teacher=th, group=gr, stream=None
+                            )
                         if ch:
                             ch.stream = None
                             ch.group = gr
@@ -111,7 +117,9 @@ def main():
                         if not ch:
                             print(f"not ch '{level}' '{time}' '{week}' '{url}'")
                             th = Teacher.objects.first()
-                            ch = Chat.objects.create(chat=url, teacher=th, group=gr, stream=None)
+                            ch = Chat.objects.create(
+                                chat=url, teacher=th, group=gr, stream=None
+                            )
                         if ch:
                             ch.stream = None
                             ch.group = gr
@@ -136,7 +144,9 @@ def main():
                         if not ch:
                             print(f"not ch '{level}' '{time}' '{week}' '{url}'")
                             th = Teacher.objects.first()
-                            ch = Chat.objects.create(chat=url, teacher=th, group=gr, stream=None)
+                            ch = Chat.objects.create(
+                                chat=url, teacher=th, group=gr, stream=None
+                            )
                         if ch:
                             ch.stream = None
                             ch.group = gr
@@ -161,7 +171,9 @@ def main():
                         if not ch:
                             print(f"not ch '{level}' '{time}' '{week}' '{url}'")
                             th = Teacher.objects.first()
-                            ch = Chat.objects.create(chat=url, teacher=th, group=gr, stream=None)
+                            ch = Chat.objects.create(
+                                chat=url, teacher=th, group=gr, stream=None
+                            )
                         if ch:
                             ch.stream = None
                             ch.group = gr
@@ -185,7 +197,9 @@ def main():
                         if not ch:
                             print(f"not ch '{level}' '{time}' '{week}' '{url}'")
                             th = Teacher.objects.first()
-                            ch = Chat.objects.create(chat=url, teacher=th, group=gr, stream=None)
+                            ch = Chat.objects.create(
+                                chat=url, teacher=th, group=gr, stream=None
+                            )
                         if ch:
                             ch.stream = None
                             ch.group = gr
@@ -211,7 +225,9 @@ def main():
                         if not ch:
                             print(f"not ch '{level}' '{time}' '{week}' '{url}'")
                             th = Teacher.objects.first()
-                            ch = Chat.objects.create(chat=url, teacher=th, group=gr, stream=None)
+                            ch = Chat.objects.create(
+                                chat=url, teacher=th, group=gr, stream=None
+                            )
                         if ch:
                             ch.stream = None
                             ch.group = gr
@@ -237,7 +253,9 @@ def main():
                         if not ch:
                             print(f"not ch '{level}' '{time}' '{week}' '{url}'")
                             th = Teacher.objects.first()
-                            ch = Chat.objects.create(chat=url, teacher=th, group=gr, stream=None)
+                            ch = Chat.objects.create(
+                                chat=url, teacher=th, group=gr, stream=None
+                            )
                         if ch:
                             ch.stream = None
                             ch.group = gr
@@ -262,7 +280,9 @@ def main():
                         if not ch:
                             print(f"not ch '{level}' '{time}' '{week}' '{url}'")
                             th = Teacher.objects.first()
-                            ch = Chat.objects.create(chat=url, teacher=th, group=gr, stream=None)
+                            ch = Chat.objects.create(
+                                chat=url, teacher=th, group=gr, stream=None
+                            )
                         if ch:
                             ch.stream = None
                             ch.group = gr
@@ -286,7 +306,9 @@ def main():
                         if not ch:
                             print(f"not ch '{level}' '{time}' '{week}' '{url}'")
                             th = Teacher.objects.first()
-                            ch = Chat.objects.create(chat=url, teacher=th, group=gr, stream=None)
+                            ch = Chat.objects.create(
+                                chat=url, teacher=th, group=gr, stream=None
+                            )
                         if ch:
                             ch.stream = None
                             ch.group = gr
@@ -312,7 +334,9 @@ def main():
                         if not ch:
                             print(f"not ch '{level}' '{time}' '{week}' '{url}'")
                             th = Teacher.objects.first()
-                            ch = Chat.objects.create(chat=url, teacher=th, group=gr, stream=None)
+                            ch = Chat.objects.create(
+                                chat=url, teacher=th, group=gr, stream=None
+                            )
                         if ch:
                             ch.stream = None
                             ch.group = gr
@@ -334,7 +358,9 @@ def main():
                         if not ch:
                             print(f"not ch '{level}' '{time}' '{week}' '{url}'")
                             th = Teacher.objects.first()
-                            ch = Chat.objects.create(chat=url, teacher=th, group=gr, stream=None)
+                            ch = Chat.objects.create(
+                                chat=url, teacher=th, group=gr, stream=None
+                            )
                         if ch:
                             ch.stream = None
                             ch.group = gr
@@ -357,7 +383,9 @@ def main():
                         if not ch:
                             print(f"not ch '{level}' '{time}' '{week}' '{url}'")
                             th = Teacher.objects.first()
-                            ch = Chat.objects.create(chat=url, teacher=th, group=gr, stream=None)
+                            ch = Chat.objects.create(
+                                chat=url, teacher=th, group=gr, stream=None
+                            )
                         if ch:
                             ch.stream = None
                             ch.group = gr
@@ -380,7 +408,9 @@ def main():
                         if not ch:
                             print(f"not ch '{level}' '{time}' '{week}' '{url}'")
                             th = Teacher.objects.first()
-                            ch = Chat.objects.create(chat=url, teacher=th, group=gr, stream=None)
+                            ch = Chat.objects.create(
+                                chat=url, teacher=th, group=gr, stream=None
+                            )
                         if ch:
                             ch.stream = None
                             ch.group = gr
@@ -403,7 +433,9 @@ def main():
                         if not ch:
                             print(f"not ch '{level}' '{time}' '{week}' '{url}'")
                             th = Teacher.objects.first()
-                            ch = Chat.objects.create(chat=url, teacher=th, group=gr, stream=None)
+                            ch = Chat.objects.create(
+                                chat=url, teacher=th, group=gr, stream=None
+                            )
                         if ch:
                             ch.stream = None
                             ch.group = gr
@@ -426,7 +458,9 @@ def main():
                         if not ch:
                             print(f"not ch '{level}' '{time}' '{week}' '{url}'")
                             th = Teacher.objects.first()
-                            ch = Chat.objects.create(chat=url, teacher=th, group=gr, stream=None)
+                            ch = Chat.objects.create(
+                                chat=url, teacher=th, group=gr, stream=None
+                            )
                         if ch:
                             ch.stream = None
                             ch.group = gr
@@ -449,7 +483,9 @@ def main():
                         if not ch:
                             print(f"not ch '{level}' '{time}' '{week}' '{url}'")
                             th = Teacher.objects.first()
-                            ch = Chat.objects.create(chat=url, teacher=th, group=gr, stream=None)
+                            ch = Chat.objects.create(
+                                chat=url, teacher=th, group=gr, stream=None
+                            )
                         if ch:
                             ch.stream = None
                             ch.group = gr

@@ -1,13 +1,8 @@
-from robokassa.signals import result_received
-from robokassa.models import SuccessNotification
 from django.db import models
 from django.contrib.auth import get_user_model
 
-from django.core.mail import EmailMultiAlternatives
-from django.contrib.postgres.fields import JSONField
+from django.db.models import JSONField
 
-from apps.speaking_clubs.helpers import generate_success_url
-from speaking_club.settings import EMAIL_HOST_USER
 
 from apps.speaking_clubs.helpers import calculate_levels
 
@@ -102,7 +97,7 @@ class Group(models.Model):
         return f"{self.level} {self.weekdays} {self.time}"
 
     def get_time(self) -> str:
-        return f"{int(self.time)}:00 - {int(self.time)+1}:00" if self.time else ""
+        return f"{int(self.time)}:00 - {int(self.time) + 1}:00" if self.time else ""
 
     class Meta:
         verbose_name = "Группа"
@@ -225,23 +220,6 @@ class Order(models.Model):
     class Meta:
         verbose_name = "Заказ"
         verbose_name_plural = "Заказы"
-
-
-def payment_received(sender: SuccessNotification, **kwargs):
-    order = Order.objects.filter(invoice_number=kwargs.get("InvId")).first()
-
-    if order:
-        url = generate_success_url(
-            cost=kwargs.get("OutSum"), number=kwargs.get("InvId")
-        )
-
-        msg = f"""Успешная оплата, ваш заказ можно получить по ссылке: {url}"""
-        subject, from_email, to = "Успешная оплата", EMAIL_HOST_USER, order.email
-        msg = EmailMultiAlternatives(subject, msg, from_email, [to])
-        msg.send()
-
-
-result_received.connect(payment_received)
 
 
 class Student(models.Model):
