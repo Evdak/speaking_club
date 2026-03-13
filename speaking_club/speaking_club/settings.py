@@ -31,7 +31,6 @@ LOCAL_APPS = [
     "social_django",
     "individual_lessons",
     "speaking_clubs",
-    "robokassa",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS
@@ -142,18 +141,6 @@ SOCIAL_AUTH_PIPELINE = (
 SECURE_CROSS_ORIGIN_OPENER_POLICY = None
 
 GC_SECRET_KEY = env.str("GC_SECRET_KEY", "")
-
-ROBOKASSA_LOGIN = env.str("ROBOKASSA_LOGIN", "")
-ROBOKASSA_TEST_MODE = env.bool("ROBOKASSA_TEST_MODE", False)
-
-if ROBOKASSA_TEST_MODE:
-    ROBOKASSA_PASSWORD1 = env.str("TEST_ROBOKASSA_PASSWORD1", "")
-    ROBOKASSA_PASSWORD2 = env.str("TEST_ROBOKASSA_PASSWORD2", "")
-else:
-    ROBOKASSA_PASSWORD1 = env.str("ROBOKASSA_PASSWORD1", "")
-    ROBOKASSA_PASSWORD2 = env.str("ROBOKASSA_PASSWORD2", "")
-
-ROBOKASSA_USE_POST = True
 
 
 EMAIL_HOST = "smtp.yandex.ru"

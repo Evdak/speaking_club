@@ -1,18 +1,11 @@
-import logging
-import decimal
 import hashlib
-from urllib import parse
-from speaking_club.settings import ALLOWED_HOSTS, ROBOKASSA_PASSWORD1
-from django import forms
-from robokassa.forms import SuccessRedirectForm
-import urllib.parse
 
 MAX_SCORE = {
     "nav-Writing": 38,
     "nav-Listening": 15,
     "nav-Vocabulary": 20,
     "nav-Grammar": 34,
-    "nav-Reading": 16
+    "nav-Reading": 16,
 }
 
 
@@ -21,51 +14,47 @@ MAX_SCORE_2 = {
     "nav-Listening": 16,
     "nav-Vocabulary": 20,
     "nav-Grammar": 34,
-    "nav-Reading": 16
+    "nav-Reading": 16,
 }
 
 
 def define_levels(
-    grammar: int,
-    listening: int,
-    writing: int,
-    reading: int,
-    vocabulary: int
+    grammar: int, listening: int, writing: int, reading: int, vocabulary: int
 ):
     if 0 <= grammar <= 13:
-        grammar = 'A1'
+        grammar = "A1"
     elif 14 <= grammar <= 21:
-        grammar = 'A2'
+        grammar = "A2"
     elif 22 <= grammar:
-        grammar = 'B1'
+        grammar = "B1"
 
     if 0 <= listening <= 4:
-        listening = 'A1'
+        listening = "A1"
     elif 5 <= listening <= 7:
-        listening = 'A2'
+        listening = "A2"
     elif 8 <= listening:
-        listening = 'B1'
+        listening = "B1"
 
     if 0 <= writing <= 16:
-        writing = 'A1'
+        writing = "A1"
     elif 17 <= writing <= 28:
-        writing = 'A2'
+        writing = "A2"
     elif 29 <= writing:
-        writing = 'B1'
+        writing = "B1"
 
     if 0 <= reading <= 5:
-        reading = 'A1'
+        reading = "A1"
     elif 6 <= reading <= 9:
-        reading = 'A2'
+        reading = "A2"
     elif 10 <= reading:
-        reading = 'B1'
+        reading = "B1"
 
     if 0 <= vocabulary <= 14:
-        vocabulary = 'A1'
+        vocabulary = "A1"
     elif 15 <= vocabulary <= 25:
-        vocabulary = 'A2'
+        vocabulary = "A2"
     elif 26 <= vocabulary:
-        vocabulary = 'B1'
+        vocabulary = "B1"
 
     return {
         "grammar": grammar if grammar else "-",
@@ -77,46 +66,42 @@ def define_levels(
 
 
 def define_levels_2(
-    grammar: int,
-    listening: int,
-    writing: int,
-    reading: int,
-    vocabulary: int
+    grammar: int, listening: int, writing: int, reading: int, vocabulary: int
 ):
     if 0 <= grammar <= 13:
-        grammar = 'A1'
+        grammar = "A1"
     elif 14 <= grammar <= 21:
-        grammar = 'A2'
+        grammar = "A2"
     elif 22 <= grammar:
-        grammar = 'B1'
+        grammar = "B1"
 
     if 0 <= listening <= 4:
-        listening = 'A1'
+        listening = "A1"
     elif 5 <= listening <= 7:
-        listening = 'A2'
+        listening = "A2"
     elif 8 <= listening:
-        listening = 'B1'
+        listening = "B1"
 
     if 0 <= writing <= 23:
-        writing = 'A1'
+        writing = "A1"
     elif 24 <= writing <= 41:
-        writing = 'A2'
+        writing = "A2"
     elif 42 <= writing:
-        writing = 'B1'
+        writing = "B1"
 
     if 0 <= reading <= 5:
-        reading = 'A1'
+        reading = "A1"
     elif 6 <= reading <= 9:
-        reading = 'A2'
+        reading = "A2"
     elif 10 <= reading:
-        reading = 'B1'
+        reading = "B1"
 
     if 0 <= vocabulary <= 14:
-        vocabulary = 'A1'
+        vocabulary = "A1"
     elif 15 <= vocabulary <= 25:
-        vocabulary = 'A2'
+        vocabulary = "A2"
     elif 26 <= vocabulary:
-        vocabulary = 'B1'
+        vocabulary = "B1"
 
     return {
         "grammar": grammar if grammar else "-",
@@ -126,107 +111,58 @@ def define_levels_2(
         "vocabulary": vocabulary if vocabulary else "-",
     }
 
-def define_total_level(grammar: str, listening: str, writing: str, reading: str, vocabulary: str):
-    if any([el == -1 or el == '-' for el in (grammar, listening, writing, reading, vocabulary)]):
-        return {
-            "total": "-"
-        }
+
+def define_total_level(
+    grammar: str, listening: str, writing: str, reading: str, vocabulary: str
+):
+    if any(
+        [
+            el == -1 or el == "-"
+            for el in (grammar, listening, writing, reading, vocabulary)
+        ]
+    ):
+        return {"total": "-"}
 
     if (grammar == "A1") and (vocabulary == "A1"):
-        return {
-            "total": "A1"
-        }
+        return {"total": "A1"}
 
-    if (grammar == "A1") and (vocabulary == "A2" or vocabulary == "B1") and writing == "A1":
-        return {
-            "total": "A1"
-        }
+    if (
+        (grammar == "A1")
+        and (vocabulary == "A2" or vocabulary == "B1")
+        and writing == "A1"
+    ):
+        return {"total": "A1"}
 
-    if (grammar == "A1") and (vocabulary == "A2" or vocabulary == "B1") and (writing == "A2" or writing == "B1"):
-        return {
-            "total": "A2"
-        }
+    if (
+        (grammar == "A1")
+        and (vocabulary == "A2" or vocabulary == "B1")
+        and (writing == "A2" or writing == "B1")
+    ):
+        return {"total": "A2"}
 
     if (grammar == "A2") and (vocabulary == "A2" or vocabulary == "B1"):
-        return {
-            "total": "A2"
-        }
+        return {"total": "A2"}
 
     if (grammar == "A2") and (vocabulary == "A1") and writing == "A1":
-        return {
-            "total": "A1"
-        }
+        return {"total": "A1"}
 
-    if (grammar == "A2") and (vocabulary == "A1") and (writing == "A2" or writing == "B1"):
-        return {
-            "total": "A2"
-        }
+    if (
+        (grammar == "A2")
+        and (vocabulary == "A1")
+        and (writing == "A2" or writing == "B1")
+    ):
+        return {"total": "A2"}
 
     if (grammar == "B1") and (vocabulary == "A2" or vocabulary == "B1"):
-        return {
-            "total": "B1"
-        }
+        return {"total": "B1"}
 
     if (grammar == "B1") and (vocabulary == "A1"):
-        return {
-            "total": "A2"
-        }
-
-
-def generate_success_form(
-    cost: decimal,  # Cost of goods, RU
-    number: int,  # Invoice number
-    host_url=ALLOWED_HOSTS[0],
-    signature=None,
-) -> str:
-    """URL for redirection of the customer to the service.
-    """
-    if signature is None:
-        signature = calculate_signature(
-            cost,
-            number,
-            ROBOKASSA_PASSWORD1,
-        )
-
-    data = {
-        'OutSum': cost,
-        'InvId': number,
-        'SignatureValue': signature,
-        "Culture": "ru"
-    }
-
-    return SuccessRedirectForm(data).as_table()
-
-
-def generate_success_url(
-    cost: decimal,  # Cost of goods, RU
-    number: int,  # Invoice number
-    host_url=ALLOWED_HOSTS[0],
-    signature=None,
-) -> str:
-    """URL for redirection of the customer to the service.
-    """
-    if signature is None:
-        signature = calculate_signature(
-            cost,
-            number,
-            ROBOKASSA_PASSWORD1,
-        )
-
-    data = {
-        'OutSum': cost,
-        'InvId': number,
-        'SignatureValue': signature,
-        "Culture": "ru"
-    }
-
-    return f"https://{host_url}/my_order?{urllib.parse.urlencode(data)}"
+        return {"total": "A2"}
 
 
 def calculate_signature(*args) -> str:
-    """Create signature MD5.
-    """
-    return hashlib.md5(':'.join(str(arg) for arg in args).encode()).hexdigest()
+    """Create signature MD5."""
+    return hashlib.md5(":".join(str(arg) for arg in args).encode()).hexdigest()
 
 
 def calculate_levels(_test, is_test_2) -> tuple[dict[str, int], str]:
@@ -243,7 +179,7 @@ def calculate_levels(_test, is_test_2) -> tuple[dict[str, int], str]:
             writing=writing,
             listening=listening,
             vocabulary=vocabulary,
-            reading=reading
+            reading=reading,
         )
     else:
         levels = define_levels(
@@ -251,7 +187,7 @@ def calculate_levels(_test, is_test_2) -> tuple[dict[str, int], str]:
             writing=writing,
             listening=listening,
             vocabulary=vocabulary,
-            reading=reading
+            reading=reading,
         )
 
     grammar = levels.get("grammar")
@@ -265,7 +201,7 @@ def calculate_levels(_test, is_test_2) -> tuple[dict[str, int], str]:
         writing=writing,
         listening=listening,
         vocabulary=vocabulary,
-        reading=reading
+        reading=reading,
     )
 
     return levels, total_level

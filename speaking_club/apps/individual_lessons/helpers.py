@@ -1,6 +1,5 @@
 import logging
 from individual_lessons.models import IndividualStudent, IndividualLesson
-from pyzoom import oauth_wizard
 import requests
 
 
@@ -71,9 +70,11 @@ def delete_meeting(student: IndividualStudent, lesson: IndividualLesson):
         "account_id": student.teacher.zoom_key,
         "client_secret": student.teacher.zoom_sec,
     }
-    response = requests.post(auth_token_url,
-                             auth=(student.teacher.zoom_client, student.teacher.zoom_sec),
-                             data=data)
+    response = requests.post(
+        auth_token_url,
+        auth=(student.teacher.zoom_client, student.teacher.zoom_sec),
+        data=data,
+    )
 
     if response.status_code != 200:
         logging.warning("Unable to get access token")
@@ -83,13 +84,13 @@ def delete_meeting(student: IndividualStudent, lesson: IndividualLesson):
 
     headers = {
         "Authorization": f"Bearer {access_token}",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
     }
 
     resp = requests.delete(f"{api_base_url}/meetings/{lesson.zoom_id}", headers=headers)
 
     if resp.status_code != 204:
-        logging.warning(f'{resp.json()=}')
+        logging.warning(f"{resp.json()=}")
         return False
 
     return True

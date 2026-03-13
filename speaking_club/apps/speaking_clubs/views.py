@@ -19,15 +19,11 @@ from django.views.decorators.csrf import csrf_exempt
 from django.db import IntegrityError
 from django.db.models import Count
 
-from robokassa.forms import RobokassaForm
 from apps.speaking_clubs.helpers import (
     MAX_SCORE,
     MAX_SCORE_2,
-    define_levels,
-    define_total_level,
     calculate_levels,
 )
-from apps.speaking_clubs.helpers import generate_success_form
 from apps.speaking_clubs.answers_helpers import get_answers, register_answer
 from individual_lessons.models import IndividualStudent, IndividualTeacher
 from speaking_clubs.forms import StudentForm
@@ -38,8 +34,6 @@ from speaking_clubs import models
 from django.contrib.auth.models import User
 
 import logging
-
-from random import randint
 
 
 def login(request: HttpRequest):
@@ -77,14 +71,14 @@ def index_no_user(request: HttpRequest, gc_id: str):
             user = User.objects.create_user(
                 gc_id,
                 "",
-                f"{gc_id*3}",
+                f"{gc_id * 3}",
             )
             user.save()
-        user = authenticate(request, username=gc_id, password=f"{gc_id*3}")
+        user = authenticate(request, username=gc_id, password=f"{gc_id * 3}")
         logging.warning(f"{user=}")
         if user is not None:
             _login(request, user)
-            
+
         logging.warning(f"{request.user=}")
 
     if not student:
@@ -166,61 +160,6 @@ def order_from_gc(request: HttpRequest):
 
 
 @csrf_exempt
-def pay_with_robokassa(request: HttpRequest):
-    weekdays: str = request.POST.get("weekdays")
-    time: str = request.POST.get("time")
-    offer_id: int = request.POST.get("offer_id")
-    email: str = request.POST.get("email")
-    name: str = request.POST.get("name")
-
-    offer = models.Offer.objects.filter(id=offer_id).first()
-
-    if not all((weekdays, time, offer_id, email, offer, name)):
-        logging.warning(
-            "ERROR: 'if not all((weekdays, time, offer_id, email, offer, name))'"
-        )
-        return render(request, "error.html")
-
-    try:
-        time = int(time.split(":")[0])
-
-    except Exception as err:
-        logging.warning(f"ERROR: {str(err)}")
-        return render(request, "error.html")
-
-    invoice_numbers = [el.invoice_number for el in models.Order.objects.all()] + [
-        el.invoice_number for el in models.OrderGC.objects.all()
-    ]
-
-    invoice_number = randint(1, (2**31) - 1)
-
-    while invoice_number in invoice_numbers:
-        invoice_number = randint(1, (2**31) - 1)
-
-    order = models.Order.objects.create(
-        invoice_number=invoice_number,
-        offer=offer,
-        email=email,
-        time=time,
-        weekdays=weekdays,
-        name=name,
-    )
-
-    form = RobokassaForm(
-        initial={
-            "OutSum": order.offer.price,
-            "InvId": order.invoice_number,
-            # 'Desc': order.offer.description,
-            "Email": order.email,
-            # 'IncCurrLabel': '',
-            # 'Culture': 'ru'
-        }
-    )
-
-    return JsonResponse({"url": form.get_redirect_url()})
-
-
-@csrf_exempt
 def update_session(request: HttpRequest):
     if not request.is_ajax() or not request.method == "POST":
         return HttpResponseNotAllowed(["POST"])
@@ -228,7 +167,7 @@ def update_session(request: HttpRequest):
         invid = int(request.POST.get("InvId"))
         if invid:
             request.session["InvId"] = invid
-    except:
+    except Exception:
         return HttpResponseServerError(
             "Ошибка при обработке платежа, обратитесь в поддержку"
         )
@@ -289,7 +228,7 @@ def profile(request: HttpRequest):
             block_num = 3
         if student.get_user_chat_url() is not None:
             block_num = 4
-        if student.is_paid == False:
+        if not student.is_paid:
             block_num = 2
 
         _test = {}
@@ -395,11 +334,15 @@ def profile_test_results(request: HttpRequest):
         return render(request, "error.html")
 
     levels.update(total_level)
-    
-    if levels.get("total") != '-' and not student.is_test_2 and not student.finished_test_1:
+
+    if (
+        levels.get("total") != "-"
+        and not student.is_test_2
+        and not student.finished_test_1
+    ):
         student.finished_test_1 = timezone.now()
         student.save()
-    
+
     show_clear_btn = False
     if not student.is_test_2 and student.finished_test_1:
         if timezone.now() > (student.finished_test_1 + timezone.timedelta(weeks=10)):
@@ -419,7 +362,7 @@ def profile_test_results(request: HttpRequest):
 @login_required
 def profile_my_group(request: HttpRequest):
     student = models.Student.objects.filter(user=request.user).first()
-    if student.is_paid == False:
+    if not student.is_paid:
         return redirect("profile")
 
     if not student:
@@ -448,7 +391,6 @@ def profile_my_group(request: HttpRequest):
         "profile_my_group.html",
         {
             "levels": levels,
-            "chat": student.chat.first(),
             "block_num": block_num,
             "chat": student.chat.first(),
         },
@@ -759,22 +701,6 @@ def get_result(request: HttpRequest):
     )
 
 
-def my_order(request: HttpRequest):
-    request.GET.get("InvId")
-    order = models.Order.objects.filter(invoice_number=request.GET.get("InvId")).first()
-
-    if order:
-        form = generate_success_form(
-            cost=request.GET.get("OutSum"),
-            number=request.GET.get("InvId"),
-            signature=request.GET.get("SignatureValue"),
-        )
-
-        return render("email.html", {"form": form})
-    else:
-        return render(request, "error.html")
-
-
 @csrf_exempt
 def create_order_from_gc(request: HttpRequest):
     try:
@@ -855,7 +781,7 @@ def get_answers_view(request: HttpRequest):
 
     try:
         quiz_ids = quiz_ids.split(";;")
-    except:
+    except Exception:
         quiz_ids = None
 
     if all((quiz_ids)):
@@ -917,6 +843,7 @@ def register_results_view(request: HttpRequest):
             "msg": "Произошла ошибка, попробуйте еще раз или обратитесь в поддержку",
         }
     )
+
 
 def reset(request):
     student = models.Student.objects.filter(user=request.user).first()
